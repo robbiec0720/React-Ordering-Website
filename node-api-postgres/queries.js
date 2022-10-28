@@ -36,16 +36,6 @@ const pool = new Pool({
 })
 
 
-const getUsers = (request, response) => {
-  pool.query('SELECT * FROM FoodItems ORDER BY food_id ASC', (error, results) => {
-    if (error) {
-      throw error.stack
-    }
-    response.status(200).json(results.rows)
-  })
-}
-
-
 const getMenuItems = (request, response) => {
   pool.query('SELECT * FROM FoodItems WHERE is_seasonal = \'f\'', (error, results) => {
     if (error) {
@@ -107,7 +97,6 @@ const getItemName = (request, response) => {
 
 
 module.exports = {
-  getUsers,
   getMenuItems,
   getSeasonalItems,
   getItemName

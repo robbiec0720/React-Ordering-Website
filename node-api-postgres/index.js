@@ -22,7 +22,6 @@ app.listen(port, () => {
     console.log(`App running on port ${port}.`)
 })
 
-app.get('/users', db.getUsers)
 app.get('/menuItems', db.getMenuItems)
 app.get('/menuItems/:id', db.getItemName)
 app.get('/menuItems/seasonal', db.getSeasonalItems)
