@@ -1,30 +1,3 @@
-
-// const { Pool, Client } = require('pg')
-// const connectionString = 'postgresql://csce315_901_quilici:630004248@csce-315-db.engr.tamu.edu:5432/csce315_901_1?sslmode=require'
-
-// const pool = new Pool({
-//   connectionString,
-// })
-
-// pool.query('SELECT NOW()', (err, res) => {
-//   console.log(err, res)
-//   pool.end()
-// })
-// const client = new Client({
-//   connectionString,
-// })
-// client.connect()
-// client.query('SELECT * FROM Inventory', (err, res) => {
-//   if (!err) {
-//     console.log(res.rows[0]);
-//   }
-//   else {
-//     console.log(err.message);
-//   }
-//   console.log(err, res)
-//   client.end()
-// })
-
 const Pool = require('pg').Pool
 const pool = new Pool({
   user: 'csce315_901_quilici',
@@ -54,17 +27,6 @@ const getSeasonalItems = (request, response) => {
   })
 }
 
-// const getSeasonalItems = (request, response) => {
-//   try {
-//     pool.query('SELECT * FROM FoodItems WHERE is_seasonal = \'t\'', (error, results) => {
-//       response.status(200).json(results.rows)
-//     })
-//   }
-//   catch (error) {
-//     console.log(error)
-//   }
-// }
-
 const getItemName = (request, response) => {
   const id = parseInt(request.params.id)
 
@@ -82,22 +44,45 @@ const getItemName = (request, response) => {
   })
 }
 
+const displayOrder = (request, response) => {
+  pool.query('SELECT * FROM FootItems WHERE food_id in ($1)', [request], (error, results) => {
+    if (error) {
+      console.log(error.stack)
+      return
+    }
+    /* if (results.rows[0] == null) {
+      console.log("")
+    } */
+    response.status(200).json(results.rows)
+  })
+}
 
-// const getItemName = (request, response) => {
-//   const id = parseInt(request.params.id)
+const displayMenu = (request, response) => {
+  pool.query('SELECT * FROM FoodItems', (error, results) => {
+    if (error) {
+      console.log(error.stack)
+      return
+    }
+    response.status(200).json(results.rows)
+  })
+}
 
-//   console.log(id)
-//   pool.query('SELECT * FROM FoodItems WHERE food_id = $1', [id], (error, results) => {
-//     if (error) {
-//       throw error.stack
-//     }
-//     response.status(200).json(results.rows)
-//   })
-// }
+const excessReport = (request, response) => {
+  const {start, end} = request.body
+  results = getExcess(start, end)
+  response.status(200).json(results)
+}
 
+function getExcess(start, end) {
+  const amounts = []
+  
+}
 
 module.exports = {
   getMenuItems,
   getSeasonalItems,
-  getItemName
+  getItemName,
+  displayOrder,
+  displayMenu,
+  excessReport
 }
