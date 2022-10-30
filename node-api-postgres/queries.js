@@ -45,16 +45,17 @@ const getItemName = (request, response) => {
 }
 
 const displayOrder = (request, response) => {
-  pool.query('SELECT * FROM FootItems WHERE food_id in ($1)', [request], (error, results) => {
-    if (error) {
-      console.log(error.stack)
-      return
-    }
-    /* if (results.rows[0] == null) {
-      console.log("")
-    } */
-    response.status(200).json(results.rows)
-  })
+  order = []
+  for(let i = 0; i < request.length; i++) {
+    pool.query('SELECT * FROM WHERE food_id = $1', [request[i]], (error, results) => {
+      if (error) {
+        console.log(error.stack)
+        return
+      }
+      order[i] = results.rows[0]
+    })
+  }
+  response.status(200).json(order)
 }
 
 const displayMenu = (request, response) => {
