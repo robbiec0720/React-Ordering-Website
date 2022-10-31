@@ -103,10 +103,38 @@ const excessReport = async (request, response) => {
   response.status(200).json(excess)
 }
 
+const addIngredient = async (request, response) => {
+  const params = request.query.array.split(',')
+  const name = String(params[0])
+  const quantity = parseInt(params[1])
+  const threshold = parseInt(params[2])
+  const reorder = parseInt(params[3])
+  const cost = parseFloat(params[4])
+  const id = await new Promise((resolve) => {
+    pool.query("SELECT MAX(ingredient_id) FROM Inventory;", (error, results) => {
+      if(error) {
+        error.stack()
+        return
+      }
+      resolve(results.rows[0].max)
+    })
+  }) + 1
+  
+  pool.query("INSERT INTO Inventory (ingredient_id, ingredient_name, unit_quantity, order_threshold, reorder_value, cost) VALUES ($1, $2, $3, $4, $5, $6);", 
+  [id, name, quantity, threshold, reorder, cost], (error) =>{
+    if(error) {
+      console.log(error)
+      return
+    }
+    response.status(201).send('Ingredient added with ID: ' + id)
+  })
+}
+
 module.exports = {
   getMenuItems,
   getSeasonalItems,
   getItemName,
   displayMenu,
-  excessReport
+  excessReport,
+  addIngredient
 }
