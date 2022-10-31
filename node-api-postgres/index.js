@@ -22,6 +22,8 @@ app.listen(port, () => {
     console.log(`App running on port ${port}.`)
 })
 
-app.get('/menuItems', db.getMenuItems)
+app.get('/menuItems', db.displayMenu)
+app.get('/menuItems/permanent', db.getMenuItems)
 app.get('/menuItems/:id', db.getItemName)
 app.get('/menuItems/seasonal', db.getSeasonalItems)
+app.get('/excess/:start/:end', db.excessReport)

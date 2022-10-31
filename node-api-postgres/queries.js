@@ -1,3 +1,4 @@
+const mmnt = require('moment')
 const Pool = require('pg').Pool
 const pool = new Pool({
   user: 'csce315_901_quilici',
@@ -8,9 +9,8 @@ const pool = new Pool({
   ssl: true
 })
 
-
 const getMenuItems = (request, response) => {
-  pool.query('SELECT * FROM FoodItems WHERE is_seasonal = \'f\'', (error, results) => {
+  pool.query('SELECT * FROM FoodItems WHERE is_seasonal = \'f\';', (error, results) => {
     if (error) {
       throw error.stack
     }
@@ -19,7 +19,7 @@ const getMenuItems = (request, response) => {
 }
 
 const getSeasonalItems = (request, response) => {
-  pool.query('SELECT * FROM FoodItems WHERE is_seasonal = \'t\'', (error, results) => {
+  pool.query('SELECT * FROM FoodItems WHERE is_seasonal = \'t\';', (error, results) => {
     if (error) {
       throw error.stack
     }
@@ -31,7 +31,7 @@ const getItemName = (request, response) => {
   const id = parseInt(request.params.id)
 
   console.log(id)
-  pool.query('SELECT * FROM FoodItems WHERE food_id = $1', [id], (error, results) => {
+  pool.query('SELECT * FROM FoodItems WHERE food_id = $1;', [id], (error, results) => {
     if (error) {
       console.log(error.stack)
       return
@@ -44,22 +44,8 @@ const getItemName = (request, response) => {
   })
 }
 
-const displayOrder = (request, response) => {
-  order = []
-  for(let i = 0; i < request.length; i++) {
-    pool.query('SELECT * FROM WHERE food_id = $1', [request[i]], (error, results) => {
-      if (error) {
-        console.log(error.stack)
-        return
-      }
-      order[i] = results.rows[0]
-    })
-  }
-  response.status(200).json(order)
-}
-
 const displayMenu = (request, response) => {
-  pool.query('SELECT * FROM FoodItems', (error, results) => {
+  pool.query('SELECT * FROM FoodItems;', (error, results) => {
     if (error) {
       console.log(error.stack)
       return
@@ -68,22 +54,47 @@ const displayMenu = (request, response) => {
   })
 }
 
-const excessReport = (request, response) => {
-  const {start, end} = request.body
-  results = getExcess(start, end)
-  response.status(200).json(results)
-}
+const excessReport = async (request, response) => {
+  const start = String(request.params.start)
+  const end = String(request.params.end)
+  const excess = []
+  const count = await new Promise((resolve) =>  {
+    pool.query("SELECT COUNT(*) FROM Inventory;", (error, results) => {
+      if (error) {
+        console.log(error.stack)
+        return
+      }
+      resolve(parseInt(results.rows[0].count))
+    })
+  })
+  const amounts = new Array(count)
+  console.log(amounts)
+  console.log(start)
+  require('moment')().format('YYYY-MM-DD HH:mm:ss');
+  console.log(date)
+  const dates = await new Promise((resolve) =>  {
+    pool.query("SELECT * FROM date WHERE date BETWEEN \'$1\' AND \'$2\';", [date, end], (error, results) => {
+      if (error) {
+        console.log(error.stack)
+        return
+      }
+      resolve(results.rows)
+    })
+  })
+  for(let i = 0; i < dates.length; i++) {
+    for(let j = 0; j < dates[i].ingredient_amounts; j++) {
+      amounts[j] += dates[i].ingredient_amounts[j]
+    }   
+  }
+  //pool.query("SELECT * FROM Inventory;")
 
-function getExcess(start, end) {
-  const amounts = []
-  
+  response.status(200).json(amounts)
 }
 
 module.exports = {
   getMenuItems,
   getSeasonalItems,
   getItemName,
-  displayOrder,
   displayMenu,
   excessReport
 }
