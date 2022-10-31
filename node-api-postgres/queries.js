@@ -52,6 +52,44 @@ const displayMenu = (request, response) => {
   })
 }
 
+const displayOrder = async (request, response) => {
+  const order = request.query.order.split(',').map(element => {
+    return Number(element);
+  });
+
+  console.log(order)
+
+
+
+  const orders = []
+  for (var i = 0; i < order.length; i++) {
+    orders.push(await new Promise((resolve) => {
+      pool.query("SELECT * FROM Orders WHERE order_id = " + order[i], (error, results) => {
+        if (error) {
+          console.log(error.stack)
+          return
+        }
+        resolve(results.rows)
+      })
+    }))
+  }
+
+  // TODO: Add error checking
+  response.status(200).json(orders)
+
+}
+
+const displayInventory = (request, response) => {
+  pool.query('SELECT * FROM Inventory;', (error, results) => {
+    if (error) {
+      console.log(error.stack)
+      return
+    }
+    response.status(200).json(results.rows)
+  })
+}
+
+
 const excessReport = async (request, response) => {
   const start = new Date(request.params.start).toISOString().slice(0, 10)
   const end = new Date(request.params.end).toISOString().slice(0, 10)
@@ -125,6 +163,36 @@ const addIngredient = async (request, response) => {
         return
       }
       response.status(201).send('Ingredient added with ID: ' + id)
+    })
+}
+
+const addFoodItem = async (request, response) => {
+  const params = request.query.array.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g)
+  const name = String(params[0])
+  const ingredients = JSON.parse(params[1]).split(',').map(element => {
+    return Number(element);
+  });
+  
+  const cost = parseFloat(params[2])
+  const type = parseInt(params[3])
+  const isSeasonal = Boolean(params[4])
+  const id = await new Promise((resolve) => {
+    pool.query("SELECT MAX(food_id) FROM FoodItems;", (error, results) => {
+      if (error) {
+        error.stack()
+        return
+      }
+      resolve(results.rows[0].max)
+    })
+  }) + 1
+
+  pool.query("INSERT INTO FoodItems (food_id, item_name, ingredients, cost, item_type, is_seasonal) VALUES ($1, $2, $3, $4, $5, $6);",
+    [id, name, ingredients, cost, type, isSeasonal], (error) => {
+      if (error) {
+        console.log(error.stack)
+        return
+      }
+      response.status(201).send('Food Item added with ID: ' + id)
     })
 }
 
@@ -317,48 +385,6 @@ async function placeTransaction(orderID, employeeID, payType, subtotal, payment)
     })
 }
 
-async function updateInventory(order, condiments) {
-  for (let i = 0; i < order.length; i++) {
-    var ingredients = await new Promise((resolve) => {
-      pool.query('SELECT ingredients FROM FoodItems WHERE food_id = $1;', [parseInt(order[i])], (error, results) => {
-        if (error) {
-          console.log(error.stack)
-          return
-        }
-        resolve(results.rows[0].ingredients)
-      })
-    })
-
-    for (let j = 0; j < ingredients.length; j++) {
-      var id = ingredients[j]
-      var val = await new Promise((resolve) => {
-        pool.query('SELECT unit_quantity FROM Inventory WHERE ingredient_id = $1', [id], (error, results) => {
-          if (error) {
-            console.log(error.stack)
-            return
-          }
-          resolve(results.rows[0].unit_quantity)
-        })
-      }) - 1
-      editItem('Inventory', id, "unit_quantity", val, "ingredient_id")
-    }
-  }
-
-  for (let k = 0; k < condiments.length; k++) {
-    var c_id = parseInt(condiments[k])
-    var c_val = await new Promise((resolve) => {
-      pool.query('SELECT unit_quantity FROM Inventory WHERE ingredient_id = $1', [c_id], (error, results) => {
-        if (error) {
-          console.log(error.stack)
-          return
-        }
-        resolve(results.rows[0].unit_quantity)
-      })
-    }) - 1
-    editItem('Inventory', c_id, "unit_quantity", c_val, "ingredient_id")
-  }
-}
-
 module.exports = {
   getMenuItems,
   getSeasonalItems,
@@ -367,10 +393,11 @@ module.exports = {
   excessReport,
   addIngredient,
   editTable,
-  editItem,
   login,
   orderSubmitted,
   placeOrder,
   placeTransaction,
-  updateInventory
+  displayInventory,
+  displayOrder,
+  addFoodItem
 }
