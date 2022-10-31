@@ -61,7 +61,7 @@ const excessReport = async (request, response) => {
   const start = new Date(request.params.start).toISOString().slice(0, 10)
   const end = new Date(request.params.end).toISOString().slice(0, 10)
   const excess = []
-  const count = await new Promise((resolve) =>  {
+  const count = await new Promise((resolve) => {
     pool.query("SELECT COUNT(*) FROM Inventory;", (error, results) => {
       if (error) {
         console.log(error.stack)
@@ -72,7 +72,7 @@ const excessReport = async (request, response) => {
   })
   const amounts = new Array(count)
 
-  const dates = await new Promise((resolve) =>  {
+  const dates = await new Promise((resolve) => {
     pool.query("SELECT * FROM date WHERE date BETWEEN $1 AND $2;", [start, end], (error, results) => {
       if (error) {
         console.log(error.stack)
@@ -82,10 +82,10 @@ const excessReport = async (request, response) => {
     })
   })
 
-  for(let i = 0; i < dates.length; i++) {
-    for(let j = 0; j < dates[i].ingredient_amounts; j++) {
+  for (let i = 0; i < dates.length; i++) {
+    for (let j = 0; j < dates[i].ingredient_amounts; j++) {
       amounts[j] += dates[i].ingredient_amounts[j]
-    }   
+    }
   }
   const inv = await new Promise((resolve) => {
     pool.query("SELECT * FROM Inventory;", (error, results) => {
@@ -96,9 +96,9 @@ const excessReport = async (request, response) => {
       resolve(results.rows)
     })
   })
-  
-  for(let i = 0; i < inv.length; i++) {
-    if(amounts[i] <= 0.1*inv[i].unit_quantity) {
+
+  for (let i = 0; i < inv.length; i++) {
+    if (amounts[i] <= 0.1 * inv[i].unit_quantity) {
       excess.push(inv[i])
     }
   }
@@ -115,22 +115,22 @@ const addIngredient = async (request, response) => {
   const cost = parseFloat(params[4])
   const id = await new Promise((resolve) => {
     pool.query("SELECT MAX(ingredient_id) FROM Inventory;", (error, results) => {
-      if(error) {
+      if (error) {
         error.stack()
         return
       }
       resolve(results.rows[0].max)
     })
   }) + 1
-  
-  pool.query("INSERT INTO Inventory (ingredient_id, ingredient_name, unit_quantity, order_threshold, reorder_value, cost) VALUES ($1, $2, $3, $4, $5, $6);", 
-  [id, name, quantity, threshold, reorder, cost], (error) =>{
-    if(error) {
-      console.log(error.stack)
-      return
-    }
-    response.status(201).send('Ingredient added with ID: ' + id)
-  })
+
+  pool.query("INSERT INTO Inventory (ingredient_id, ingredient_name, unit_quantity, order_threshold, reorder_value, cost) VALUES ($1, $2, $3, $4, $5, $6);",
+    [id, name, quantity, threshold, reorder, cost], (error) => {
+      if (error) {
+        console.log(error.stack)
+        return
+      }
+      response.status(201).send('Ingredient added with ID: ' + id)
+    })
 }
 
 const editTable = (request, response) => {
@@ -144,10 +144,10 @@ const editTable = (request, response) => {
   response.status(200).send(msg)
 }
 
-function editItem (table, id, col, val, idCol) {
+function editItem(table, id, col, val, idCol) {
   const stmt = "UPDATE " + table + " SET " + col + " = \'" + val + "'\ WHERE " + idCol + " = " + id + ";"
-  pool.query(stmt, (error) =>{
-    if(error) {
+  pool.query(stmt, (error) => {
+    if (error) {
       console.log(error.stack)
       return "Update Failed"
     }
@@ -162,30 +162,30 @@ const login = async (request, response) => {
   var check = -1
   check = await new Promise((resolve) => {
     pool.query("SELECT employee_id FROM employee WHERE employee_name = $1;", [name], (error, results) => {
-      if(error) {
+      if (error) {
         console.log(error.stack)
         return
       }
       resolve(parseInt(results.rows[0].employee_id))
     })
   })
-  if(check == -1) {
+  if (check == -1) {
     response.status(200).json(-1)
   }
-  else if(check != id) {
+  else if (check != id) {
     response.status(200).json(0)
   }
   else {
     const mngr = await new Promise((resolve) => {
       pool.query("SELECT is_manager FROM employee WHERE employee_name = $1;", [name], (error, results) => {
-        if(error) {
+        if (error) {
           console.log(error.stack)
           return
         }
         resolve(String(results.rows[0].is_manager))
       })
     })
-    if(mngr.localeCompare('t')) {
+    if (mngr.localeCompare('t')) {
       response.status(200).json(2)
     }
     else {
@@ -206,20 +206,20 @@ const orderSubmitted = async (request, response) => {
 
   const orderInfo = await placeOrder(order, condiments, payment, payType)
 
-  if(orderInfo == null) {
+  if (orderInfo == null) {
     response.status(200).json(-1)
   }
   else {
     placeTransaction(orderInfo[0], id, payType, orderInfo[1], payment)
-    //updateInventory(order, condiments)
+    updateInventory(order, condiments)
     response.status(200).json(0)
   }
 }
 
-async function placeOrder (order, condiments, payment, payType) {
+async function placeOrder(order, condiments, payment, payType) {
   const id = await new Promise((resolve) => {
     pool.query("SELECT MAX(order_id) FROM Orders;", (error, results) => {
-      if(error) {
+      if (error) {
         console.log(error.stack)
         return
       }
@@ -233,41 +233,41 @@ async function placeOrder (order, condiments, payment, payType) {
   const desserts = []
 
   var totalCost = 0.0
-  for(let n = 0; n < order.length; n++) {
+  for (let n = 0; n < order.length; n++) {
     var type = -1
     var cost = 0.0
     var i = parseInt(order[n])
 
     var item = await new Promise((resolve) => {
       pool.query("SELECT * FROM FoodItems where food_id = $1;", [i], (error, results) => {
-        if(error) {
+        if (error) {
           console.log(error.stack)
           return
         }
         resolve(results.rows[0])
       })
     })
-  
+
     type = parseInt(item.item_type)
     cost = parseFloat(item.cost)
 
-    if(type != -1) {
+    if (type != -1) {
       totalCost += cost
     }
 
-    if(type == 0) {
+    if (type == 0) {
       entrees.push(i)
     }
 
-    if(type == 1) {
+    if (type == 1) {
       sides.push(i)
     }
 
-    if(type == 2) {
+    if (type == 2) {
       drinks.push(i)
     }
 
-    if(type == 3) {
+    if (type == 3) {
       drinks.push(i)
     }
   }
@@ -279,13 +279,13 @@ async function placeOrder (order, condiments, payment, payType) {
     return ret;
   }
 
-  pool.query("INSERT INTO Orders (order_id, entree_items, side_items, drink_items, dessert_items, condiments, order_cost) VALUES ($1, $2, $3, $4, $5, $6, $7);", 
-  [id, entrees, sides, drinks, desserts, condiments, totalCost], (error) => {
-    if(error) {
-      console.log(error.stack)
-      return
-    }
-  })
+  pool.query("INSERT INTO Orders (order_id, entree_items, side_items, drink_items, dessert_items, condiments, order_cost) VALUES ($1, $2, $3, $4, $5, $6, $7);",
+    [id, entrees, sides, drinks, desserts, condiments, totalCost], (error) => {
+      if (error) {
+        console.log(error.stack)
+        return
+      }
+    })
 
   orderInfo = [id, totalCost]
   return orderInfo
@@ -294,7 +294,7 @@ async function placeOrder (order, condiments, payment, payType) {
 async function placeTransaction(orderID, employeeID, payType, subtotal, payment) {
   const transId = await new Promise((resolve) => {
     pool.query("SELECT MAX(transaction_id) FROM Transactions;", (error, results) => {
-      if(error) {
+      if (error) {
         console.log(error.stack)
         return
       }
@@ -303,26 +303,66 @@ async function placeTransaction(orderID, employeeID, payType, subtotal, payment)
   }) + 1
 
   const totalCost = Math.round(subtotal * 1.0825 * 100) / 100.0
-  if(payType == 1 || payType == 2) {
+  if (payType == 1 || payType == 2) {
     payment = totalCost
   }
   const change = Math.round((payment - totalCost) * 100) / 100.0
 
-  const pad = function(num) { return ('00'+num).slice(-2) };
+  const pad = function (num) { return ('00' + num).slice(-2) };
   const utc = new Date();
-  const date = utc.getFullYear() + '-' + pad(utc.getMonth() + 1)  + '-' + pad(utc.getDate())
+  const date = utc.getFullYear() + '-' + pad(utc.getMonth() + 1) + '-' + pad(utc.getDate())
   const time = new Date().toString().slice(16, 24)
-  
-  pool.query("INSERT INTO Transactions (transaction_id, order_id, payment_type, total_cost, payment_received, change_given, employee_id, time, date) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);", 
-  [transId, orderID, payType, totalCost, payment, change, employeeID, time, date], (error) => {
-    if(error) {
-      console.log(error.stack)
-      return
-    }
-  })
+
+  pool.query("INSERT INTO Transactions (transaction_id, order_id, payment_type, total_cost, payment_received, change_given, employee_id, time, date) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);",
+    [transId, orderID, payType, totalCost, payment, change, employeeID, time, date], (error) => {
+      if (error) {
+        console.log(error.stack)
+        return
+      }
+    })
 }
 
-async function updateInventory(order, condiments)
+async function updateInventory(order, condiments) {
+  for (let i = 0; i < order.length; i++) {
+    var ingredients = await new Promise((resolve) => {
+      pool.query('SELECT ingredients FROM FoodItems WHERE food_id = $1;', [parseInt(order[i])], (error, results) => {
+        if (error) {
+          console.log(error.stack)
+          return
+        }
+        resolve(results.rows[0].ingredients)
+      })
+    })
+    
+    for (let j = 0; j = ingredients.length; j++) {
+      var id = parseInt(ingredients[i])
+      var val = await new Promise((resolve) => {
+        pool.query('SELECT unit_quantity FROM Inventory WHERE ingredient_id = $1', [id], (error, results) => {
+          if (error) {
+            console.log(error.stack)
+            return
+          }
+          resolve(results.rows[0].unit_quantity)
+        })
+      }) - 1
+      editItem('Inventory', id, "unit_quantity", val, "ingredient_id")
+    }
+  }
+
+  for (let i = 0; i < condiments.length; i++) {
+    var id = parseInt(condiments[i])
+    var val = await new Promise((resolve) => {
+      pool.query('SELECT unit_quantity FROM Inventory WHERE ingredient_id = $1', [id], (error, results) => {
+        if (error) {
+          console.log(error.stack)
+          return
+        }
+        resolve(results.rows[0].unit_quantity)
+      })
+    }) - 1
+    editItem('Inventory', id, "unit_quantity", val, "ingredient_id")
+  }
+}
 
 module.exports = {
   getMenuItems,
@@ -331,7 +371,8 @@ module.exports = {
   displayMenu,
   excessReport,
   addIngredient,
-  editTable, 
+  editTable,
+  editItem,
   login,
   orderSubmitted,
   placeOrder,
