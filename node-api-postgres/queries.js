@@ -337,7 +337,6 @@ async function updateInventory(order, condiments) {
             console.log(error.stack)
             return
           }
-          console.log()
           resolve(results.rows[0].unit_quantity)
         })
       }) - 1
