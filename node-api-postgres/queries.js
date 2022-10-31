@@ -130,11 +130,29 @@ const addIngredient = async (request, response) => {
   })
 }
 
+const editTable = (request, response) => {
+  const params = request.query.array.split(',')
+  const table = String(params[0])
+  const id = parseInt(params[1])
+  const col = String(params[2])
+  const val = params[3]
+  const idCol = String(params[4])
+  const stmt = "UPDATE " + table + " SET " + col + " = \'" + val + "'\ WHERE " + idCol + " = " + id + ";"
+  pool.query(stmt, (error) =>{
+    if(error) {
+      console.log(error)
+      return
+    }
+    response.status(200).send('Updated item from ' + table + ' with ID:' + id)
+  })
+}
+
 module.exports = {
   getMenuItems,
   getSeasonalItems,
   getItemName,
   displayMenu,
   excessReport,
-  addIngredient
+  addIngredient,
+  editTable
 }
