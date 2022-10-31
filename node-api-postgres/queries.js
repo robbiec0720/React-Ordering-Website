@@ -1,4 +1,5 @@
 const mmnt = require('moment')
+const { resolve } = require('path')
 const Pool = require('pg').Pool
 const pool = new Pool({
   user: 'csce315_901_quilici',
@@ -147,6 +148,45 @@ const editTable = (request, response) => {
   })
 }
 
+const login = async (request, response) => {
+  const name = String(request.query.name)
+  const id = parseInt(request.query.id)
+
+  var check = -1
+  check = await new Promise((resolve) => {
+    pool.query("SELECT employee_id FROM employee WHERE employee_name = $1;", [name], (error, results) => {
+      if(error) {
+        console.log(error.stack)
+        return
+      }
+      resolve(parseInt(results.rows[0].employee_id))
+    })
+  })
+  if(check == -1) {
+    response.status(200).json(-1)
+  }
+  else if(check != id) {
+    response.status(200).json(0)
+  }
+  else {
+    const mngr = await new Promise((resolve) => {
+      pool.query("SELECT is_manager FROM employee WHERE employee_name = $1;", [name], (error, results) => {
+        if(error) {
+          console.log(error.stack)
+          return
+        }
+        resolve(String(results.rows[0].is_manager))
+      })
+    })
+    if(mngr.localeCompare('t')) {
+      response.status(200).json(2)
+    }
+    else {
+      response.status(200).json(1)
+    }
+  }
+}
+
 module.exports = {
   getMenuItems,
   getSeasonalItems,
@@ -154,5 +194,6 @@ module.exports = {
   displayMenu,
   excessReport,
   addIngredient,
-  editTable
+  editTable,
+  login
 }
