@@ -1,5 +1,8 @@
+const { INSPECT_MAX_BYTES } = require('buffer')
+const { relativeTimeRounding } = require('moment')
 const mmnt = require('moment')
 const { resolve } = require('path')
+const { CommandCompleteMessage } = require('pg-protocol/dist/messages')
 const Pool = require('pg').Pool
 const pool = new Pool({
   user: 'csce315_901_quilici',
@@ -31,7 +34,6 @@ const getSeasonalItems = (request, response) => {
 const getItemName = (request, response) => {
   const id = parseInt(request.params.id)
 
-  console.log(id)
   pool.query('SELECT * FROM FoodItems WHERE food_id = $1;', [id], (error, results) => {
     if (error) {
       console.log(error.stack)
@@ -124,7 +126,7 @@ const addIngredient = async (request, response) => {
   pool.query("INSERT INTO Inventory (ingredient_id, ingredient_name, unit_quantity, order_threshold, reorder_value, cost) VALUES ($1, $2, $3, $4, $5, $6);", 
   [id, name, quantity, threshold, reorder, cost], (error) =>{
     if(error) {
-      console.log(error)
+      console.log(error.stack)
       return
     }
     response.status(201).send('Ingredient added with ID: ' + id)
@@ -141,7 +143,7 @@ const editTable = (request, response) => {
   const stmt = "UPDATE " + table + " SET " + col + " = \'" + val + "'\ WHERE " + idCol + " = " + id + ";"
   pool.query(stmt, (error) =>{
     if(error) {
-      console.log(error)
+      console.log(error.stack)
       return
     }
     response.status(200).send('Updated item from ' + table + ' with ID:' + id)
@@ -187,6 +189,134 @@ const login = async (request, response) => {
   }
 }
 
+const orderSubmitted = async (request, response) => {
+  const order = request.query.order.split(',')
+  const condiments = request.query.condiments.split(',')
+  const id = parseInt(request.query.id)
+  const payType = parseInt(request.query.type)
+  const payment = parseFloat(request.query.payment)
+
+  condiments.push(26)
+  condiments.push(27)
+
+  const orderInfo = await placeOrder(order, condiments, payment, payType)
+
+  if(orderInfo == null) {
+    response.status(200).json(-1)
+  }
+  else {
+    placeTransaction(orderInfo[0], id, payType, orderInfo[1], payment)
+    //updateInventory(order, condiments)
+    response.status(200).json(0)
+  }
+}
+
+async function placeOrder (order, condiments, payment, payType) {
+  const id = await new Promise((resolve) => {
+    pool.query("SELECT MAX(order_id) FROM Orders;", (error, results) => {
+      if(error) {
+        console.log(error.stack)
+        return
+      }
+      resolve(parseInt(results.rows[0].max))
+    })
+  }) + 1
+
+  const entrees = []
+  const sides = []
+  const drinks = []
+  const desserts = []
+
+  var totalCost = 0.0
+  for(let n = 0; n < order.length; n++) {
+    var type = -1
+    var cost = 0.0
+    var i = parseInt(order[n])
+
+    var item = await new Promise((resolve) => {
+      pool.query("SELECT * FROM FoodItems where food_id = $1;", [i], (error, results) => {
+        if(error) {
+          console.log(error.stack)
+          return
+        }
+        resolve(results.rows[0])
+      })
+    })
+  
+    type = parseInt(item.item_type)
+    cost = parseFloat(item.cost)
+
+    if(type != -1) {
+      totalCost += cost
+    }
+
+    if(type == 0) {
+      entrees.push(i)
+    }
+
+    if(type == 1) {
+      sides.push(i)
+    }
+
+    if(type == 2) {
+      drinks.push(i)
+    }
+
+    if(type == 3) {
+      drinks.push(i)
+    }
+  }
+
+  // If the emplyee enters a payment received that is less than the total cost,
+  // indicate error by returning a null array
+  if (payment < totalCost && payType == 0) {
+    var ret = null;
+    return ret;
+  }
+
+  pool.query("INSERT INTO Orders (order_id, entree_items, side_items, drink_items, dessert_items, condiments, order_cost) VALUES ($1, $2, $3, $4, $5, $6, $7);", 
+  [id, entrees, sides, drinks, desserts, condiments, totalCost], (error) => {
+    if(error) {
+      console.log(error.stack)
+      return
+    }
+  })
+
+  orderInfo = [id, totalCost]
+  return orderInfo
+}
+
+async function placeTransaction(orderID, employeeID, payType, subtotal, payment) {
+  const transId = await new Promise((resolve) => {
+    pool.query("SELECT MAX(transaction_id) FROM Transactions;", (error, results) => {
+      if(error) {
+        console.log(error.stack)
+        return
+      }
+      resolve(parseInt(results.rows[0].max))
+    })
+  }) + 1
+
+  const totalCost = Math.round(subtotal * 1.0825 * 100) / 100.0
+  if(payType == 1 || payType == 2) {
+    payment = totalCost
+  }
+  const change = Math.round((payment - totalCost) * 100) / 100.0
+
+  const pad = function(num) { return ('00'+num).slice(-2) };
+  const utc = new Date();
+  const date = utc.getFullYear() + '-' + pad(utc.getMonth() + 1)  + '-' + pad(utc.getDate())
+  const time = new Date().toString().slice(16, 24)
+  
+  pool.query("INSERT INTO Transactions (transaction_id, order_id, payment_type, total_cost, payment_received, change_given, employee_id, time, date) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);", 
+  [transId, orderID, payType, totalCost, payment, change, employeeID, time, date], (error) => {
+    if(error) {
+      console.log(error.stack)
+      return
+    }
+  })
+}
+
 module.exports = {
   getMenuItems,
   getSeasonalItems,
@@ -194,6 +324,9 @@ module.exports = {
   displayMenu,
   excessReport,
   addIngredient,
-  editTable,
-  login
+  editTable, 
+  login,
+  orderSubmitted,
+  placeOrder,
+  placeTransaction
 }
