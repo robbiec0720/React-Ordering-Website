@@ -57,10 +57,6 @@ const displayOrder = async (request, response) => {
     return Number(element);
   });
 
-  console.log(order)
-
-
-
   const orders = []
   for (var i = 0; i < order.length; i++) {
     orders.push(await new Promise((resolve) => {
@@ -77,6 +73,30 @@ const displayOrder = async (request, response) => {
   // TODO: Add error checking
   response.status(200).json(orders)
 
+}
+
+const deleteEntry = (request, response) => {
+  const id = parseInt(request.query.id)
+  const tableName = String(request.query.table)
+  const colName = String(request.query.pkcol)
+
+  pool.query('DELETE FROM ' + tableName + ' WHERE ' + colName + ' = ' + id, (error, results) => {
+    if (error) {
+      console.log(error.stack)
+      return
+    }
+    response.status(200).json(0)
+  })
+}
+
+const restockReport = (request, response) => {
+  pool.query('SELECT * FROM Inventory WHERE unit_quantity <= order_threshold', (error, results) => {
+    if (error) {
+      console.log(error.stack)
+      return
+    }
+    response.status(200).json(results.rows)
+  })
 }
 
 const displayInventory = (request, response) => {
@@ -172,7 +192,7 @@ const addFoodItem = async (request, response) => {
   const ingredients = JSON.parse(params[1]).split(',').map(element => {
     return Number(element);
   });
-  
+
   const cost = parseFloat(params[2])
   const type = parseInt(params[3])
   const isSeasonal = Boolean(params[4])
@@ -195,6 +215,8 @@ const addFoodItem = async (request, response) => {
       response.status(201).send('Food Item added with ID: ' + id)
     })
 }
+
+
 
 const editTable = (request, response) => {
   const params = request.query.array.split(',')
@@ -399,5 +421,7 @@ module.exports = {
   placeTransaction,
   displayInventory,
   displayOrder,
-  addFoodItem
+  addFoodItem,
+  deleteEntry,
+  restockReport
 }
