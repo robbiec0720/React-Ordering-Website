@@ -140,13 +140,18 @@ const editTable = (request, response) => {
   const col = String(params[2])
   const val = params[3]
   const idCol = String(params[4])
+  const msg = editItem(table, id, col, val, idCol)
+  response.status(200).send(msg)
+}
+
+function editItem (table, id, col, val, idCol) {
   const stmt = "UPDATE " + table + " SET " + col + " = \'" + val + "'\ WHERE " + idCol + " = " + id + ";"
   pool.query(stmt, (error) =>{
     if(error) {
       console.log(error.stack)
-      return
+      return "Update Failed"
     }
-    response.status(200).send('Updated item from ' + table + ' with ID:' + id)
+    return ("Updated item from " + table + " with ID:" + id)
   })
 }
 
@@ -317,6 +322,8 @@ async function placeTransaction(orderID, employeeID, payType, subtotal, payment)
   })
 }
 
+async function updateInventory(order, condiments)
+
 module.exports = {
   getMenuItems,
   getSeasonalItems,
@@ -328,5 +335,6 @@ module.exports = {
   login,
   orderSubmitted,
   placeOrder,
-  placeTransaction
+  placeTransaction,
+  updateInventory
 }
