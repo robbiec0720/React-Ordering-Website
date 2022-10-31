@@ -55,8 +55,8 @@ const displayMenu = (request, response) => {
 }
 
 const excessReport = async (request, response) => {
-  const start = String(request.params.start)
-  const end = String(request.params.end)
+  const start = new Date(request.params.start).toISOString().slice(0, 10)
+  const end = new Date(request.params.end).toISOString().slice(0, 10)
   const excess = []
   const count = await new Promise((resolve) =>  {
     pool.query("SELECT COUNT(*) FROM Inventory;", (error, results) => {
@@ -68,12 +68,9 @@ const excessReport = async (request, response) => {
     })
   })
   const amounts = new Array(count)
-  console.log(amounts)
-  console.log(start)
-  require('moment')().format('YYYY-MM-DD HH:mm:ss');
-  console.log(date)
+
   const dates = await new Promise((resolve) =>  {
-    pool.query("SELECT * FROM date WHERE date BETWEEN \'$1\' AND \'$2\';", [date, end], (error, results) => {
+    pool.query("SELECT * FROM date WHERE date BETWEEN $1 AND $2;", [start, end], (error, results) => {
       if (error) {
         console.log(error.stack)
         return
@@ -81,14 +78,29 @@ const excessReport = async (request, response) => {
       resolve(results.rows)
     })
   })
+
   for(let i = 0; i < dates.length; i++) {
     for(let j = 0; j < dates[i].ingredient_amounts; j++) {
       amounts[j] += dates[i].ingredient_amounts[j]
     }   
   }
-  //pool.query("SELECT * FROM Inventory;")
+  const inv = await new Promise((resolve) => {
+    pool.query("SELECT * FROM Inventory;", (error, results) => {
+      if (error) {
+        console.log(error.stack)
+        return
+      }
+      resolve(results.rows)
+    })
+  })
+  
+  for(let i = 0; i < inv.length; i++) {
+    if(amounts[i] <= 0.1*inv[i].unit_quantity) {
+      excess.push(inv[i])
+    }
+  }
 
-  response.status(200).json(amounts)
+  response.status(200).json(excess)
 }
 
 module.exports = {
