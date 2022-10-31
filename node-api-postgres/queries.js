@@ -1,8 +1,3 @@
-const { INSPECT_MAX_BYTES } = require('buffer')
-const { relativeTimeRounding } = require('moment')
-const mmnt = require('moment')
-const { resolve } = require('path')
-const { CommandCompleteMessage } = require('pg-protocol/dist/messages')
 const Pool = require('pg').Pool
 const pool = new Pool({
   user: 'csce315_901_quilici',
@@ -333,15 +328,16 @@ async function updateInventory(order, condiments) {
         resolve(results.rows[0].ingredients)
       })
     })
-    
-    for (let j = 0; j = ingredients.length; j++) {
-      var id = parseInt(ingredients[i])
+
+    for (let j = 0; j < ingredients.length; j++) {
+      var id = ingredients[j]
       var val = await new Promise((resolve) => {
         pool.query('SELECT unit_quantity FROM Inventory WHERE ingredient_id = $1', [id], (error, results) => {
           if (error) {
             console.log(error.stack)
             return
           }
+          console.log()
           resolve(results.rows[0].unit_quantity)
         })
       }) - 1
@@ -349,10 +345,10 @@ async function updateInventory(order, condiments) {
     }
   }
 
-  for (let i = 0; i < condiments.length; i++) {
-    var id = parseInt(condiments[i])
-    var val = await new Promise((resolve) => {
-      pool.query('SELECT unit_quantity FROM Inventory WHERE ingredient_id = $1', [id], (error, results) => {
+  for (let k = 0; k < condiments.length; k++) {
+    var c_id = parseInt(condiments[k])
+    var c_val = await new Promise((resolve) => {
+      pool.query('SELECT unit_quantity FROM Inventory WHERE ingredient_id = $1', [c_id], (error, results) => {
         if (error) {
           console.log(error.stack)
           return
@@ -360,7 +356,7 @@ async function updateInventory(order, condiments) {
         resolve(results.rows[0].unit_quantity)
       })
     }) - 1
-    editItem('Inventory', id, "unit_quantity", val, "ingredient_id")
+    editItem('Inventory', c_id, "unit_quantity", c_val, "ingredient_id")
   }
 }
 
