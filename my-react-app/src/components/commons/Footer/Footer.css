@@ -1,0 +1,14 @@
+.footer-style{
+    text-align: center;
+    background-color: rgb(205, 217, 227);
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.footer-style > h5{
+    margin-bottom: 0;
+    padding: 0;
+}
+.footer-style > p{
+    margin-top: 5px;
+    padding: 0;
+}

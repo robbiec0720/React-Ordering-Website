@@ -1,0 +1,40 @@
+.grid-item{
+    background-color: rgba(0, 0, 0, 0.084);
+    border: 1px solid rgba(0, 0, 0, 0.22);
+    
+}
+.grid-item:hover{
+    transform: scale(1.03);
+    transition: transform .5s ease-out;
+    overflow: hidden;
+}
+.desc{
+    text-align: start;
+    padding: 0px 10px;
+    font-weight: bold;
+}
+.desc{
+    font-size: 14px;
+    height: 80px;
+}
+.order-btn{
+    background-color: orange;
+    color: white;
+    border: 1px solid orange;
+    padding: 5px 10px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+
+}
+.order-btn:hover{
+    background-color: white;
+    color: orange;
+}
+.order-btn:active{
+    background-color: red;
+    color: white;
+    border: 1px solid red;
+}
