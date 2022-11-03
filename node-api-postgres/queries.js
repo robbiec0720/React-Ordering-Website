@@ -8,8 +8,9 @@ const pool = new Pool({
   ssl: true
 })
 
-// array to store order
+// arrays to store order and condiments
 var order = []
+var condiments = []
 
 const getMenuItems = (request, response) => {
   pool.query('SELECT * FROM FoodItems WHERE is_seasonal = \'f\';', (error, results) => {
@@ -56,13 +57,9 @@ const displayMenu = (request, response) => {
 }
 
 const displayOrder = async (request, response) => {
-  const order = request.query.order.split(',').map(element => {
-    return Number(element);
-  });
-
-  const orders = []
+  const display = []
   for (var i = 0; i < order.length; i++) {
-    orders.push(await new Promise((resolve) => {
+    display.push(await new Promise((resolve) => {
       pool.query("SELECT * FROM Orders WHERE order_id = " + order[i], (error, results) => {
         if (error) {
           console.log(error.stack)
@@ -74,7 +71,7 @@ const displayOrder = async (request, response) => {
   }
 
   // TODO: Add error checking
-  response.status(200).json(orders)
+  response.status(200).json(display)
 
 }
 
@@ -280,8 +277,6 @@ const login = async (request, response) => {
 }
 
 const orderSubmitted = async (request, response) => {
-  const order = request.query.order.split(',')
-  const condiments = request.query.condiments.split(',')
   const id = parseInt(request.query.id)
   const payType = parseInt(request.query.type)
   const payment = parseFloat(request.query.payment)
@@ -289,19 +284,22 @@ const orderSubmitted = async (request, response) => {
   condiments.push(26)
   condiments.push(27)
 
-  const orderInfo = await placeOrder(order, condiments, payment, payType)
+  const orderInfo = await placeOrder(payment, payType)
 
   if (orderInfo == null) {
     response.status(200).json(-1)
   }
   else {
     placeTransaction(orderInfo[0], id, payType, orderInfo[1], payment)
-    updateInventory(order, condiments)
+    updateInventory()
     response.status(200).json(0)
   }
+
+  order = []
+  condiments = []
 }
 
-async function placeOrder(order, condiments, payment, payType) {
+async function placeOrder(payment, payType) {
   const id = await new Promise((resolve) => {
     pool.query("SELECT MAX(order_id) FROM Orders;", (error, results) => {
       if (error) {
@@ -321,7 +319,7 @@ async function placeOrder(order, condiments, payment, payType) {
   for (let n = 0; n < order.length; n++) {
     var type = -1
     var cost = 0.0
-    var i = parseInt(order[n])
+    var i = order[n]
 
     var item = await new Promise((resolve) => {
       pool.query("SELECT * FROM FoodItems where food_id = $1;", [i], (error, results) => {
@@ -407,6 +405,49 @@ async function placeTransaction(orderID, employeeID, payType, subtotal, payment)
     })
 }
 
+async function updateInventory() {
+  for (let i = 0; i < order.length; i++) {
+    var ingredients = await new Promise((resolve) => {
+      pool.query('SELECT ingredients FROM FoodItems WHERE food_id = $1;', [order[i]], (error, results) => {
+        if (error) {
+          console.log(error.stack)
+          return
+        }
+        resolve(results.rows[0].ingredients)
+      })
+    })
+
+    for (let j = 0; j < ingredients.length; j++) {
+      var id = ingredients[j]
+      var val = await new Promise((resolve) => {
+        pool.query('SELECT unit_quantity FROM Inventory WHERE ingredient_id = $1', [id], (error, results) => {
+          if (error) {
+            console.log(error.stack)
+            return
+          }
+          console.log()
+          resolve(results.rows[0].unit_quantity)
+        })
+      }) - 1
+      editItem('Inventory', id, "unit_quantity", val, "ingredient_id")
+    }
+  }
+
+  for (let k = 0; k < condiments.length; k++) {
+    var c_id = condiments[k]
+    var c_val = await new Promise((resolve) => {
+      pool.query('SELECT unit_quantity FROM Inventory WHERE ingredient_id = $1', [c_id], (error, results) => {
+        if (error) {
+          console.log(error.stack)
+          return
+        }
+        resolve(results.rows[0].unit_quantity)
+      })
+    }) - 1
+    editItem('Inventory', c_id, "unit_quantity", c_val, "ingredient_id")
+  }
+}
+
 const addItem = (request, response) => {
   const id = parseInt(request.params.id)
   order.push(id)
@@ -445,6 +486,7 @@ module.exports = {
   orderSubmitted,
   placeOrder,
   placeTransaction,
+  updateInventory,
   displayInventory,
   displayOrder,
   addFoodItem,
