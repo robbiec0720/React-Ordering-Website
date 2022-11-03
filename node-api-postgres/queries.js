@@ -8,6 +8,9 @@ const pool = new Pool({
   ssl: true
 })
 
+// array to store order
+var order = []
+
 const getMenuItems = (request, response) => {
   pool.query('SELECT * FROM FoodItems WHERE is_seasonal = \'f\';', (error, results) => {
     if (error) {
@@ -108,7 +111,6 @@ const displayInventory = (request, response) => {
     response.status(200).json(results.rows)
   })
 }
-
 
 const excessReport = async (request, response) => {
   const start = new Date(request.params.start).toISOString().slice(0, 10)
@@ -215,8 +217,6 @@ const addFoodItem = async (request, response) => {
       response.status(201).send('Food Item added with ID: ' + id)
     })
 }
-
-
 
 const editTable = (request, response) => {
   const params = request.query.array.split(',')
@@ -407,6 +407,32 @@ async function placeTransaction(orderID, employeeID, payType, subtotal, payment)
     })
 }
 
+const addItem = (request, response) => {
+  const id = parseInt(request.params.id)
+  order.push(id)
+  console.log(order)
+  response.status(200).send("Item " + id + " successfully added to order!")
+}
+
+const removeItem = (request, response) => {
+  const id = parseInt(request.params.id)
+  const index = order.indexOf(id)
+  if(index > -1) {
+    order.splice(index, 1)
+    console.log(order)
+    response.status(200).send("Item " + id + " successfully removed from order.")
+  }
+  else {
+    response.status(200).send("Item " + id + " not found in order.")
+  }
+}
+
+const clearCart = (request, response) => {
+  order = []
+  console.log(order)
+  response.status(200).send("Cart successfully cleared.")
+}
+
 module.exports = {
   getMenuItems,
   getSeasonalItems,
@@ -423,5 +449,8 @@ module.exports = {
   displayOrder,
   addFoodItem,
   deleteEntry,
-  restockReport
+  restockReport,
+  addItem,
+  removeItem,
+  clearCart
 }
