@@ -181,7 +181,7 @@ const addIngredient = async (request, response) => {
         console.log(error.stack)
         return
       }
-      response.status(201).send('Ingredient added with ID: ' + id)
+      response.status(201).json('Ingredient added with ID: ' + id)
     })
 }
 
@@ -211,7 +211,7 @@ const addFoodItem = async (request, response) => {
         console.log(error.stack)
         return
       }
-      response.status(201).send('Food Item added with ID: ' + id)
+      response.status(201).json('Food Item added with ID: ' + id)
     })
 }
 
@@ -223,7 +223,7 @@ const editTable = (request, response) => {
   const val = params[3]
   const idCol = String(params[4])
   const msg = editItem(table, id, col, val, idCol)
-  response.status(200).send(msg)
+  response.status(200).json(msg)
 }
 
 function editItem(table, id, col, val, idCol) {
@@ -452,7 +452,7 @@ const addItem = (request, response) => {
   const id = parseInt(request.params.id)
   order.push(id)
   console.log(order)
-  response.status(200).send("Item " + id + " successfully added to order!")
+  response.status(200).json("Item " + id + " successfully added to order!")
 }
 
 const removeItem = (request, response) => {
@@ -461,17 +461,17 @@ const removeItem = (request, response) => {
   if(index > -1) {
     order.splice(index, 1)
     console.log(order)
-    response.status(200).send("Item " + id + " successfully removed from order.")
+    response.status(200).json("Item " + id + " successfully removed from order.")
   }
   else {
-    response.status(200).send("Item " + id + " not found in order.")
+    response.status(200).json("Item " + id + " not found in order.")
   }
 }
 
 const clearCart = (request, response) => {
   order = []
   console.log(order)
-  response.status(200).send("Cart successfully cleared.")
+  response.status(200).json("Cart successfully cleared.")
 }
 
 module.exports = {
