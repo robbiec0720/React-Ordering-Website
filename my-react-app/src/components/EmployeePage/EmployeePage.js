@@ -8,6 +8,29 @@ const EmployeePage = () => {
         .then(res => res.json())
         .then(result =>  setFoods(result));
     }, [])
+
+    const handleClick = async () => {
+        console.log("Order Button Clicked")
+        try {
+          const response = await fetch('http://localhost:8081/order/submit?id=1&type=0&payment=20.00', {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+            },
+          });
+    
+          if (!response.ok) {
+            throw new Error(`Error! status: ${response.status}`);
+          }
+    
+          const result = await response.json();
+    
+          console.log('result is: ', JSON.stringify(result, null, 4));
+        } catch (err) {
+          console.log(err)
+        } 
+    };
+    
     console.log(foods);
     return (
         <div className='employee-page-style'>
@@ -29,12 +52,15 @@ const EmployeePage = () => {
                     </div>
                 </div>
                 <div className='submit-div'>
-                    <button className='logout-btn'>Submit Order</button>
+                    <button className='logout-btn' onClick = {handleClick}>Submit Order</button>
                     <button className='logout-btn'>Edit Order</button>
                 </div>
             </div>
         </div>
     );
 };
+
+
+
 
 export default EmployeePage;

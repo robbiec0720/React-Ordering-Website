@@ -12,8 +12,7 @@ const FoodItem = ({ food }) => {
                 <p>${price}</p>
             </div>
             <button className='order-btn'>Order Now</button>
-        </div>
+        </div>      
     );
 };
-
 export default FoodItem;
