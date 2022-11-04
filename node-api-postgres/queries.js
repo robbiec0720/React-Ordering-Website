@@ -295,6 +295,7 @@ const orderSubmitted = async (request, response) => {
     response.status(200).json(0)
   }
 
+  console.log("Order placed sucessfully")
   order = []
   condiments = []
 }
