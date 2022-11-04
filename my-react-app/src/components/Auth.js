@@ -25,7 +25,6 @@ export default function auth(props) {
           </div>
           
         </div>
-      </form>
-    
+      </form>   
   )
 }

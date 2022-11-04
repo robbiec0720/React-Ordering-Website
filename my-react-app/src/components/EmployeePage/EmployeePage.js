@@ -59,8 +59,4 @@ const EmployeePage = () => {
         </div>
     );
 };
-
-
-
-
 export default EmployeePage;
