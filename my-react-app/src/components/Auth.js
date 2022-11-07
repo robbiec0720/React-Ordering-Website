@@ -10,16 +10,16 @@ const Auth = () =>{
       <form className="Auth-form">
         <div className="Auth-form-content">
           <h3 className="Auth-form-title">Sign In</h3>
-          <div className="">
+          <div className="form-group">
             <input
-              className="input"
+              className="login-input"
               placeholder="Your name"
             />
           </div>
-          <div className="">
+          <div className="form-group">
             <input
               type="password"
-              className="form-control mt-1"
+              className="login-input"
               placeholder="Password"
             />
           </div>
