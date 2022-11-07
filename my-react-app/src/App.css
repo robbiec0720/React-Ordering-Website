@@ -4,6 +4,7 @@
 .Auth-form{
   display: flex;
   width: 100vw;
+  overflow: hidden;
 }
 .login-input{
   border: 1px solid #5B6770;
