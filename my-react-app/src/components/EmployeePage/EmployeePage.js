@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './EmployeePage.css';
 import FoodItem from './FoodItem';
+import { useNavigate } from "react-router-dom";
 const EmployeePage = () => {
+    const navigate = useNavigate();
     const [foods, setFoods] = useState([]);
     useEffect(()=>{
         fetch('foods.json')
@@ -54,6 +56,7 @@ const EmployeePage = () => {
                 <div className='submit-div'>
                     <button className='logout-btn' onClick = {handleClick}>Submit Order</button>
                     <button className='logout-btn'>Edit Order</button>
+                    <button className='logout-btn' onClick={() => navigate('../')}>Logout</button>
                 </div>
             </div>
         </div>
