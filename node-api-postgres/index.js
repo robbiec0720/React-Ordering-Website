@@ -6,7 +6,7 @@ const port = 8081
 
 const db = require('./queries')
 
-//process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"
 app.use(bodyParser.json())
 app.use(
     bodyParser.urlencoded({
