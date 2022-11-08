@@ -16,7 +16,7 @@ const Header = () => {
                         <p onClick={()=> navigate('/manageaccess')} className='manage-access'><small>Manage Access</small></p>
                     </div>
                 </div>
-                <button className='logout-btn'>Logout</button>
+                
             </div>
             
         </div>

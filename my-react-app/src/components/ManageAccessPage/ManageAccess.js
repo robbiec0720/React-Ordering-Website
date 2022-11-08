@@ -12,16 +12,32 @@ const ManageAccess = () => {
                     </div>
                     <div className='half-section'>
                         <h3>Edit Inventory</h3>
+                        <div className='btn-styles-div'>
+                        <div>
+                            <button className="access-btn">Edit Menu</button>
+                            <button className="access-btn">Delete Items</button>
+                            <button className="access-btn">Add seasonal Items</button>
+                        </div>
+                        <div>
+                            <button className="access-btn">Edit Inventory</button>
+                            <button className="access-btn">Add to Inventory</button>
+                            <button className="access-btn">Delete Inventory</button>
+                        </div>
+                        </div>
                     </div>
                 </div>
 
                 {/* second block */}
                 <div className='blocks'>
                     <div className='half-section'>
-                        <h3>Restock Reports</h3>
+                        <h3>Restock Report</h3>
+                        <div className='rstck_btn-styles-div'></div>
+                        <div>
+                        <button className="rstck-btn">Respock Options</button>
+                        </div>
                     </div>
                     <div className='half-section'>
-                        <h3>Restock Inventory</h3>
+                        <h3>View Menu</h3>
                     </div>
                 </div>
 
@@ -31,12 +47,8 @@ const ManageAccess = () => {
                         <h3>Excess Report</h3>
                     </div>
                     <div className='half-section'>
-                        <h3>View Menu</h3>
+                        <h3>Sales Report </h3>
                     </div>
-                </div>
-                <div className='seasonal-item'>
-                <h3>Sales Report</h3>
-                <p></p>
                 </div>
 
             </div>
