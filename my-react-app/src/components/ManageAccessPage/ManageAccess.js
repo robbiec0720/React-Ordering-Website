@@ -28,10 +28,10 @@ const ManageAccess = () => {
                 {/* third block */}
                 <div className='blocks'>
                     <div className='half-section'>
-                        <h3>Access Report</h3>
+                        <h3>Excess Report</h3>
                     </div>
                     <div className='half-section'>
-                        <h3>Sales Report</h3>
+                        <h3>View Menu</h3>
                     </div>
                 </div>
                 <div className='seasonal-item'>
