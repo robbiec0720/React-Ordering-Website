@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react';
 import './EmployeePage.css';
 import FoodItem from './FoodItem';
 import { useNavigate } from "react-router-dom";
+
 const EmployeePage = () => {
     const navigate = useNavigate();
     const [foods, setFoods] = useState([]);
+    const [cart, setCart] = useState([]);
+
     useEffect(()=>{
         fetch('foods.json')
         .then(res => res.json())
@@ -14,7 +17,7 @@ const EmployeePage = () => {
     const handleClick = async () => {
         console.log("Order Button Clicked")
         try {
-          const response = await fetch('http://localhost:8081/order/submit?id=1&type=0&payment=20.00', {
+          const response = await fetch('https://project3-api.onrender.com/order/submit?id=1&type=0&payment=20.00', {
             method: 'POST',
             headers: {
               Accept: 'application/json',
@@ -33,12 +36,11 @@ const EmployeePage = () => {
         } 
     };
     
-    console.log(foods);
     return (
         <div className='employee-page-style'>
             <div className='sub-employee-one'>
                 {
-                    foods?.map(food => <FoodItem key={food.id} food={food}></FoodItem>)
+                    foods?.map(food => <FoodItem key={food.id} food={food} cart={cart} setCart={setCart}></FoodItem>)
                 }
             </div>
             <div className='sub-employee-two'>
