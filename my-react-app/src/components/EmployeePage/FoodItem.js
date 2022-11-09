@@ -6,8 +6,8 @@ const FoodItem = ({ food, cart, setCart }) => {
   // const url = 'https://project3-api.onrender.com/order/add/' + id.toString()
   //const encodedID = encodeURIComponent(id);
   const handleClick = async () => {
-    setCart([...cart, id])
-
+    setCart([...cart, food])
+    console.log(cart)
     // try {
     //   const response = await fetch(url, {
     //     method: 'GET',
