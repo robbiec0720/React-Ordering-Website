@@ -10,16 +10,18 @@ const InventoryButton = () => {
     const [sales, setSales] = React.useState()
     const [excess, setExcess] = React.useState()
     const [restock, setRestock] = React.useState()
+    const [start, setStart] = React.useState('2022-10-02')
+    const [end, setEnd] = React.useState('2022-10-25')
 
-    React.useEffect(() => {     
+    React.useEffect(() => {
         let tempInv = []
         let tempMenu = []
+        let tempRestock = []
         let tempSales = []
         let tempExcess = []
-        let tempRestock = []
-
-        // getting inventory through api
+        
         try {
+            // getting inventory through api
             fetch('https://project3-api.onrender.com/inventory', {
                 method: 'GET',
                 headers: {
@@ -58,7 +60,8 @@ const InventoryButton = () => {
             })
 
             // getting excess report through api
-            /* fetch('https://project3-api.onrender.com/excess/2022-10-10/2022-10-15', {
+            const apiExcess = 'https://project3-api.onrender.com/excess/' + start + '/2022-10-26'
+            fetch(apiExcess, {
                 method: 'GET',
                 headers: {
                     Accept: 'application/json',
@@ -74,8 +77,8 @@ const InventoryButton = () => {
                     }
                     setExcess(tempExcess)
                 })
-            }) */
-
+            })
+          
             // getting menu through api
             fetch('https://project3-api.onrender.com/menuItems', {
                 method: 'GET',
@@ -96,7 +99,8 @@ const InventoryButton = () => {
             })
 
             // getting sales report through api
-            /* fetch('https://project3-api.onrender.com/sales/2022-10-10/2022-10-15', {
+            const apiSales = 'https://project3-api.onrender.com/sales/' + start + '/' + end;
+            fetch(apiSales, {
                 method: 'GET',
                 headers: {
                     Accept: 'application/json',
@@ -112,7 +116,7 @@ const InventoryButton = () => {
                     }
                     setSales(tempSales)
                 })
-            }) */
+            })
         } catch (err) {
             console.log(err)
         }
@@ -129,18 +133,18 @@ const InventoryButton = () => {
     ]
 
     const menuCols = [
-        { field: 'food_id', headerName: 'ID', width: 50},
-        { field: 'item_name', headerName: 'Item Name', width: 250},
-        { field: 'ingredients', headerName: 'Ingredients', width: 200},
-        { field: 'cost', headerName: 'Cost', width: 75},
-        { field: 'item_type', headerName: 'Item Type', width: 100},
-        { field: 'is_seasonal', headerName: 'Seasonal?', width: 90}
+        { field: 'food_id', headerName: 'ID', width: 50 },
+        { field: 'item_name', headerName: 'Item Name', width: 250 },
+        { field: 'ingredients', headerName: 'Ingredients', width: 200 },
+        { field: 'cost', headerName: 'Cost', width: 75 },
+        { field: 'item_type', headerName: 'Item Type', width: 100 },
+        { field: 'is_seasonal', headerName: 'Seasonal?', width: 90 }
     ]
 
     const salesCols = [
-        { field: 'food_id', headerName: 'ID', width: 50},
-        { field: 'item_name', headerName: 'Item Name', width: 250},
-        { field: 'amount_sold', headerName: 'Units Sold', width: 75}
+        { field: 'food_id', headerName: 'ID', width: 50 },
+        { field: 'item_name', headerName: 'Item Name', width: 250 },
+        { field: 'amount_sold', headerName: 'Units Sold', width: 75 }
     ]
 
     const excessCols = [
