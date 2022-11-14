@@ -205,7 +205,8 @@ const excessReport = async (request, response) => {
 
   for (let i = 0; i < inv.length; i++) {
     if (amounts[i] <= 0.1 * inv[i].unit_quantity) {
-      excess.push(inv[i])
+      var per = Math.round(amounts[i] / inv[i].reorder_value * 10000) / 100
+      excess.push({"ingredient_id": inv[i].ingredient_id, "ingredient_name": inv[i].ingredient_name, "amount_sold": amounts[i], "reorder_value": inv[i].reorder_value, "percentage_sold": per})
     }
   }
 
