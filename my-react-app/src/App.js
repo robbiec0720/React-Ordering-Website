@@ -5,6 +5,7 @@ import Header from './components/commons/Header/Header';
 import EmployeePage from './components/EmployeePage/EmployeePage';
 import Auth from './components/Auth';
 import ManageAccess from './components/ManageAccessPage/ManageAccess';
+import InventoryTable from './components/ManagerTables/InventoryTable';
 
 function App() {
   return (
@@ -14,10 +15,10 @@ function App() {
         <Route path='/' element={<Auth></Auth>}></Route>
         <Route path='/employee' element={<EmployeePage></EmployeePage>}></Route>
         <Route path='/manageaccess' element={<ManageAccess></ManageAccess>}></Route>
+        <Route path='/inventory' element={<InventoryTable></InventoryTable>}></Route>
       </Routes>
       <Footer></Footer>
     </div>
   );
  
 }export default App;
-
