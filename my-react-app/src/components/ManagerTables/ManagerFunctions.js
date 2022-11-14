@@ -31,7 +31,6 @@ const InventoryButton = () => {
                 }
 
                 response.json().then(json => {
-                    console.log(json)
                     for (var key in json) {
                         tempInv.push(json[key])
                     }
@@ -51,7 +50,6 @@ const InventoryButton = () => {
                 }
 
                 response.json().then(json => {
-                    console.log(json)
                     for (var key in json) {
                         tempRestock.push(json[key])
                     }
@@ -71,7 +69,6 @@ const InventoryButton = () => {
                 }
 
                 response.json().then(json => {
-                    console.log(json)
                     for (var key in json) {
                         tempExcess.push(json[key])
                     }
@@ -91,7 +88,6 @@ const InventoryButton = () => {
                 }
 
                 response.json().then(json => {
-                    console.log(json)
                     for (var key in json) {
                         tempMenu.push(json[key])
                     }
@@ -111,7 +107,6 @@ const InventoryButton = () => {
                 }
 
                 response.json().then(json => {
-                    console.log(json)
                     for (var key in json) {
                         tempSales.push(json[key])
                     }
@@ -208,7 +203,7 @@ const InventoryButton = () => {
             <Popup trigger={<button className="popup-btn">Excess Report</button>} position="right top" contentStyle={{ width: '100%' }}>
                 <div className="popup">
                     <DataGrid
-                        getRowId={(row) => row.food_id}
+                        getRowId={(row) => row.ingredient_id}
                         rows={excess}
                         columns={excessCols}
                         pageSize={5}
@@ -221,7 +216,7 @@ const InventoryButton = () => {
             <Popup trigger={<button className="popup-btn">Restock Report</button>} position="right top" contentStyle={{ width: '100%' }}>
                 <div className="popup">
                     <DataGrid
-                        getRowId={(row) => row.food_id}
+                        getRowId={(row) => row.ingredient_id}
                         rows={restock}
                         columns={restockCols}
                         pageSize={5}
