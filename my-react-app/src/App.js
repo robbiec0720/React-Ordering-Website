@@ -5,7 +5,7 @@ import Header from './components/commons/Header/Header';
 import EmployeePage from './components/EmployeePage/EmployeePage';
 import Auth from './components/Auth';
 import ManageAccess from './components/ManageAccessPage/ManageAccess';
-import InventoryTable from './components/ManagerTables/ManagerFunctions';
+import ManagerFunctions from './components/ManagerTables/ManagerFunctions';
 
 function App() {
   return (

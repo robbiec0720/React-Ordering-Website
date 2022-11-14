@@ -2,3 +2,12 @@
     height: 400px;
     width: 75%;
 }
+
+.popup-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.popup-btn {
+    width: 150px;
+}
