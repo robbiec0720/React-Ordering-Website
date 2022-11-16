@@ -13,12 +13,10 @@ const Header = () => {
                 <div class="dropdown">
                     <span><AiOutlineMenu className='dropdown-icon' /></span>
                     <div class="dropdown-content">
-                        <p onClick={()=> navigate('/manageaccess')} className='manage-access'><small>Manage Access</small></p>
+                        <p onClick={()=> navigate('/manage-access')} className='manage-access'><small>Manage Access</small></p>
                     </div>
                 </div>
-                <button className='logout-btn'>Logout</button>
             </div>
-            
         </div>
     );
 };

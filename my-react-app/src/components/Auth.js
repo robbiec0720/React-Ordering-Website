@@ -7,6 +7,7 @@ const Auth = () =>{
     const navigate= useNavigate();
   return (
     <div id="Nav Page">
+      <div className="container">
       <form className="Auth-form">
         <div className="Auth-form-content">
           <h3 className="Auth-form-title">Sign In</h3>
@@ -39,6 +40,7 @@ const Auth = () =>{
       </div>
       <div className="nav-right">
       <img id="nav-page-main-image"src="CFASpicySandwich.png" alt="Chick-fil-a spicy sandwich"/>
+      </div>
       </div>
       </div>
       </div>

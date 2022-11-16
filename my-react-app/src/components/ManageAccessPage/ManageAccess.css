@@ -51,3 +51,15 @@
 ::-webkit-scrollbar-thumb:hover {
     background: #b30000;
 }
+.main-layout{
+    display: flex;
+    justify-content: space-between;
+}
+.sidebar{
+    width: 24%;
+}
+.main-content{
+    width: 70%;
+    margin-left: 3%;
+    margin-right: 3%;
+}
