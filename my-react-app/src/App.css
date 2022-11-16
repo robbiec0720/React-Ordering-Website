@@ -1,7 +1,8 @@
 .App {
   display: block;
 }
-.Auth-form{
+
+.Auth-form {
   display: flex;
   width: 100vw;
   overflow: hidden;
@@ -9,7 +10,8 @@
   padding-top: 5%;
   padding-bottom: 20%;
 }
-.login-input{
+
+.login-input {
   border: 1px solid #5B6770;
   border-radius: 6px;
   display: flex;
@@ -21,60 +23,110 @@
   color: #6D787E;
   margin-bottom: 2%
 }
-.submit-button{
+
+.submit-button {
   background: linear-gradient(180deg, #FF033B 0%, #CA0F1A 100%);
-    border-radius: 24px;
-    border: none;
-    color: #fff;
-    cursor: pointer;
-    display: block;
-    font-family: "apercu", sans-serif;
-    font-weight: 700;
-    line-height: 24px;
-    padding: 12px 24px;
-    text-transform: none;
-    width: -webkit-fit-content;
-    width: -moz-fit-content;
-    width: fit-content;
-    font-size: 14.0442px;
+  border-radius: 24px;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: block;
+  font-family: "apercu", sans-serif;
+  font-weight: 700;
+  line-height: 24px;
+  padding: 12px 24px;
+  text-transform: none;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  font-size: 14.0442px;
 }
 
 
-#nav-page-content{
-display:flex;
-align-items: center;
-margin-top: 0;
+#nav-page-content {
+  display: flex;
+  align-items: center;
+  margin-top: 0;
 }
-#nav-page-main-image{
+
+#nav-page-main-image {
   width: 100%;
 }
-.nav-left{
-  width:50vw;
+
+.nav-left {
+  width: 50vw;
 }
-.nav-right{
-  width:50vw;
+
+.nav-right {
+  width: 50vw;
 }
-.nav-page-button{
+
+#cart-item {
   align-items: center;
-    background: linear-gradient(-180deg,rgba(254,67,108,.99),rgba(221,0,49,.99) 49%,#c20726);
-    border-radius: 12.4838px;
-    border: none;
-    color: #fff;
-    display: flex;
-    font-size: 14.0442px;
-    font-weight: 700;
-    height: 55px;
-    justify-content: center;
-    line-height: 17px;
-    margin: 0 0 16px;
-    padding: 0;
-    text-decoration: none;
-    width: 100%;
-    cursor: pointer;
+  background-color: #CA0F1A;
+  border: 0;
+  border-radius: 100px;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: -apple-system, system-ui, system-ui, "Segoe UI", Roboto, "Helvetica Neue", "Fira Sans", Ubuntu, Oxygen, "Oxygen Sans", Cantarell, "Droid Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  justify-content: center;
+  line-height: 20px;
+  max-width: 480px;
+  min-height: 40px;
+  min-width: 0px;
+  overflow: hidden;
+  padding: 0px;
+  padding-left: 20px;
+  padding-right: 20px;
+  text-align: center;
+  touch-action: manipulation;
+  transition: background-color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, box-shadow 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+  user-select: none;
+  -webkit-user-select: none;
+  vertical-align: middle;
 }
+
+#cart-item:hover,
+#cart-item.nav-page-button { 
+  background-color: #16437E;
+  color: #ffffff;
+
 .chickFont{
   color: #E51636;
   font-family: apercu,sans-serif;
   font-size: 50px;
 }
 
+#cart-item:active {
+  background: #09223b;
+  color: rgb(255, 255, 255, .7);
+}
+
+#cart-item:disabled { 
+  cursor: not-allowed;
+  background: rgba(0, 0, 0, .08);
+  color: rgba(0, 0, 0, .3);
+}
+
+.nav-page-button {
+  align-items: center;
+  background: linear-gradient(-180deg, rgba(254, 67, 108, .99), rgba(221, 0, 49, .99) 49%, #c20726);
+  border-radius: 12.4838px;
+  border: none;
+  color: #fff;
+  display: flex;
+  font-size: 14.0442px;
+  font-weight: 700;
+  height: 55px;
+  justify-content: center;
+  line-height: 17px;
+  margin: 0 0 16px;
+  padding: 0;
+  text-decoration: none;
+  width: 100%;
+  cursor: pointer;
+}

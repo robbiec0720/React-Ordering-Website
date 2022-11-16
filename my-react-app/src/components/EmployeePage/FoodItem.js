@@ -2,30 +2,21 @@ import React from 'react';
 import './FoodItem.css';
 const FoodItem = ({ food, cart, setCart }) => {
   var condiments = [26, 27]
-  const { id, name, price, img } = food;
+  const { id, name, price, img, count } = food;
   // const url = 'https://project3-api.onrender.com/order/add/' + id.toString()
   //const encodedID = encodeURIComponent(id);
   const handleClick = async () => {
-    setCart([...cart, id])
+    // console.log(food.id)
 
-    // try {
-    //   const response = await fetch(url, {
-    //     method: 'GET',
-    //     headers: {
-    //       Accept: 'application/json',
-    //     },
-    //   });
-
-    //   if (!response.ok) {
-    //     throw new Error(`Error! status: ${response.status}`);
-    //   }
-
-    //   const result = await response.json();
-
-    //   console.log('result is: ', JSON.stringify(result, null, 4));
-    // } catch (err) {
-    //   console.log(err)
-    // }
+    if (cart.includes(food)) {
+      cart[cart.indexOf(food)]["count"] += 1;
+      setCart([...cart]);
+    }
+    else {
+      food.count += 1;
+      setCart([...cart, food]);
+    }
+    console.log(cart);
   };
 
   return (
