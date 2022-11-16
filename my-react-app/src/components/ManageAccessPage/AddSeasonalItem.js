@@ -3,7 +3,7 @@ import React from 'react';
 const AddSeasonalItem = () => {
     return (
         <div>
-            <h1>Seasonal Items</h1>
+            <h1>Add Seasonal Items</h1>
         </div>
     );
 };
