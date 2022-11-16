@@ -6,6 +6,7 @@ import EmployeePage from './components/EmployeePage/EmployeePage';
 import CustomerPage from './components/EmployeePage/CustomerPage';
 import Auth from './components/Auth';
 import ManageAccess from './components/ManageAccessPage/ManageAccess';
+import ManagerFunctions from './components/ManagerTables/ManagerFunctions';
 import Login from './components/Login/Login';
 import AddSeasonalItem from './components/ManageAccessPage/AddSeasonalItem';
 import AddToInventory from './components/ManageAccessPage/AddToInventory';
@@ -19,7 +20,6 @@ import SalesReport from './components/ManageAccessPage/SalesReport';
 import ViewInventory from './components/ManageAccessPage/ViewInventory';
 import ViewMenu from './components/ManageAccessPage/ViewMenu';
 
-
 function App() {
   return (
     <div className="App">
@@ -30,6 +30,7 @@ function App() {
         <Route path='/employee' element={<EmployeePage></EmployeePage>}></Route>
         <Route path='/customer' element={<CustomerPage></CustomerPage>}></Route>
         <Route path='/manageaccess' element={<ManageAccess></ManageAccess>}></Route>
+        <Route path='/inventory' element={<ManagerFunctions></ManagerFunctions>}></Route>
         <Route path='/login' element={<Login></Login>}></Route>
         {/* <Route path='/manage-access' element={<ManageAccess></ManageAccess>}></Route> */}
         <Route path='/manage-access' element={

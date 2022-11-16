@@ -1,0 +1,13 @@
+.popup {
+    height: 400px;
+    max-width: 100%;
+}
+
+.popup-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.popup-btn {
+    width: 150px;
+}

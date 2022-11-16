@@ -56,6 +56,57 @@ const displayMenu = (request, response) => {
   })
 }
 
+const salesReport = async (request, response) => {
+  const start = new Date(request.params.start).toISOString().slice(0, 10)
+  const end = new Date(request.params.end).toISOString().slice(0, 10)
+  const sales = []
+  const count = await new Promise((resolve) => {
+    pool.query("SELECT COUNT(*) FROM FoodItems;", (error, results) => {
+      if (error) {
+        console.log(error.stack)
+        return
+      }
+      resolve(parseInt(results.rows[0].count))
+    })
+  })
+  const amounts = new Array(count)
+  for(let i = 0; i < count; i++) {
+    amounts[i] = 0
+  }
+
+  const dates = await new Promise((resolve) => {
+    pool.query("SELECT * FROM date WHERE date BETWEEN $1 AND $2;", [start, end], (error, results) => {
+      if (error) {
+        console.log(error.stack)
+        return
+      }
+      resolve(results.rows)
+    })
+  })
+  
+  const menu = await new Promise((resolve) => {
+    pool.query("SELECT * FROM FoodItems ORDER BY food_id ASC;", (error, results) => {
+      if (error) {
+        console.log(error.stack)
+        return
+      }
+      resolve(results.rows)
+    })
+  })
+
+  for (let i = 0; i < dates.length; i++) {
+    for (let j = 0; j < dates[i].menu_amounts.length; j++) {
+      amounts[j] += dates[i].menu_amounts[j]
+    }
+  }
+
+  for (let i = 0; i < menu.length; i++) {
+    sales[i] = {"food_id": menu[i].food_id, "item_name": menu[i].item_name, "amount_sold": amounts[i]}
+  }
+
+  response.status(200).json(sales)
+}
+
 const displayOrder = async (request, response) => {
   const display = []
   for (var i = 0; i < order.length; i++) {
@@ -123,6 +174,9 @@ const excessReport = async (request, response) => {
     })
   })
   const amounts = new Array(count)
+  for(let i = 0; i < count; i++) {
+    amounts[i] = 0
+  }
 
   const dates = await new Promise((resolve) => {
     pool.query("SELECT * FROM date WHERE date BETWEEN $1 AND $2;", [start, end], (error, results) => {
@@ -135,12 +189,12 @@ const excessReport = async (request, response) => {
   })
 
   for (let i = 0; i < dates.length; i++) {
-    for (let j = 0; j < dates[i].ingredient_amounts; j++) {
+    for (let j = 0; j < dates[i].ingredient_amounts.length; j++) {
       amounts[j] += dates[i].ingredient_amounts[j]
     }
   }
   const inv = await new Promise((resolve) => {
-    pool.query("SELECT * FROM Inventory;", (error, results) => {
+    pool.query("SELECT * FROM Inventory ORDER BY ingredient_id ASC;", (error, results) => {
       if (error) {
         console.log(error.stack)
         return
@@ -151,7 +205,8 @@ const excessReport = async (request, response) => {
 
   for (let i = 0; i < inv.length; i++) {
     if (amounts[i] <= 0.1 * inv[i].unit_quantity) {
-      excess.push(inv[i])
+      var per = Math.round(amounts[i] / inv[i].reorder_value * 10000) / 100
+      excess.push({"ingredient_id": inv[i].ingredient_id, "ingredient_name": inv[i].ingredient_name, "amount_sold": amounts[i], "reorder_value": inv[i].reorder_value, "percentage_sold": per})
     }
   }
 
@@ -479,6 +534,7 @@ module.exports = {
   getSeasonalItems,
   getItemName,
   displayMenu,
+  salesReport,
   excessReport,
   addIngredient,
   editTable,
