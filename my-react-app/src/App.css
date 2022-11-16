@@ -6,6 +6,9 @@
   display: flex;
   width: 100vw;
   overflow: hidden;
+  justify-content: center;
+  padding-top: 5%;
+  padding-bottom: 20%;
 }
 
 .login-input {
@@ -91,6 +94,11 @@
 #cart-item.nav-page-button { 
   background-color: #16437E;
   color: #ffffff;
+
+.chickFont{
+  color: #E51636;
+  font-family: apercu,sans-serif;
+  font-size: 50px;
 }
 
 #cart-item:active {

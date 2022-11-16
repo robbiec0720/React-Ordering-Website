@@ -3,8 +3,8 @@ import './Footer.css';
 const Footer = () => {
     return (
         <footer className='footer-style'>
-            <h5>ChickFil</h5>
-            <p><small>All rights reserved by ChickFil © 2022</small></p>
+            <h5>ChickFilA</h5>
+            <p><small>All picture rights reserved by ChickFilA, the rest is Team 1 © 2022</small></p>
         </footer>
     );
 };
