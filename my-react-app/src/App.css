@@ -72,5 +72,9 @@ margin-top: 0;
     width: 100%;
     cursor: pointer;
 }
-
+.chickFont{
+  color: #E51636;
+  font-family: apercu,sans-serif;
+  font-size: 50px;
+}
 

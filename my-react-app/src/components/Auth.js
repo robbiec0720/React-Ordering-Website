@@ -11,11 +11,12 @@ const Auth = () =>{
     
       <div id="nav-page-content">
         <div className="nav-left">
-        <h1>Welcome to Chick-fil-a</h1>
+        <h1 class="chickFont">Welcome to Chick-fil-a</h1>
         <h1>Get our Spicy Chicken Sandwich</h1>
         <h3>Subheading with some kind of company announcement. This should be two or more lines.</h3>
-        <button className="nav-page-button" onClick={() => navigate('/employee')}>Browse Menu</button>
-      <button className="nav-page-button" onClick={() => navigate('/employee')}>Submit an Order</button>
+        <button className="nav-page-button" onClick={() => navigate('/customer')}>Browse Menu</button>
+      <button className="nav-page-button" onClick={() => navigate('/customer')}>Submit an Order</button>
+      
       </div>
       <div className="nav-right">
       <img id="nav-page-main-image"src="CFASpicySandwich.png" alt="Chick-fil-a spicy sandwich"/>
