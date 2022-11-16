@@ -5,6 +5,7 @@ import './Table.css'
 import { DataGrid } from '@mui/x-data-grid';
 
 const InventoryButton = () => {
+    // state variables
     const [inv, setInv] = React.useState()
     const [menu, setMenu] = React.useState()
     const [sales, setSales] = React.useState()
@@ -19,7 +20,7 @@ const InventoryButton = () => {
         let tempRestock = []
         let tempSales = []
         let tempExcess = []
-        
+
         try {
             // getting inventory through api
             fetch('https://project3-api.onrender.com/inventory', {
@@ -78,7 +79,7 @@ const InventoryButton = () => {
                     setExcess(tempExcess)
                 })
             })
-          
+
             // getting menu through api
             fetch('https://project3-api.onrender.com/menuItems', {
                 method: 'GET',
@@ -120,9 +121,76 @@ const InventoryButton = () => {
         } catch (err) {
             console.log(err)
         }
-        
-    }, [])
 
+    }, [start, end])
+
+    // form to get start date input
+    class StartForm extends React.Component {
+        constructor(props) {
+            super(props)
+            this.state = { value: '' }
+
+            this.handleChange = this.handleChange.bind(this)
+            this.handleSubmit = this.handleSubmit.bind(this)
+        }
+
+        handleChange(event) {
+            this.setState({ value: event.target.value})
+        }
+
+        handleSubmit(event) {  
+            event.preventDefault();     
+            console.log(this.state.value)
+            setStart(this.state.value)          
+        }
+
+        render() {
+            return (
+                <form onSubmit={this.handleSubmit}>
+                    <label>
+                        Start Date (YYYY-MM-DD):
+                        <input type="text" value={this.state.value} onChange={this.handleChange} />
+                    </label>
+                    <input type="submit" value="Submit" />
+                </form>
+            )
+        }
+    }
+
+    // form to get end date input
+    class EndForm extends React.Component {
+        constructor(props) {
+            super(props)
+            this.state = { value: '' }
+
+            this.handleChange = this.handleChange.bind(this)
+            this.handleSubmit = this.handleSubmit.bind(this)
+        }
+
+        handleChange(event) {
+            this.setState({ value: event.target.value})
+        }
+
+        handleSubmit(event) {
+            event.preventDefault();
+            console.log(this.state.value)
+            setEnd(this.state.value)
+        }
+
+        render() {
+            return (
+                <form onSubmit={this.handleSubmit}>
+                    <label>
+                        End Date (YYYY-MM-DD):
+                        <input type="text" value={this.state.value} onChange={this.handleChange} />
+                    </label>
+                    <input type="submit" value="Submit" />
+                </form>
+            )
+        }
+    }
+
+    // columns for view inventory and restock table
     const invCols = [
         { field: 'ingredient_id', headerName: 'Ingredient ID', width: 110 },
         { field: 'ingredient_name', headerName: 'Ingredient Name', width: 200, sortable: false },
@@ -132,21 +200,24 @@ const InventoryButton = () => {
         { field: 'cost', headerName: 'Cost', width: 75 }
     ]
 
+    // columns for view menu table
     const menuCols = [
         { field: 'food_id', headerName: 'ID', width: 50 },
-        { field: 'item_name', headerName: 'Item Name', width: 250 },
-        { field: 'ingredients', headerName: 'Ingredients', width: 200 },
+        { field: 'item_name', headerName: 'Item Name', width: 250, sortable: false },
+        { field: 'ingredients', headerName: 'Ingredients', width: 200, sortable: false },
         { field: 'cost', headerName: 'Cost', width: 75 },
         { field: 'item_type', headerName: 'Item Type', width: 100 },
         { field: 'is_seasonal', headerName: 'Seasonal?', width: 90 }
     ]
 
+    // columns for sales report table
     const salesCols = [
         { field: 'food_id', headerName: 'ID', width: 50 },
-        { field: 'item_name', headerName: 'Item Name', width: 250 },
-        { field: 'amount_sold', headerName: 'Units Sold', width: 75 }
+        { field: 'item_name', headerName: 'Item Name', width: 250, sortable: false },
+        { field: 'amount_sold', headerName: 'Units Sold', width: 100 }
     ]
 
+    // columns for excess report table
     const excessCols = [
         { field: 'ingredient_id', headerName: 'Ingredient ID', width: 110 },
         { field: 'ingredient_name', headerName: 'Ingredient Name', width: 200, sortable: false },
@@ -155,17 +226,9 @@ const InventoryButton = () => {
         { field: 'precentage_sold', headerName: '% Sold', width: 75 }
     ]
 
-    const restockCols = [
-        { field: 'ingredient_id', headerName: 'Ingredient ID', width: 110 },
-        { field: 'ingredient_name', headerName: 'Ingredient Name', width: 200, sortable: false },
-        { field: 'unit_quantity', headerName: 'Unit Quantity', width: 130 },
-        { field: 'order_threshold', headerName: 'Order Threshold', width: 130 },
-        { field: 'reorder_value', headerName: 'Reorder Value', width: 130 }
-    ]
-
     return (
         <div className="popup-wrapper">
-            <Popup trigger={<button className="popup-btn">View Inventory</button>} position="right top" contentStyle={{ width: '100%' }}>
+            <Popup trigger={<button className="popup-btn">View Inventory</button>} position="right top" contentStyle={{ width: '57%' }}>
                 <div className="popup">
                     <DataGrid
                         getRowId={(row) => row.ingredient_id}
@@ -178,7 +241,7 @@ const InventoryButton = () => {
                     />
                 </div>
             </Popup>
-            <Popup trigger={<button className="popup-btn">View Menu</button>} position="right top" contentStyle={{ width: '100%' }}>
+            <Popup trigger={<button className="popup-btn">View Menu</button>} position="right top" contentStyle={{ width: '57%' }}>
                 <div className="popup">
                     <DataGrid
                         getRowId={(row) => row.food_id}
@@ -191,7 +254,7 @@ const InventoryButton = () => {
                     />
                 </div>
             </Popup>
-            <Popup trigger={<button className="popup-btn">Sales Report</button>} position="right top" contentStyle={{ width: '100%' }}>
+            <Popup trigger={<button className="popup-btn">Sales Report</button>} position="right top" contentStyle={{ width: '30%' }}>
                 <div className="popup">
                     <DataGrid
                         getRowId={(row) => row.food_id}
@@ -204,7 +267,7 @@ const InventoryButton = () => {
                     />
                 </div>
             </Popup>
-            <Popup trigger={<button className="popup-btn">Excess Report</button>} position="right top" contentStyle={{ width: '100%' }}>
+            <Popup trigger={<button className="popup-btn">Excess Report</button>} position="right top" contentStyle={{ width: '48%' }}>
                 <div className="popup">
                     <DataGrid
                         getRowId={(row) => row.ingredient_id}
@@ -217,17 +280,29 @@ const InventoryButton = () => {
                     />
                 </div>
             </Popup>
-            <Popup trigger={<button className="popup-btn">Restock Report</button>} position="right top" contentStyle={{ width: '100%' }}>
+            <Popup trigger={<button className="popup-btn">Restock Report</button>} position="right top" contentStyle={{ width: '57%' }}>
                 <div className="popup">
                     <DataGrid
                         getRowId={(row) => row.ingredient_id}
                         rows={restock}
-                        columns={restockCols}
+                        columns={invCols}
                         pageSize={5}
                         rowsPerPageOptions={[5]}
                         checkboxSelection={false}
                         disableColumnMenu={true}
                     />
+                </div>
+            </Popup>
+            <Popup trigger={<button className="popup-btn">Change Dates</button>} position="right top" contentStyle={{ width: '55%', height: 50 }}>
+                <div className="popup">
+                    <StartForm></StartForm>
+                    <EndForm></EndForm>
+                </div>
+            </Popup>
+            <Popup trigger={<button className="popup-btn">View Dates</button>} position="right top" contentStyle={{ width: '30%', height: 75 }}>
+                <div className="popup">
+                    <p>Start Date:&nbsp;{start}</p>
+                    <p>End Date:&nbsp;{end}</p>
                 </div>
             </Popup>
         </div>
