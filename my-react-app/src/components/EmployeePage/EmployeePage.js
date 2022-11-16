@@ -7,6 +7,7 @@ const EmployeePage = () => {
     const navigate = useNavigate();
     const [foods, setFoods] = useState([]);
     const [cart, setCart] = useState([]);
+    const [totalPrice, setTotal] = useState([]);
 
     useEffect(() => {
         fetch('foods.json')
@@ -15,6 +16,18 @@ const EmployeePage = () => {
 
 
     }, [])
+
+    const clearCart = () => setCart([]);
+
+    const removeFromCart = item => {
+        console.log(cart);
+        console.log(cart.indexOf(item));
+        setCart(cart => cart.filter((_, i) => cart[i] !== item));
+    }
+
+    const getTotalCost = (productList) => {
+        return productList.reduce((totalCost, { cost: itemCost }) => totalCost + parseFloat(itemCost), 0);
+    };
 
     const handleClick = async () => {
         console.log("Order Button Clicked")
@@ -33,6 +46,7 @@ const EmployeePage = () => {
             const result = await response.json();
 
             console.log('result is: ', JSON.stringify(result, null, 4));
+
         } catch (err) {
             console.log(err)
         }
@@ -51,19 +65,23 @@ const EmployeePage = () => {
                     <h4>Total Items</h4>
                     {cart.map((product) => {
                         return (
-                            <div className='total-items'>
-                                <p className='item-name'>{product.name}</p>
+                            <div key={product.id} className='total-items'>
+                                <button  id="cart-item" className='item-name' onClick={() => removeFromCart(product)}>{product.name} ${product.price}</button>
                             </div>
                         )
                     })}
 
+
                     <div className='total-items'>
-                        <h4>Total Price: $15.99</h4>
+                        <h4>Total Price: ${Math.round(cart.reduce((total, item) => total + parseFloat(item.price), 0) * 100 / 100)}</h4>
                     </div>
+
+
                 </div>
                 <div className='submit-div'>
                     <button className='logout-btn' onClick={handleClick}>Submit Order</button>
                     <button className='logout-btn'>Edit Order</button>
+                    <button className='logout-btn' onClick={clearCart}>Clear Order</button>
                     <button className='logout-btn' onClick={() => navigate('../')}>Logout</button>
                 </div>
             </div>

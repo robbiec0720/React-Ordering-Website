@@ -6,26 +6,11 @@ const FoodItem = ({ food, cart, setCart }) => {
   // const url = 'https://project3-api.onrender.com/order/add/' + id.toString()
   //const encodedID = encodeURIComponent(id);
   const handleClick = async () => {
+    // console.log(food.id)
+
     setCart([...cart, food])
     console.log(cart)
-    // try {
-    //   const response = await fetch(url, {
-    //     method: 'GET',
-    //     headers: {
-    //       Accept: 'application/json',
-    //     },
-    //   });
 
-    //   if (!response.ok) {
-    //     throw new Error(`Error! status: ${response.status}`);
-    //   }
-
-    //   const result = await response.json();
-
-    //   console.log('result is: ', JSON.stringify(result, null, 4));
-    // } catch (err) {
-    //   console.log(err)
-    // }
   };
 
   return (
