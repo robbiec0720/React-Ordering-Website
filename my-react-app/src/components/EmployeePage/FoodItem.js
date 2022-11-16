@@ -15,9 +15,8 @@ const FoodItem = ({ food, cart, setCart }) => {
     else {
       food.count += 1;
       setCart([...cart, food]);
-      console.log(cart);
     }
-
+    console.log(cart);
   };
 
   return (

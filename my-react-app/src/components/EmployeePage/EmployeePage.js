@@ -17,17 +17,39 @@ const EmployeePage = () => {
 
     }, [])
 
-    const clearCart = () => setCart([]);
-
-    const removeFromCart = item => {
-        console.log(cart);
-        console.log(cart.indexOf(item));
-        setCart(cart => cart.filter((_, i) => cart[i] !== item));
+    function round(value, decimals) {
+        return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
     }
 
-    const getTotalCost = (productList) => {
-        return productList.reduce((totalCost, { cost: itemCost }) => totalCost + parseFloat(itemCost), 0);
-    };
+    const clearCart = () => {
+        cart.forEach((element) => element["count"] = 0)
+        setCart([]);
+    }
+
+    const removeFromCart = item => {
+        console.log(cart.indexOf(item));
+        if (item["count"] >= 1) {
+            item["count"]--;
+            setCart([...cart]);
+        }
+        if (item["count"] == 0) {
+            console.log(item == cart[0]);
+            setCart(cart => cart.filter((_, i) => cart[i] !== item));
+        }
+
+        console.log(cart);
+    }
+
+    // const getTotalCost = (productList) => {
+    //     let sum = 0;
+    //     console.log("AAAA" + productList[0]);
+    //     productList.forEach(element => {
+    //         sum += (Math.round(parseFloat(element["cost"]) * 100) / 100) * parseInt(element["count"]);
+    //     });
+    //     console.log(sum);
+    //     return sum;
+    //     // return productList.reduce((totalCost, { cost: itemCost }) => totalCost + parseFloat(itemCost), 0);
+    // };
 
     const handleClick = async () => {
         console.log("Order Button Clicked")
@@ -66,14 +88,25 @@ const EmployeePage = () => {
                     {cart.map((product) => {
                         return (
                             <div key={product.id} className='total-items'>
-                                <button  id="cart-item" className='item-name' onClick={() => removeFromCart(product)}>{product.name} ${product.price} x{product.count}</button>
+                                <table id="item-table">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <button id="cart-item" className='item-name' onClick={() => removeFromCart(product)}>{product.name}  </button>
+                                            </td>
+                                            <td><p id="cart-descriptor">${round(parseFloat(product.price) * parseInt(product.count), 2)}</p></td>
+                                            <td><p id="cart-descriptor">x{product.count}</p></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         )
                     })}
 
 
                     <div className='total-items'>
-                        <h4>Total Price: ${cart.reduce((total, item) => total + Math.round(parseFloat(item.price) * 100) / 100, 0)}</h4>
+                        <h4>Total Price: ${round(cart.reduce((total, item) => total + parseInt(item.count) * parseFloat(item.price), 0), 2)}</h4>
+                        {/* <h4>Total Price: ${getTotalCost(cart)}</h4> */}
                     </div>
 
 
