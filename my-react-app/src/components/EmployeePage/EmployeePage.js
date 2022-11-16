@@ -66,14 +66,14 @@ const EmployeePage = () => {
                     {cart.map((product) => {
                         return (
                             <div key={product.id} className='total-items'>
-                                <button  id="cart-item" className='item-name' onClick={() => removeFromCart(product)}>{product.name} ${product.price}</button>
+                                <button  id="cart-item" className='item-name' onClick={() => removeFromCart(product)}>{product.name} ${product.price} x{product.count}</button>
                             </div>
                         )
                     })}
 
 
                     <div className='total-items'>
-                        <h4>Total Price: ${Math.round(cart.reduce((total, item) => total + parseFloat(item.price), 0) * 100 / 100)}</h4>
+                        <h4>Total Price: ${cart.reduce((total, item) => total + Math.round(parseFloat(item.price) * 100) / 100, 0)}</h4>
                     </div>
 
 

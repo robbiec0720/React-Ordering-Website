@@ -2,14 +2,21 @@ import React from 'react';
 import './FoodItem.css';
 const FoodItem = ({ food, cart, setCart }) => {
   var condiments = [26, 27]
-  const { id, name, price, img } = food;
+  const { id, name, price, img, count } = food;
   // const url = 'https://project3-api.onrender.com/order/add/' + id.toString()
   //const encodedID = encodeURIComponent(id);
   const handleClick = async () => {
     // console.log(food.id)
 
-    setCart([...cart, food])
-    console.log(cart)
+    if (cart.includes(food)) {
+      cart[cart.indexOf(food)]["count"] += 1;
+      setCart([...cart]);
+    }
+    else {
+      food.count += 1;
+      setCart([...cart, food]);
+      console.log(cart);
+    }
 
   };
 
