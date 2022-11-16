@@ -8,31 +8,10 @@ const Auth = () =>{
   return (
     <div id="Nav Page">
       <div className="container">
-      <form className="Auth-form">
-        <div className="Auth-form-content">
-          <h3 className="Auth-form-title">Sign In</h3>
-          <div className="form-group">
-            <input
-              className="login-input"
-              placeholder="Your name"
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="password"
-              className="login-input"
-              placeholder="Password"
-            />
-          </div>
-          <div className="">
-            <button type="submit" className="submit-button" onClick={() => navigate('/employee')}>
-              Submit
-            </button>
-          </div>
-        </div>
-      </form>
+    
       <div id="nav-page-content">
         <div className="nav-left">
+        <h1>Welcome to Chick-fil-a</h1>
         <h1>Get our Spicy Chicken Sandwich</h1>
         <h3>Subheading with some kind of company announcement. This should be two or more lines.</h3>
         <button className="nav-page-button" onClick={() => navigate('/employee')}>Browse Menu</button>

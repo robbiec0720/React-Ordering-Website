@@ -5,6 +5,9 @@
   display: flex;
   width: 100vw;
   overflow: hidden;
+  justify-content: center;
+  padding-top: 5%;
+  padding-bottom: 20%;
 }
 .login-input{
   border: 1px solid #5B6770;
