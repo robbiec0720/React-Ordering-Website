@@ -14,6 +14,31 @@
     grid-gap: 8px;
 
 }
+
+#cart-descriptor {
+    align-items: center;
+    background-color: #16437E;
+    border: 2px solid #CA0F1A;
+    border-radius: 100px;
+    box-sizing: border-box;
+    color: #ffffff;
+    display: inline-flex;
+    font-family: -apple-system, system-ui, system-ui, "Segoe UI", Roboto, "Helvetica Neue", "Fira Sans", Ubuntu, Oxygen, "Oxygen Sans", Cantarell, "Droid Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Lucida Grande", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    justify-content: center;
+    line-height: 20px;
+    max-width: 480px;
+    min-height: 40px;
+    min-width: 0px;
+    overflow: hidden;
+    padding: 0px;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-align: center;
+    vertical-align: middle;
+  }
+
 .sub-employee-two{
     width: 34%;
     
@@ -23,12 +48,16 @@
 }
 .total-items{
     text-align: start;
-    padding: 10px;
+    padding: 2px;
 }
 .item-name{
     font-size: 14px;
-
 }
+
+#item-table {
+    padding: 0px;
+}
+
 .submit-div{
     display: flex;
     justify-content: space-between;
