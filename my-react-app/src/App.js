@@ -3,8 +3,10 @@ import './App.css';
 import Footer from './components/commons/Footer/Footer';
 import Header from './components/commons/Header/Header';
 import EmployeePage from './components/EmployeePage/EmployeePage';
+import CustomerPage from './components/EmployeePage/CustomerPage';
 import Auth from './components/Auth';
 import ManageAccess from './components/ManageAccessPage/ManageAccess';
+import Login from './components/Login/Login';
 import AddSeasonalItem from './components/ManageAccessPage/AddSeasonalItem';
 import AddToInventory from './components/ManageAccessPage/AddToInventory';
 import DeleteInventory from './components/ManageAccessPage/DeleteInventory';
@@ -26,6 +28,9 @@ function App() {
         <Route path='/' element={<Auth></Auth>}></Route>
         {/* <Route path='/' element={<EmployeePage></EmployeePage>}></Route> */}
         <Route path='/employee' element={<EmployeePage></EmployeePage>}></Route>
+        <Route path='/customer' element={<CustomerPage></CustomerPage>}></Route>
+        <Route path='/manageaccess' element={<ManageAccess></ManageAccess>}></Route>
+        <Route path='/login' element={<Login></Login>}></Route>
         {/* <Route path='/manage-access' element={<ManageAccess></ManageAccess>}></Route> */}
         <Route path='/manage-access' element={
            <ManageAccess></ManageAccess>

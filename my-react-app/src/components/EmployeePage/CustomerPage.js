@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 //import Popup from 'reactjs-popup';
 
 
-const EmployeePage = () => {
+const CustomerPage = () => {
     const navigate = useNavigate();
     const [foods, setFoods] = useState([]);
     const [cart, setCart] = useState([]);
@@ -60,10 +60,10 @@ const EmployeePage = () => {
                 <div className='submit-div'>
                     <button className='logout-btn' onClick = {handleClick}>Submit Order</button>
                     <button className='logout-btn'>Edit Order</button>
-                    <button className='logout-btn' onClick={() => navigate('../')}>Logout</button>
+                    <button className='logout-btn' onClick={() => navigate('../')}>Deliver</button>
                 </div>
             </div>
         </div>
     );
 };
-export default EmployeePage;
+export default CustomerPage;
