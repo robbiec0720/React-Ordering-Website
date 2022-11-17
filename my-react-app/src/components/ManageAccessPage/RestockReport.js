@@ -42,7 +42,7 @@ const RestockOptions = () => {
     }, [])
 
     return (
-        <div>
+        <div className="table">
             <h1>Restock Report</h1>
             <DataGrid
                 getRowId={(row) => row.ingredient_id}

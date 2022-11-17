@@ -270,26 +270,43 @@ const addFoodItem = async (request, response) => {
     })
 }
 
-const editTable = (request, response) => {
+const editTable = async (request, response) => {
   const params = request.query.array.split(',')
   const table = String(params[0])
   const id = parseInt(params[1])
   const col = String(params[2])
   const val = params[3]
   const idCol = String(params[4])
-  const msg = editItem(table, id, col, val, idCol)
+  const msg = await editItem(table, id, col, val, idCol)
   response.status(200).json(msg)
 }
 
-function editItem(table, id, col, val, idCol) {
+async function editItem(table, id, col, val, idCol) {
+  // checking if item exists
+  const exists = "SELECT COUNT(*) FROM " + table + " WHERE " + idCol + " = " + id + ";"
+  const count = await new Promise((resolve) => {
+    pool.query(exists, (error, results) => {
+      if (error) {
+        console.log(error.stack)
+        return "Error"
+      }
+      resolve(parseInt(results.rows[0].count))
+    })
+  })
+  
+  // if id does not exist, return error message
+  if(count == 0) {
+    return (table + " does not have an item with ID: " + id)
+  }
+
   const stmt = "UPDATE " + table + " SET " + col + " = \'" + val + "'\ WHERE " + idCol + " = " + id + ";"
   pool.query(stmt, (error) => {
     if (error) {
       console.log(error.stack)
-      return "Update Failed"
+      return "Error"
     }
-    return ("Updated item from " + table + " with ID:" + id)
   })
+  return ("Updated item from " + table + " with ID: " + id)
 }
 
 const login = async (request, response) => {
