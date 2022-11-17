@@ -13,8 +13,6 @@ const EmployeePage = () => {
         fetch('foods.json')
             .then(res => res.json())
             .then(result => setFoods(result));
-
-
     }, [])
 
     function round(value, decimals) {
@@ -110,14 +108,10 @@ const EmployeePage = () => {
                             </div>
                         )
                     })}
-
-
                     <div className='total-items'>
                         <h4>Total Price: ${round(cart.reduce((total, item) => total + parseInt(item.count) * parseFloat(item.price), 0), 2)}</h4>
                         {/* <h4>Total Price: ${getTotalCost(cart)}</h4> */}
                     </div>
-
-
                 </div>
                 <div className='submit-div'>
                     <button className='logout-btn' onClick={handleClick}>Submit Order</button>

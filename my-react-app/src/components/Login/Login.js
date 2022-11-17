@@ -8,7 +8,7 @@ const Login = () => {
     return (
     <form className="Auth-form">
         <div className="Auth-form-content">
-  <h3 className="Auth-form-title">If you're an employee or a Manager: Sign In</h3>
+  <h3 className="Auth-form-title">If you're an Employee or a Manager: Sign In</h3>
   <div className="form-group">
     <input
       className="login-input"
