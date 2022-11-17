@@ -1,9 +1,9 @@
-import * as React from 'react';
+import React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 
 
 const ViewInventory = () => {
-    // columns for view inventory and restock table
+    // columns for view inventory
     const invCols = [
         { field: 'ingredient_id', headerName: 'Ingredient ID', width: 110 },
         { field: 'ingredient_name', headerName: 'Ingredient Name', width: 200, sortable: false },
@@ -19,7 +19,6 @@ const ViewInventory = () => {
 
         try {
             // getting inventory through api
-            console.log('test')
             fetch('https://project3-api.onrender.com/inventory', {
                 method: 'GET',
                 headers: {
@@ -43,11 +42,11 @@ const ViewInventory = () => {
     }, [])
 
     return (
-        <div>
+        <div className='table'>
             <h1>View Inventory</h1>
             <DataGrid
                 getRowId={(row) => row.ingredient_id}
-                rows={inv}
+                rows={inv ? inv : []}
                 columns={invCols}
                 pageSize={5}
                 rowsPerPageOptions={[5]}
