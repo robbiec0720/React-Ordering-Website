@@ -14,7 +14,6 @@ const Header = () => {
                     <span><AiOutlineMenu className='dropdown-icon' /></span>
                     <div class="dropdown-content">
                         <p onClick={()=> navigate('/Login')} className='manage-access'><small>Login</small></p>
-                        <p onClick={()=> navigate('/manageaccess')} className='manage-access'><small>Manage Access</small></p>
                         <p onClick={()=> navigate('/manage-access')} className='manage-access'><small>Manage Access</small></p>
                     </div>
                    

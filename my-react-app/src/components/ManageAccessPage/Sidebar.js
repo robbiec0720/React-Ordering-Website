@@ -54,11 +54,11 @@ const Sidebar = () => {
                         itemId: '/manage-access/view-menu',
                     },
                     {
-                        title: 'Restock Report',
-                        itemId: '/manage-access/restock-options',
+                        title: 'Restock Options',
+                        itemId: '/manage-access',
                         subNav: [
                             {
-                                title: 'Restock Options',
+                                title: 'Restock Report',
                                 itemId: '/manage-access/restock-options',
                             },
                         ],

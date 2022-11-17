@@ -29,13 +29,9 @@ function App() {
         {/* <Route path='/' element={<EmployeePage></EmployeePage>}></Route> */}
         <Route path='/employee' element={<EmployeePage></EmployeePage>}></Route>
         <Route path='/customer' element={<CustomerPage></CustomerPage>}></Route>
-        <Route path='/manageaccess' element={<ManageAccess></ManageAccess>}></Route>
         <Route path='/inventory' element={<ManagerFunctions></ManagerFunctions>}></Route>
         <Route path='/login' element={<Login></Login>}></Route>
-        {/* <Route path='/manage-access' element={<ManageAccess></ManageAccess>}></Route> */}
-        <Route path='/manage-access' element={
-           <ManageAccess></ManageAccess>
-        }>
+        <Route path='/manage-access' element={<ManageAccess></ManageAccess>}>
           <Route index element={<ViewInventory></ViewInventory>}></Route>
           <Route path='/manage-access/edit-menu' element={<EditMenu></EditMenu>}></Route>
           <Route path='/manage-access/delete-Items' element={<DeleteItems></DeleteItems>}></Route>
