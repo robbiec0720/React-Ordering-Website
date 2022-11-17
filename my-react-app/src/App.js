@@ -15,7 +15,7 @@ import DeleteItems from './components/ManageAccessPage/DeleteItems';
 import EditInventory from './components/ManageAccessPage/EditInventory';
 import EditMenu from './components/ManageAccessPage/EditMenu';
 import ExcessReport from './components/ManageAccessPage/ExcessReport';
-import RestockOptions from './components/ManageAccessPage/RestockOptions';
+import RestockReport from './components/ManageAccessPage/RestockReport';
 import SalesReport from './components/ManageAccessPage/SalesReport';
 import ViewInventory from './components/ManageAccessPage/ViewInventory';
 import ViewMenu from './components/ManageAccessPage/ViewMenu';
@@ -31,8 +31,10 @@ function App() {
         <Route path='/customer' element={<CustomerPage></CustomerPage>}></Route>
         <Route path='/inventory' element={<ManagerFunctions></ManagerFunctions>}></Route>
         <Route path='/login' element={<Login></Login>}></Route>
-        <Route path='/manage-access' element={<ManageAccess></ManageAccess>}>
-          <Route index element={<ViewInventory></ViewInventory>}></Route>
+        <Route path='/manage-access' element={<ManageAccess></ManageAccess>}>  
+          <Route path='/manage-access/restock-options' element={<div></div>}></Route>
+          <Route path='/manage-access/edit-functions' element={<div></div>}></Route>
+          <Route path='/manage-access/view-inventory' element={<ViewInventory></ViewInventory>}></Route>
           <Route path='/manage-access/edit-menu' element={<EditMenu></EditMenu>}></Route>
           <Route path='/manage-access/delete-Items' element={<DeleteItems></DeleteItems>}></Route>
           <Route path='/manage-access/add-seasonal-items' element={<AddSeasonalItem></AddSeasonalItem>}></Route>
@@ -40,7 +42,7 @@ function App() {
           <Route path='/manage-access/add-to-inventory' element={<AddToInventory></AddToInventory>}></Route>
           <Route path='/manage-access/delete-inventory' element={<DeleteInventory></DeleteInventory>}></Route>
           <Route path='/manage-access/view-menu' element={<ViewMenu></ViewMenu>}></Route>
-          <Route path='/manage-access/restock-options' element={<RestockOptions></RestockOptions>}></Route>
+          <Route path='/manage-access/restock-report' element={<RestockReport></RestockReport>}></Route>
           <Route path='/manage-access/excess-report' element={<ExcessReport></ExcessReport>}></Route>
           <Route path='/manage-access/sales-report' element={<SalesReport></SalesReport>}></Route>
         </Route>

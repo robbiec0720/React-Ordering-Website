@@ -2,6 +2,7 @@ import React from 'react';
 import {Navigation} from 'react-minimal-side-navigation';
 import 'react-minimal-side-navigation/lib/ReactMinimalSideNavigation.css';
 import { useNavigate } from 'react-router-dom';
+
 const Sidebar = () => {
     const navigate = useNavigate()
     return (
@@ -14,12 +15,16 @@ const Sidebar = () => {
                 }}
                 items={[
                     {
-                        title: 'View Inventories',
-                        itemId: '/manage-access',
+                        title: 'View Inventory',
+                        itemId: '/manage-access/view-inventory',
                     },
                     {
-                        title: 'Edit Inventories',
-                        itemId: '/manage-access',
+                        title: 'View Menu',
+                        itemId: '/manage-access/view-menu',
+                    },
+                    {
+                        title: 'Edit Functions',
+                        itemId: '/manage-access/edit-functions',
                         
                         subNav: [
                             {
@@ -28,12 +33,12 @@ const Sidebar = () => {
                                 to: '/manage-access/edit-menu'
                             },
                             {
-                                title: 'Delete Items',
-                                itemId: '/manage-access/delete-Items',
-                            },
-                            {
                                 title: 'Add Seasonal Items',
                                 itemId: '/manage-access/add-seasonal-items',
+                            },
+                            {
+                                title: 'Delete From Menu',
+                                itemId: '/manage-access/delete-Items',
                             },
                             {
                                 title: 'Edit Inventory',
@@ -44,22 +49,18 @@ const Sidebar = () => {
                                 itemId: '/manage-access/add-to-inventory',
                             },
                             {
-                                title: 'Delete Inventory',
+                                title: 'Delete From Inventory',
                                 itemId: '/manage-access/delete-inventory',
                             },
                         ],
                     },
                     {
-                        title: 'View Menu',
-                        itemId: '/manage-access/view-menu',
-                    },
-                    {
                         title: 'Restock Options',
-                        itemId: '/manage-access',
+                        itemId: '/manage-access/restock-options',
                         subNav: [
                             {
                                 title: 'Restock Report',
-                                itemId: '/manage-access/restock-options',
+                                itemId: '/manage-access/restock-report',
                             },
                         ],
                     },
