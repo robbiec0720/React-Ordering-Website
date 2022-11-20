@@ -169,6 +169,24 @@ const restockReport = (request, response) => {
   })
 }
 
+const restock = async (request, response) => {
+  const reorder = await new Promise((resolve) => {
+    pool.query('SELECT * FROM Inventory WHERE unit_quantity <= order_threshold', (error, results) => {
+      if (error) {
+        console.log(error.stack)
+        return
+      }
+      resolve(results.rows)
+    })
+  })
+
+  for(let i = 0; i < reorder.length; i++) {
+    editItem('Inventory', reorder[i].ingredient_id, 'unit_quantity', reorder[i].reorder_value, 'ingredient_id')
+  }
+
+  response.status(200).json('Inventory has been restocked!')
+}
+
 const displayInventory = (request, response) => {
   pool.query('SELECT * FROM Inventory;', (error, results) => {
     if (error) {
@@ -585,6 +603,7 @@ module.exports = {
   addFoodItem,
   deleteEntry,
   restockReport,
+  restock,
   addItem,
   removeItem,
   clearCart
