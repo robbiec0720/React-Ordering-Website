@@ -1,7 +1,7 @@
 import React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 
-const RestockOptions = () => {
+const RestockReport = () => {
     // columns for restock table
     const invCols = [
         { field: 'ingredient_id', headerName: 'Ingredient ID', width: 110 },
@@ -57,4 +57,4 @@ const RestockOptions = () => {
     );
 };
 
-export default RestockOptions;
+export default RestockReport;

@@ -30,7 +30,6 @@ function App() {
         <Route path='/customer' element={<CustomerPage></CustomerPage>}></Route>
         <Route path='/login' element={<Login></Login>}></Route>
         <Route path='/manage-access' element={<ManageAccess></ManageAccess>}>  
-          <Route path='/manage-access/restock-options' element={<div></div>}></Route>
           <Route path='/manage-access/edit-functions' element={<div></div>}></Route>
           <Route path='/manage-access/view-inventory' element={<ViewInventory></ViewInventory>}></Route>
           <Route path='/manage-access/edit-menu' element={<EditMenu></EditMenu>}></Route>
