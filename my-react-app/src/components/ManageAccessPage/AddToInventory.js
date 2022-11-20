@@ -37,8 +37,6 @@ const AddToInventory = () => {
 
         handleSubmit(event) {
             event.preventDefault();
-            console.log('Sumbitted')
-            // need to change to publicly hosted api
             const url = 'https://project3-api.onrender.com/inventory/add?array=' + this.state.name + ',' + this.state.quantity + ',' + this.state.threshold + ',' + this.state.reorder + ',' + this.state.cost
             fetch(url, {
                 method: 'POST',

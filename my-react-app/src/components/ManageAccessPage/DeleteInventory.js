@@ -17,6 +17,7 @@ const DeleteInventory = () => {
 
         handleSubmit(event) {
             event.preventDefault();
+            // change to publicly hosted
             const url = 'http://localhost:8081/entry/delete?id=' + this.state.id + '&table=Inventory&pkcol=ingredient_id';
             fetch(url, {
                 method: 'DELETE',
