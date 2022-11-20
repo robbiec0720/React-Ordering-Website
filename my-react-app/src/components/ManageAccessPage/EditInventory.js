@@ -30,7 +30,7 @@ const EditInventory = () => {
             // need to change to publicly hosted api
             const url = 'http://localhost:8081/edit?array=Inventory,' + this.state.id + ',' + this.state.col + ',' + this.state.value + ',ingredient_id'
             fetch(url, {
-                method: 'POST',
+                method: 'PUT',
                 headers: {
                     Accept: 'application/json',
                 },
