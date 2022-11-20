@@ -126,18 +126,37 @@ const displayOrder = async (request, response) => {
 
 }
 
-const deleteEntry = (request, response) => {
+const deleteEntry = async (request, response) => {
   const id = parseInt(request.query.id)
   const tableName = String(request.query.table)
   const colName = String(request.query.pkcol)
-
-  pool.query('DELETE FROM ' + tableName + ' WHERE ' + colName + ' = ' + id, (error, results) => {
-    if (error) {
-      console.log(error.stack)
-      return
-    }
-    response.status(200).json(0)
+  
+  // checking if item exists
+  const exists = "SELECT COUNT(*) FROM " + tableName + " WHERE " + colName + " = " + id + ";"
+  const count = await new Promise((resolve) => {
+    pool.query(exists, (error, results) => {
+      if (error) {
+        console.log(error.stack)
+        return "Error"
+      }
+      resolve(parseInt(results.rows[0].count))
+    })
   })
+  
+  // if id does not exist, return error message
+  if(count == 0) {
+    response.status(200).json(tableName + " does not have an item with ID: " + id)
+  }
+  else {
+    pool.query('DELETE FROM ' + tableName + ' WHERE ' + colName + ' = ' + id, (error, results) => {
+      if (error) {
+        console.log(error.stack)
+        response.status(200).json('Error in deleting entry from ' + tableName + 'with ID: ' + id)
+        return
+      }
+      response.status(200).json('Deleted entry from ' + tableName + 'with ID: ' + id)
+    })
+  }
 }
 
 const restockReport = (request, response) => {
@@ -234,6 +253,7 @@ const addIngredient = async (request, response) => {
     [id, name, quantity, threshold, reorder, cost], (error) => {
       if (error) {
         console.log(error.stack)
+        response.status(201).json('Error in adding ingredient')
         return
       }
       response.status(201).json('Ingredient added with ID: ' + id)
