@@ -76,6 +76,9 @@
 .form {
     display: flex;
     flex-direction: column;
+    font-family: apercu,sans-serif;
+    padding-inline: 5px;
+    line-height: 25px;
 }
 
 .submit-btn{
@@ -88,7 +91,8 @@
     border-radius: 5px;
     cursor: pointer;
     margin-bottom: 10px;
-    margin-top: 6px;
+    margin-top: 6px;   
+    width: max-content;
 }
 
 .submit-btn:hover{
