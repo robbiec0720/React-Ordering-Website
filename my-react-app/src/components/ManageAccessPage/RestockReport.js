@@ -41,9 +41,28 @@ const RestockReport = () => {
 
     }, [])
 
+    const handleClick = () => {
+        // need to change to public api
+        fetch('http://localhost:8081/inventory/restock', {
+            method: 'PUT',
+            headers: {
+                Accept: 'application/json',
+            },
+        }).then(response => {
+            if (!response.ok) {
+                throw new Error(`Error! status: ${response.status}`)
+            }
+            response.json().then(json => {
+                alert(json)
+                document.location.reload(true)
+            })
+        })  
+    }
+
     return (
-        <div className="table">
+        <div className='table'>
             <h1>Restock Report</h1>
+            <button className='submit-btn' onClick={handleClick}>Restock</button>
             <DataGrid
                 getRowId={(row) => row.ingredient_id}
                 rows={restock ? restock : []}
