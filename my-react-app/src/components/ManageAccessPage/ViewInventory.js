@@ -28,7 +28,6 @@ const ViewInventory = () => {
                 if (!response.ok) {
                     throw new Error(`Error! status: ${response.status}`)
                 }
-                console.log(response)
                 response.json().then(json => {
                     for (var key in json) {
                         tempInv.push(json[key])

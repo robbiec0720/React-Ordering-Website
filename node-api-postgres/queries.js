@@ -126,18 +126,37 @@ const displayOrder = async (request, response) => {
 
 }
 
-const deleteEntry = (request, response) => {
+const deleteEntry = async (request, response) => {
   const id = parseInt(request.query.id)
   const tableName = String(request.query.table)
   const colName = String(request.query.pkcol)
-
-  pool.query('DELETE FROM ' + tableName + ' WHERE ' + colName + ' = ' + id, (error, results) => {
-    if (error) {
-      console.log(error.stack)
-      return
-    }
-    response.status(200).json(0)
+  
+  // checking if item exists
+  const exists = "SELECT COUNT(*) FROM " + tableName + " WHERE " + colName + " = " + id + ";"
+  const count = await new Promise((resolve) => {
+    pool.query(exists, (error, results) => {
+      if (error) {
+        console.log(error.stack)
+        return "Error"
+      }
+      resolve(parseInt(results.rows[0].count))
+    })
   })
+  
+  // if id does not exist, return error message
+  if(count == 0) {
+    response.status(200).json(tableName + " does not have an item with ID: " + id)
+  }
+  else {
+    pool.query('DELETE FROM ' + tableName + ' WHERE ' + colName + ' = ' + id, (error, results) => {
+      if (error) {
+        console.log(error.stack)
+        response.status(200).json('Error in deleting entry from ' + tableName + 'with ID: ' + id)
+        return
+      }
+      response.status(200).json('Deleted entry from ' + tableName + 'with ID: ' + id)
+    })
+  }
 }
 
 const restockReport = (request, response) => {
@@ -148,6 +167,24 @@ const restockReport = (request, response) => {
     }
     response.status(200).json(results.rows)
   })
+}
+
+const restock = async (request, response) => {
+  const reorder = await new Promise((resolve) => {
+    pool.query('SELECT * FROM Inventory WHERE unit_quantity <= order_threshold', (error, results) => {
+      if (error) {
+        console.log(error.stack)
+        return
+      }
+      resolve(results.rows)
+    })
+  })
+
+  for(let i = 0; i < reorder.length; i++) {
+    editItem('Inventory', reorder[i].ingredient_id, 'unit_quantity', reorder[i].reorder_value, 'ingredient_id')
+  }
+
+  response.status(200).json('Inventory has been restocked!')
 }
 
 const displayInventory = (request, response) => {
@@ -234,6 +271,7 @@ const addIngredient = async (request, response) => {
     [id, name, quantity, threshold, reorder, cost], (error) => {
       if (error) {
         console.log(error.stack)
+        response.status(201).json('Error in adding ingredient')
         return
       }
       response.status(201).json('Ingredient added with ID: ' + id)
@@ -270,26 +308,43 @@ const addFoodItem = async (request, response) => {
     })
 }
 
-const editTable = (request, response) => {
+const editTable = async (request, response) => {
   const params = request.query.array.split(',')
   const table = String(params[0])
   const id = parseInt(params[1])
   const col = String(params[2])
   const val = params[3]
   const idCol = String(params[4])
-  const msg = editItem(table, id, col, val, idCol)
+  const msg = await editItem(table, id, col, val, idCol)
   response.status(200).json(msg)
 }
 
-function editItem(table, id, col, val, idCol) {
+async function editItem(table, id, col, val, idCol) {
+  // checking if item exists
+  const exists = "SELECT COUNT(*) FROM " + table + " WHERE " + idCol + " = " + id + ";"
+  const count = await new Promise((resolve) => {
+    pool.query(exists, (error, results) => {
+      if (error) {
+        console.log(error.stack)
+        return "Error"
+      }
+      resolve(parseInt(results.rows[0].count))
+    })
+  })
+  
+  // if id does not exist, return error message
+  if(count == 0) {
+    return (table + " does not have an item with ID: " + id)
+  }
+
   const stmt = "UPDATE " + table + " SET " + col + " = \'" + val + "'\ WHERE " + idCol + " = " + id + ";"
   pool.query(stmt, (error) => {
     if (error) {
       console.log(error.stack)
-      return "Update Failed"
+      return "Error"
     }
-    return ("Updated item from " + table + " with ID:" + id)
   })
+  return ("Updated item from " + table + " with ID: " + id)
 }
 
 const login = async (request, response) => {
@@ -548,6 +603,7 @@ module.exports = {
   addFoodItem,
   deleteEntry,
   restockReport,
+  restock,
   addItem,
   removeItem,
   clearCart

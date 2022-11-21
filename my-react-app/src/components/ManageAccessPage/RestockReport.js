@@ -1,7 +1,7 @@
 import React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 
-const RestockOptions = () => {
+const RestockReport = () => {
     // columns for restock table
     const invCols = [
         { field: 'ingredient_id', headerName: 'Ingredient ID', width: 110 },
@@ -41,9 +41,28 @@ const RestockOptions = () => {
 
     }, [])
 
+    const handleClick = () => {
+        // need to change to public api
+        fetch('http://localhost:8081/inventory/restock', {
+            method: 'PUT',
+            headers: {
+                Accept: 'application/json',
+            },
+        }).then(response => {
+            if (!response.ok) {
+                throw new Error(`Error! status: ${response.status}`)
+            }
+            response.json().then(json => {
+                alert(json)
+                document.location.reload(true)
+            })
+        })  
+    }
+
     return (
-        <div>
+        <div className='table'>
             <h1>Restock Report</h1>
+            <button className='submit-btn' onClick={handleClick}>Restock</button>
             <DataGrid
                 getRowId={(row) => row.ingredient_id}
                 rows={restock ? restock : []}
@@ -57,4 +76,4 @@ const RestockOptions = () => {
     );
 };
 
-export default RestockOptions;
+export default RestockReport;
