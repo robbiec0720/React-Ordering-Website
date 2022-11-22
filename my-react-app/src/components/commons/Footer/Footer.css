@@ -4,6 +4,13 @@
     padding-top: 20px;
     padding-bottom: 20px;
 }
+
+.footer-style-dark{
+    background-color: black;
+    color: white;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
 .footer-style > h5{
     margin-bottom: 0;
     padding: 0;

@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
+import { ThemeContext } from '../../App';
+
 
 
 const ViewInventory = () => {
@@ -13,6 +15,7 @@ const ViewInventory = () => {
         { field: 'cost', headerName: 'Cost', width: 75 } 
     ]
     const [inv, setInv] = React.useState()
+    const {theme} = useContext(ThemeContext)
 
     React.useEffect(() => {
         let tempInv = []
@@ -44,6 +47,7 @@ const ViewInventory = () => {
         <div className='table'>
             <h1>View Inventory</h1>
             <DataGrid
+                sx={{color: theme === 'light' ? 'black' : 'white'}}
                 getRowId={(row) => row.ingredient_id}
                 rows={inv ? inv : []}
                 columns={invCols}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './EmployeePage.css';
 import FoodItem from './FoodItem';
+import PaymentModal from './PaymentModal';
 import { useNavigate } from "react-router-dom";
 
 const EmployeePage = () => {
@@ -8,6 +9,23 @@ const EmployeePage = () => {
     const [foods, setFoods] = useState([]);
     const [cart, setCart] = useState([]);
     const [totalPrice, setTotal] = useState([]);
+
+    let subtitle;
+    const [modalIsOpen, setIsOpen] = React.useState(false);
+
+    function openModal() {
+        setIsOpen(true);
+    }
+
+    function afterOpenModal() {
+        // references are now sync'd and can be accessed.
+        subtitle.style.color = '#f00';
+    }
+
+    function closeModal() {
+        setIsOpen(false);
+    }
+
 
     useEffect(() => {
         fetch('foods.json')
@@ -70,11 +88,11 @@ const EmployeePage = () => {
             if (!response.ok) {
                 throw new Error(`Error! status: ${response.status}`);
             }
-
-            const result = await response.json();
+            
+            const result = await response.json(openModal);
 
             console.log('result is: ', JSON.stringify(result, null, 4));
-
+            openModal()
         } catch (err) {
             console.log(err)
         }
@@ -120,6 +138,7 @@ const EmployeePage = () => {
                     <button className='logout-btn' onClick={() => navigate('../')}>Logout</button>
                 </div>
             </div>
+            <PaymentModal openModal={openModal} modalIsOpen={modalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeModal}></PaymentModal>
         </div>
     );
 };

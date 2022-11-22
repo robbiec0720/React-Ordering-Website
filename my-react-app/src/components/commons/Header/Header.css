@@ -7,6 +7,17 @@
     padding-right: 5%;
     
 }
+
+.header-style-dark {
+  background-color: black;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
 .logout-btn{
     background-color: orange;
     color: white;
@@ -30,6 +41,12 @@
     color: black;
     font-size: 20px;
 }
+
+.dropdown-icon-dark {
+  color: white;
+  font-size: 20px;
+}
+
 .logo{
     cursor: pointer;
 }
@@ -38,6 +55,15 @@
     display: inline-block;
     margin-right: 50px;
     cursor: pointer;
+  }
+
+  .dropdown-dark {
+    position: relative;
+    display: inline-block;
+    margin-right: 50px;
+    cursor: pointer;
+    background-color: black;
+    color: white;
   }
   
   .dropdown-content {
@@ -49,18 +75,73 @@
     z-index: 1;
     cursor: pointer;
   }
+
+  .dropdown-content-dark {
+    display: none;
+    position: absolute;
+    background-color: black;
+    color: white;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    cursor: pointer;
+  }
+
   .manage-access{
     background-color: whitesmoke;
     padding: 8px 15px;
   }
+
+  .manage-access-dark{
+    padding: 8px 15px;
+    background-color: black;
+    color: white;
+  }
+
   .manage-access:hover{
     background-color: rgb(7, 69, 241);
     color: white;
   }
+
+  .manage-access-dark:hover {
+    background-color: rgb(7, 69, 241);
+    color: white;
+  }
+
   .manage-access:active{
     background-color: rgb(255, 5, 10);
     color: white;
   }
+
+  .manage-access-dark:active {
+    background-color: rgb(255, 5, 10);
+    color: white;
+  }
+
   .dropdown:hover .dropdown-content {
     display: block;
+  }
+
+  .dropdown-dark:hover .dropdown-content-dark {
+    display: block;
+  }
+
+  .theme-btn-dark{
+    background-color: white;
+    border: 1px solid white;
+    color: black !important;
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    margin-right: 20px;
+    cursor: pointer;
+  }
+  
+  .theme-btn-light{
+    background-color: black;
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    margin-right: 20px;
+    cursor: pointer;
   }

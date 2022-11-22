@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { createContext } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Footer from './components/commons/Footer/Footer';
@@ -18,10 +20,14 @@ import RestockReport from './components/ManageAccessPage/RestockReport';
 import SalesReport from './components/ManageAccessPage/SalesReport';
 import ViewInventory from './components/ManageAccessPage/ViewInventory';
 import ViewMenu from './components/ManageAccessPage/ViewMenu';
+export const ThemeContext = createContext();
 
 function App() {
+  const [theme, setTheme] = useState('light')
   return (
-    <div className="App">
+    <ThemeContext.Provider value={{theme, setTheme}}>
+    <div className={theme === 'light' ? 'App align-things' : 'App align-things dark'}>
+      <div>
       <Header></Header>
       <Routes>
         <Route path='/' element={<Auth></Auth>}></Route>
@@ -31,7 +37,8 @@ function App() {
         <Route path='/login' element={<Login></Login>}></Route>
         <Route path='/manage-access' element={<ManageAccess></ManageAccess>}>  
           <Route path='/manage-access/edit-functions' element={<div></div>}></Route>
-          <Route path='/manage-access/view-inventory' element={<ViewInventory></ViewInventory>}></Route>
+          <Route index element={<ViewInventory></ViewInventory>}></Route>
+          {/* <Route path='/manage-access/view-inventory' element={<ViewInventory></ViewInventory>}></Route> */}
           <Route path='/manage-access/edit-menu' element={<EditMenu></EditMenu>}></Route>
           <Route path='/manage-access/delete-Items' element={<DeleteItems></DeleteItems>}></Route>
           <Route path='/manage-access/add-seasonal-items' element={<AddSeasonalItem></AddSeasonalItem>}></Route>
@@ -44,8 +51,12 @@ function App() {
           <Route path='/manage-access/sales-report' element={<SalesReport></SalesReport>}></Route>
         </Route>
       </Routes>
+      </div>
+      <div>
       <Footer></Footer>
+      </div>
     </div>
+  </ThemeContext.Provider>
   );
  
 }export default App;
