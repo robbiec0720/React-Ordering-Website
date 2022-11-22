@@ -72,3 +72,24 @@
     width: 100%;
     padding-bottom: 150px;
 }
+.table-dark{
+    height: 371px;
+    width: 100%;
+    padding-bottom: 150px;
+    color: white !important;
+}
+
+.sidebar-style{
+    background-color: rgb(223, 223, 223);
+    color: black;
+    height: 90vh;
+    margin: 0;
+    padding: 0;
+}
+.sidebar-style-dark{
+    background-color: black;
+    color: white;
+    height: 90vh;
+    margin: 0;
+    padding: 0;
+}

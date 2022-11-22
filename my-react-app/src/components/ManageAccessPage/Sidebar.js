@@ -1,30 +1,29 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {Navigation} from 'react-minimal-side-navigation';
 import 'react-minimal-side-navigation/lib/ReactMinimalSideNavigation.css';
 import { useNavigate } from 'react-router-dom';
-
+import { ThemeContext } from '../../App';
+import './ManageAccess.css'
 const Sidebar = () => {
     const navigate = useNavigate()
+    const {theme}  = useContext(ThemeContext)
     return (
-        <div>
+        <div className={theme === 'light' ? 'sidebar-style' : 'sidebar-style-dark'}>
             <Navigation
                 // you can use your own router's api to get pathname
                 activeItemId="/manage-access/members"
                 onSelect={({ itemId }) => {
                    navigate(itemId)
                 }}
+                style={{padding: 0}}
                 items={[
                     {
-                        title: 'View Inventory',
-                        itemId: '/manage-access/view-inventory',
+                        title: 'View Inventories',
+                        itemId: '/manage-access',
                     },
                     {
-                        title: 'View Menu',
-                        itemId: '/manage-access/view-menu',
-                    },
-                    {
-                        title: 'Edit Functions',
-                        itemId: '/manage-access/edit-functions',
+                        title: 'Edit Inventories',
+                        // itemId: '/manage-access',
                         
                         subNav: [
                             {
@@ -33,12 +32,12 @@ const Sidebar = () => {
                                 to: '/manage-access/edit-menu'
                             },
                             {
-                                title: 'Add Seasonal Items',
-                                itemId: '/manage-access/add-seasonal-items',
+                                title: 'Delete Items',
+                                itemId: '/manage-access/delete-Items',
                             },
                             {
-                                title: 'Delete From Menu',
-                                itemId: '/manage-access/delete-Items',
+                                title: 'Add Seasonal Items',
+                                itemId: '/manage-access/add-seasonal-items',
                             },
                             {
                                 title: 'Edit Inventory',
@@ -49,18 +48,22 @@ const Sidebar = () => {
                                 itemId: '/manage-access/add-to-inventory',
                             },
                             {
-                                title: 'Delete From Inventory',
+                                title: 'Delete Inventory',
                                 itemId: '/manage-access/delete-inventory',
                             },
                         ],
                     },
                     {
-                        title: 'Restock Options',
-                        itemId: '/manage-access/restock-options',
+                        title: 'View Menu',
+                        itemId: '/manage-access/view-menu',
+                    },
+                    {
+                        title: 'Restock Report',
+                        itemId: '#',
                         subNav: [
                             {
-                                title: 'Restock Report',
-                                itemId: '/manage-access/restock-report',
+                                title: 'Restock Options',
+                                itemId: '/manage-access/restock-options',
                             },
                         ],
                     },
