@@ -68,14 +68,12 @@
 }
 
 .table {
-    height: 371px;
+    height: 631px;
     width: 100%;
-    padding-bottom: 150px;
 }
 .table-dark{
-    height: 371px;
+    height: 631px;
     width: 100%;
-    padding-bottom: 150px;
     color: white !important;
 }
 

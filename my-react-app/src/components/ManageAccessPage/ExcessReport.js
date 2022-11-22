@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
+import { ThemeContext } from '../../App';
+import './ManageAccess.css'
 
 const ExcessReport = () => {
     // columns for excess report table
@@ -14,6 +16,7 @@ const ExcessReport = () => {
     // state columns
     const [excess, setExcess] = React.useState()
     const [start, setStart] = React.useState('2022-10-02')
+    const {theme} = useContext(ThemeContext)
 
     React.useEffect(() => {
         let tempExcess = []
@@ -81,15 +84,16 @@ const ExcessReport = () => {
     }
 
     return (
-        <div className='table'>
+        <div className={theme === 'light' ? 'table' : 'table-dark'}>
             <h1>Excess Report from {start} to 2022-10-25</h1>
             <StartForm></StartForm>
             <DataGrid
+                sx={{color: theme === 'light' ? 'black' : 'white'}}
                 getRowId={(row) => row.ingredient_id}
                 rows={excess ? excess : []}
                 columns={excessCols}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
+                pageSize={10}
+                rowsPerPageOptions={[10]}
                 checkboxSelection={false}
                 disableColumnMenu={true}
             />

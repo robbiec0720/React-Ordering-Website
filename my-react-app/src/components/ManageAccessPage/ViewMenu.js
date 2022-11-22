@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { ThemeContext } from '../../App';
 import './ManageAccess.css'
+
 const ViewMenu = () => {
     // columns for view menu table
     const menuCols = [
@@ -12,8 +13,10 @@ const ViewMenu = () => {
         { field: 'item_type', headerName: 'Item Type', width: 100 },
         { field: 'is_seasonal', headerName: 'Seasonal?', width: 90 }
     ]
+    
     const [menu, setMenu] = React.useState()
     const {theme} = useContext(ThemeContext)
+
     React.useEffect(() => {
         let tempMenu = []
 
@@ -49,8 +52,8 @@ const ViewMenu = () => {
                 getRowId={(row) => row.food_id}
                 rows={menu ? menu : []}
                 columns={menuCols}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
+                pageSize={10}
+                rowsPerPageOptions={[10]}
                 checkboxSelection={false}
                 disableColumnMenu={true}
             />

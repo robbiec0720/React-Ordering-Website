@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
+import { ThemeContext } from '../../App';
+import './ManageAccess.css'
 
 const RestockReport = () => {
     // columns for restock table
@@ -12,6 +14,7 @@ const RestockReport = () => {
         { field: 'cost', headerName: 'Cost', width: 75 }
     ]
     const [restock, setRestock] = React.useState()
+    const {theme} = useContext(ThemeContext)
 
     React.useEffect(() => {
         let tempRestock = []
@@ -60,15 +63,16 @@ const RestockReport = () => {
     }
 
     return (
-        <div className='table'>
+        <div className={theme === 'light' ? 'table' : 'table-dark'}>
             <h1>Restock Report</h1>
             <button className='submit-btn' onClick={handleClick}>Restock</button>
             <DataGrid
+                sx={{color: theme === 'light' ? 'black' : 'white'}}
                 getRowId={(row) => row.ingredient_id}
                 rows={restock ? restock : []}
                 columns={invCols}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
+                pageSize={10}
+                rowsPerPageOptions={[10]}
                 checkboxSelection={false}
                 disableColumnMenu={true}
             />

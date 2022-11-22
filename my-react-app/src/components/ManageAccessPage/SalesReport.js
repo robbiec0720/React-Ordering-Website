@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
+import { ThemeContext } from '../../App';
+import './ManageAccess.css'
 
 const SalesReport = () => {
     // columns for sales report table
@@ -13,6 +15,7 @@ const SalesReport = () => {
     const [sales, setSales] = React.useState()
     const [start, setStart] = React.useState('2022-10-02')
     const [end, setEnd] = React.useState('2022-10-25')
+    const {theme} = useContext(ThemeContext)
 
     React.useEffect(() => {
         let tempSales = []
@@ -117,16 +120,17 @@ const SalesReport = () => {
     }
 
     return (
-        <div className='table'>
+        <div className={theme === 'light' ? 'table' : 'table-dark'}>
             <h1>Sales Report from {start} to {end}</h1>
             <StartForm></StartForm>
             <EndForm></EndForm>
             <DataGrid
+                sx={{color: theme === 'light' ? 'black' : 'white'}}
                 getRowId={(row) => row.food_id}
                 rows={sales ? sales : []}
                 columns={salesCols}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
+                pageSize={10}
+                rowsPerPageOptions={[10]}
                 checkboxSelection={false}
                 disableColumnMenu={true}
             />
