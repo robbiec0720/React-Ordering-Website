@@ -43,7 +43,7 @@ const RestockReport = () => {
 
     const handleClick = () => {
         // need to change to public api
-        fetch('http://localhost:8081/inventory/restock', {
+        fetch('https://project3-api.onrender.com/inventory/restock', {
             method: 'PUT',
             headers: {
                 Accept: 'application/json',

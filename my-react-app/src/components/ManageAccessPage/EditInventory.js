@@ -28,7 +28,7 @@ const EditInventory = () => {
         handleSubmit(event) {
             event.preventDefault();
             // need to change to publicly hosted api
-            const url = 'http://localhost:8081/edit?array=Inventory,' + this.state.id + ',' + this.state.col + ',' + this.state.value + ',ingredient_id'
+            const url = 'https://project3-api.onrender.com/edit?array=Inventory,' + this.state.id + ',' + this.state.col + ',' + this.state.value + ',ingredient_id'
             fetch(url, {
                 method: 'PUT',
                 headers: {

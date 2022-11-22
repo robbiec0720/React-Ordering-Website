@@ -37,8 +37,7 @@ function App() {
         <Route path='/login' element={<Login></Login>}></Route>
         <Route path='/manage-access' element={<ManageAccess></ManageAccess>}>  
           <Route path='/manage-access/edit-functions' element={<div></div>}></Route>
-          <Route index element={<ViewInventory></ViewInventory>}></Route>
-          {/* <Route path='/manage-access/view-inventory' element={<ViewInventory></ViewInventory>}></Route> */}
+          <Route path='/manage-access/view-inventory' element={<ViewInventory></ViewInventory>}></Route>
           <Route path='/manage-access/edit-menu' element={<EditMenu></EditMenu>}></Route>
           <Route path='/manage-access/delete-Items' element={<DeleteItems></DeleteItems>}></Route>
           <Route path='/manage-access/add-seasonal-items' element={<AddSeasonalItem></AddSeasonalItem>}></Route>

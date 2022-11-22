@@ -18,11 +18,15 @@ const Sidebar = () => {
                 style={{padding: 0}}
                 items={[
                     {
-                        title: 'View Inventories',
-                        itemId: '/manage-access',
+                        title: 'View Inventory',
+                        itemId: '/manage-access/view-inventory',
                     },
                     {
-                        title: 'Edit Inventories',
+                        title: 'View Menu',
+                        itemId: '/manage-access/view-menu',
+                    },
+                    {
+                        title: 'Edit Functions',
                         // itemId: '/manage-access',
                         
                         subNav: [
@@ -54,18 +58,6 @@ const Sidebar = () => {
                         ],
                     },
                     {
-                        title: 'View Menu',
-                        itemId: '/manage-access/view-menu',
-                    },
-                    {
-                        title: 'Restock Report',
-                        itemId: '#',
-                        subNav: [
-                            {
-                                title: 'Restock Options',
-                                itemId: '/manage-access/restock-options',
-                            },
-                        ],
                         title: 'Restock Report',
                         itemId: '/manage-access/restock-report',
                     },
