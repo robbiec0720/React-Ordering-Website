@@ -351,6 +351,8 @@ const login = async (request, response) => {
   const name = String(request.query.name)
   const id = parseInt(request.query.id)
 
+  console.log(name + " " + id);
+
   var check = -1
   check = await new Promise((resolve) => {
     pool.query("SELECT employee_id FROM employee WHERE employee_name = $1;", [name], (error, results) => {
