@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import PaymentModal from './PaymentModal';
 //import Popup from 'reactjs-popup';
 
+
 const CustomerPage = () => {
     const navigate = useNavigate();
     const [foods, setFoods] = useState([]);
@@ -108,26 +109,24 @@ const CustomerPage = () => {
             <div className='sub-employee-two'>
                 <div className='selected-items-style'>
                     <h3>Current Orders</h3>
-                    <div className='total-items'>
-                        <h4>Total Items</h4>
-                        {cart.map((product) => {
-                            return (
-                                <div key={product.id} className='total-items'>
-                                    <table id="item-table">
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <button id="cart-item" className='item-name' onClick={() => removeFromCart(product)}>{product.name}  </button>
-                                                </td>
-                                                <td><p id="cart-descriptor">${round(parseFloat(product.price) * parseInt(product.count), 2)}</p></td>
-                                                <td><p id="cart-descriptor">x{product.count}</p></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            )
-                        })}
-                    </div>
+                    <h4>Total Items</h4>
+                    {cart.map((product) => {
+                        return (
+                            <div key={product.id} className='total-items'>
+                                <table id="item-table">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <button id="cart-item" className='item-name' onClick={() => removeFromCart(product)}>{product.name}  </button>
+                                            </td>
+                                            <td><p id="cart-descriptor">${round(parseFloat(product.price) * parseInt(product.count), 2)}</p></td>
+                                            <td><p id="cart-descriptor">x{product.count}</p></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        )
+                    })}
                     <div className='total-items'>
                         <h4>Total Price: ${round(cart.reduce((total, item) => total + parseInt(item.count) * parseFloat(item.price), 0), 2)}</h4>
                         {/* <h4>Total Price: ${getTotalCost(cart)}</h4> */}

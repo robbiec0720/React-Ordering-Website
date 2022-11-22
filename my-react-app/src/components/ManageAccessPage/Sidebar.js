@@ -66,6 +66,8 @@ const Sidebar = () => {
                                 itemId: '/manage-access/restock-options',
                             },
                         ],
+                        title: 'Restock Report',
+                        itemId: '/manage-access/restock-report',
                     },
                     {
                         title: 'Excess Report',

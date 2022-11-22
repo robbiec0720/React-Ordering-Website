@@ -68,10 +68,13 @@ const ExcessReport = () => {
             return (
                 <form onSubmit={this.handleSubmit}>
                     <label>
-                        Start Date (YYYY-MM-DD):
+                        Start Date (YYYY-MM-DD):&nbsp;
                         <input type="text" value={this.state.value} onChange={this.handleChange} />
                     </label>
-                    <input type="submit" value="Submit" />
+                    <label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    </label>
+                    <input className="submit-btn" type="submit" value="Submit" />
                 </form>
             )
         }
