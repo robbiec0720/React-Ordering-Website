@@ -28,6 +28,8 @@ const CustomerPage = () => {
         setIsOpen(false);
     }
 
+
+
     useEffect(() => {
         fetch('foods.json')
             .then(res => res.json())
@@ -65,39 +67,28 @@ const CustomerPage = () => {
         console.log(cart);
     }
 
-    // const getTotalCost = (productList) => {
-    //     let sum = 0;
-    //     console.log("AAAA" + productList[0]);
-    //     productList.forEach(element => {
-    //         sum += (Math.round(parseFloat(element["cost"]) * 100) / 100) * parseInt(element["count"]);
-    //     });
-    //     console.log(sum);
-    //     return sum;
-    //     // return productList.reduce((totalCost, { cost: itemCost }) => totalCost + parseFloat(itemCost), 0);
+    // const handleClick = async () => {
+    //     console.log("Order Button Clicked")
+    //     try {
+    //         const response = await fetch('https://project3-api.onrender.com/order/submit?id=1&type=0&payment=20.00', {
+    //             method: 'POST',
+    //             headers: {
+    //                 Accept: 'application/json',
+    //             },
+    //         });
+
+    //         if (!response.ok) {
+    //             throw new Error(`Error! status: ${response.status}`);
+    //         }
+
+    //         const result = await response.json();
+
+    //         console.log('result is: ', JSON.stringify(result, null, 4));
+    //         openModal()
+    //     } catch (err) {
+    //         console.log(err)
+    //     }
     // };
-
-    const handleClick = async () => {
-        console.log("Order Button Clicked")
-        try {
-            const response = await fetch('https://project3-api.onrender.com/order/submit?id=1&type=0&payment=20.00', {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                },
-            });
-
-            if (!response.ok) {
-                throw new Error(`Error! status: ${response.status}`);
-            }
-
-            const result = await response.json();
-
-            console.log('result is: ', JSON.stringify(result, null, 4));
-            openModal()
-        } catch (err) {
-            console.log(err)
-        }
-    };
 
     return (
         <div className='employee-page-style'>
@@ -133,12 +124,12 @@ const CustomerPage = () => {
                     </div>
                 </div>
                 <div className='submit-div'>
-                    <button className='logout-btn' onClick={handleClick}>Dine-In</button>
+                    <button className='logout-btn' onClick={openModal}>Dine-In</button>
                     <button className='logout-btn' onClick={clearCart}>Clear Order</button>
                     <button className='logout-btn' onClick={() => navigate('../')}>Deliver</button>
                 </div>
             </div>
-            <PaymentModal openModal={openModal} modalIsOpen={modalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeModal}></PaymentModal>
+            <PaymentModal openModal={openModal} modalIsOpen={modalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeModal} cart={cart} setCart={setCart}></PaymentModal>
         </div>
     );
 };
