@@ -5,7 +5,6 @@ const FoodItem = ({ food, cart, setCart }) => {
   const url = 'https://project3-api.onrender.com/order/add/' + id.toString()
   
   const handleClick = async () => {
-    console.log(url)
     await fetch(url, {
       method: 'GET',
       headers: {
