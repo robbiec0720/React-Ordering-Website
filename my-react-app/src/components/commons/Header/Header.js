@@ -9,6 +9,11 @@ import { ThemeContext } from '../../../App';
 const Header = () => {
     const navigate = useNavigate();
     const {theme, setTheme}  = useContext(ThemeContext)
+    const user = JSON.parse(localStorage.getItem("user"))
+    const handleLogout = () =>{
+        localStorage.removeItem("user")
+        navigate('/')
+    }
     return (
         <div className={theme === 'light' ? 'header-style' : 'header-style-dark'}>
             <div onClick={()=> navigate('/')} className='logo'>
@@ -25,8 +30,16 @@ const Header = () => {
                 <div className={theme === "light" ? "dropdown" : "dropdown-dark"}>
                     <span><AiOutlineMenu className={theme === 'light' ? 'dropdown-icon' : 'dropdown-icon-dark'} /></span>
                     <div className={theme === 'light' ? "dropdown-content": "dropdown-content-dark"}>
-                        <p onClick={()=> navigate('/Login')} className={theme === 'light' ? 'manage-access' : 'manage-access-dark'}><small>Login</small></p>
-                        <p onClick={()=> navigate('/manage-access')} className={theme === 'light' ? 'manage-access' : 'manage-access-dark'}><small>Manage Access</small></p>
+                        {
+                            user ?
+                            <p onClick={handleLogout} className={theme === 'light' ? 'manage-access' : 'manage-access-dark'}><small>Logout</small></p>
+                            :
+                            <p onClick={()=> navigate('/Login')} className={theme === 'light' ? 'manage-access' : 'manage-access-dark'}><small>Login</small></p>
+                        }
+                        
+                       {
+                           user?.role === "manager" &&  <p onClick={()=> navigate('/manage-access')} className={theme === 'light' ? 'manage-access' : 'manage-access-dark'}><small>Manage Access</small></p>
+                       }
                     </div>
                 </div>
             </div>
