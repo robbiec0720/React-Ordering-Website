@@ -28,8 +28,6 @@ const CustomerPage = () => {
         setIsOpen(false);
     }
 
-
-
     useEffect(() => {
         fetch('foods.json')
             .then(res => res.json())
@@ -40,9 +38,15 @@ const CustomerPage = () => {
         return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
     }
 
-    const clearCart = () => {
+    const clearCart = async () => {
         cart.forEach((element) => element["count"] = 0)
         setCart([]);
+        await fetch('https://project3-api.onrender.com/order/clear', {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+            },
+        });
     }
 
     const removeFromCart = async item => {
@@ -67,28 +71,10 @@ const CustomerPage = () => {
         console.log(cart);
     }
 
-    // const handleClick = async () => {
-    //     console.log("Order Button Clicked")
-    //     try {
-    //         const response = await fetch('https://project3-api.onrender.com/order/submit?id=1&type=0&payment=20.00', {
-    //             method: 'POST',
-    //             headers: {
-    //                 Accept: 'application/json',
-    //             },
-    //         });
-
-    //         if (!response.ok) {
-    //             throw new Error(`Error! status: ${response.status}`);
-    //         }
-
-    //         const result = await response.json();
-
-    //         console.log('result is: ', JSON.stringify(result, null, 4));
-    //         openModal()
-    //     } catch (err) {
-    //         console.log(err)
-    //     }
-    // };
+    const handleClick = async () => {
+        console.log("Order Button Clicked")
+        openModal()
+    };
 
     return (
         <div className='employee-page-style'>
@@ -119,17 +105,18 @@ const CustomerPage = () => {
                         )
                     })}
                     <div className='total-items'>
-                        <h4>Total Price: ${round(cart.reduce((total, item) => total + parseInt(item.count) * parseFloat(item.price), 0), 2)}</h4>
+                    <h4>Subtotal: ${round(cart.reduce((total, item) => total + parseInt(item.count) * parseFloat(item.price), 0), 2)}</h4>
+                    <h4>Total Price: ${round((cart.reduce((total, item) => total + parseInt(item.count) * parseFloat(item.price), 0) * 1.0825), 2)}</h4>
                         {/* <h4>Total Price: ${getTotalCost(cart)}</h4> */}
                     </div>
                 </div>
                 <div className='submit-div'>
-                    <button className='logout-btn' onClick={openModal}>Dine-In</button>
+                    <button className='logout-btn' onClick={handleClick}>Dine-In</button>
                     <button className='logout-btn' onClick={clearCart}>Clear Order</button>
                     <button className='logout-btn' onClick={() => navigate('../')}>Deliver</button>
                 </div>
             </div>
-            <PaymentModal openModal={openModal} modalIsOpen={modalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeModal} cart={cart} setCart={setCart}></PaymentModal>
+            <PaymentModal openModal={openModal} modalIsOpen={modalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeModal} cost={round((cart.reduce((total, item) => total + parseInt(item.count) * parseFloat(item.price), 0) * 1.0825), 2)} setCart={setCart}></PaymentModal>
         </div>
     );
 };
