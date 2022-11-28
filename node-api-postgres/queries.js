@@ -70,7 +70,7 @@ const salesReport = async (request, response) => {
     })
   })
   const amounts = new Array(count)
-  for(let i = 0; i < count; i++) {
+  for (let i = 0; i < count; i++) {
     amounts[i] = 0
   }
 
@@ -83,7 +83,7 @@ const salesReport = async (request, response) => {
       resolve(results.rows)
     })
   })
-  
+
   const menu = await new Promise((resolve) => {
     pool.query("SELECT * FROM FoodItems ORDER BY food_id ASC;", (error, results) => {
       if (error) {
@@ -101,7 +101,7 @@ const salesReport = async (request, response) => {
   }
 
   for (let i = 0; i < menu.length; i++) {
-    sales[i] = {"food_id": menu[i].food_id, "item_name": menu[i].item_name, "amount_sold": amounts[i]}
+    sales[i] = { "food_id": menu[i].food_id, "item_name": menu[i].item_name, "amount_sold": amounts[i] }
   }
 
   response.status(200).json(sales)
@@ -130,7 +130,7 @@ const deleteEntry = async (request, response) => {
   const id = parseInt(request.query.id)
   const tableName = String(request.query.table)
   const colName = String(request.query.pkcol)
-  
+
   // checking if item exists
   const exists = "SELECT COUNT(*) FROM " + tableName + " WHERE " + colName + " = " + id + ";"
   const count = await new Promise((resolve) => {
@@ -142,9 +142,9 @@ const deleteEntry = async (request, response) => {
       resolve(parseInt(results.rows[0].count))
     })
   })
-  
+
   // if id does not exist, return error message
-  if(count == 0) {
+  if (count == 0) {
     response.status(200).json(tableName + " does not have an item with ID: " + id)
   }
   else {
@@ -180,7 +180,7 @@ const restock = async (request, response) => {
     })
   })
 
-  for(let i = 0; i < reorder.length; i++) {
+  for (let i = 0; i < reorder.length; i++) {
     editItem('Inventory', reorder[i].ingredient_id, 'unit_quantity', reorder[i].reorder_value, 'ingredient_id')
   }
 
@@ -211,7 +211,7 @@ const excessReport = async (request, response) => {
     })
   })
   const amounts = new Array(count)
-  for(let i = 0; i < count; i++) {
+  for (let i = 0; i < count; i++) {
     amounts[i] = 0
   }
 
@@ -243,7 +243,7 @@ const excessReport = async (request, response) => {
   for (let i = 0; i < inv.length; i++) {
     if (amounts[i] <= 0.1 * inv[i].unit_quantity) {
       var per = Math.round(amounts[i] / inv[i].reorder_value * 10000) / 100
-      excess.push({"ingredient_id": inv[i].ingredient_id, "ingredient_name": inv[i].ingredient_name, "amount_sold": amounts[i], "reorder_value": inv[i].reorder_value, "percentage_sold": per})
+      excess.push({ "ingredient_id": inv[i].ingredient_id, "ingredient_name": inv[i].ingredient_name, "amount_sold": amounts[i], "reorder_value": inv[i].reorder_value, "percentage_sold": per })
     }
   }
 
@@ -331,9 +331,9 @@ async function editItem(table, id, col, val, idCol) {
       resolve(parseInt(results.rows[0].count))
     })
   })
-  
+
   // if id does not exist, return error message
-  if(count == 0) {
+  if (count == 0) {
     return (table + " does not have an item with ID: " + id)
   }
 
@@ -360,7 +360,14 @@ const login = async (request, response) => {
         console.log(error.stack)
         return
       }
-      resolve(parseInt(results.rows[0].employee_id))
+      console.log(results)
+      if (results.rowCount == 0) {
+        console.log("Invalid employee")
+        resolve(-1)
+      }
+      else {
+        resolve(parseInt(results.rows[0].employee_id))
+      }
     })
   })
   if (check == -1) {
@@ -570,7 +577,7 @@ const addItem = (request, response) => {
 const removeItem = (request, response) => {
   const id = parseInt(request.params.id)
   const index = order.indexOf(id)
-  if(index > -1) {
+  if (index > -1) {
     order.splice(index, 1)
     console.log(order)
     response.status(200).json("Item " + id + " successfully removed from order.")
