@@ -76,29 +76,29 @@ const EmployeePage = () => {
     //     // return productList.reduce((totalCost, { cost: itemCost }) => totalCost + parseFloat(itemCost), 0);
     // };
 
-    const handleClick = async () => {
-        console.log("Order Button Clicked")
-        try {
-            console.log(employee)
-            const response = await fetch('https://project3-api.onrender.com/order/submit?id=1&type=0&payment=20.00', {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                },
-            });
+    // const handleClick = async () => {
+    //     console.log("Order Button Clicked")
+    //     try {
+    //         console.log(employee)
+    //         const response = await fetch('https://project3-api.onrender.com/order/submit?id=1&type=0&payment=20.00', {
+    //             method: 'POST',
+    //             headers: {
+    //                 Accept: 'application/json',
+    //             },
+    //         });
 
-            if (!response.ok) {
-                throw new Error(`Error! status: ${response.status}`);
-            }
-            
-            const result = await response.json(openModal);
+    //         if (!response.ok) {
+    //             throw new Error(`Error! status: ${response.status}`);
+    //         }
 
-            console.log('result is: ', JSON.stringify(result, null, 4));
-            openModal()
-        } catch (err) {
-            console.log(err)
-        }
-    };
+    //         const result = await response.json(openModal);
+
+    //         console.log('result is: ', JSON.stringify(result, null, 4));
+    //         openModal()
+    //     } catch (err) {
+    //         console.log(err)
+    //     }
+    // };
 
     return (
         <div className='employee-page-style'>
@@ -134,13 +134,13 @@ const EmployeePage = () => {
                     </div>
                 </div>
                 <div className='submit-div'>
-                    <button className='logout-btn' onClick={handleClick}>Submit Order</button>
+                    <button className='logout-btn' onClick={openModal}>Submit Order</button>
                     {/* <button className='logout-btn'>Edit Order</button> */}
                     <button className='logout-btn' onClick={clearCart}>Clear Order</button>
                     <button className='logout-btn' onClick={() => navigate('../')}>Logout</button>
                 </div>
             </div>
-            <PaymentModal openModal={openModal} modalIsOpen={modalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeModal}></PaymentModal>
+            <PaymentModal openModal={openModal} modalIsOpen={modalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeModal} cart={cart} setCart={setCart} employee={employee}></PaymentModal>
         </div>
     );
 };

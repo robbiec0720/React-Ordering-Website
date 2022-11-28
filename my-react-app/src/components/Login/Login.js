@@ -4,13 +4,12 @@ import './Login.css'
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-  const [employee, setEmployee] = useState(-1);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     // console.log(event.target.password.value) // from elements property
     // console.log(event.target.username.value)          // or directly
-    const loginRequest = 'http://localhost:8081/login?name=' + event.target.username.value + '&id=' + event.target.password.value;
+    const loginRequest = 'https://project3-api.onrender.com/login?name=' + event.target.username.value + '&id=' + event.target.password.value;
     fetch(loginRequest, {
       method: 'GET',
       headers: {
