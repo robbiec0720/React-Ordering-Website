@@ -22,6 +22,15 @@ const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    // console.log(event.target.elements.username.value) // from elements property
+    // console.log(event.target.username.value)    
+          // or directly
+  const username = event.target.username.value
+  const password = event.target.password.value
+  if(username && password){
+      localStorage.setItem("user", JSON.stringify({username: username, password: password, role: "manager"}))
+   }
+
     // console.log(event.target.password.value) // from elements property
     // console.log(event.target.username.value)          // or directly
     const loginRequest = 'https://project3-api.onrender.com/login?name=' + event.target.username.value + '&id=' + event.target.password.value;
