@@ -49,7 +49,7 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, cost, clearCart
     } catch (err) {
       console.log(err)
     }
-    // clearCart()
+    clearCart()
     closeModal()
   };
 
