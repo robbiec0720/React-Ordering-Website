@@ -2,19 +2,24 @@ import React, { useEffect, useState } from 'react';
 import './EmployeePage.css';
 import FoodItem from './FoodItem';
 import PaymentModal from './PaymentModal';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const EmployeePage = () => {
     const navigate = useNavigate();
     const [foods, setFoods] = useState([]);
     const [cart, setCart] = useState([]);
     const [totalPrice, setTotal] = useState([]);
+    const [employee, setEmployee] = useState(parseInt(useLocation().state));
 
     let subtitle;
     const [modalIsOpen, setIsOpen] = React.useState(false);
 
     function openModal() {
         setIsOpen(true);
+    }
+
+    function getEmployee() {
+        return employee;
     }
 
     function afterOpenModal() {
@@ -26,7 +31,6 @@ const EmployeePage = () => {
         setIsOpen(false);
     }
 
-
     useEffect(() => {
         fetch('foods.json')
             .then(res => res.json())
@@ -37,9 +41,15 @@ const EmployeePage = () => {
         return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
     }
 
-    const clearCart = () => {
+    const clearCart = async () => {
         cart.forEach((element) => element["count"] = 0)
         setCart([]);
+        await fetch('https://project3-api.onrender.com/order/clear', {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+            },
+        });
     }
 
     const removeFromCart = async item => {
@@ -63,40 +73,6 @@ const EmployeePage = () => {
 
         console.log(cart);
     }
-
-    // const getTotalCost = (productList) => {
-    //     let sum = 0;
-    //     console.log("AAAA" + productList[0]);
-    //     productList.forEach(element => {
-    //         sum += (Math.round(parseFloat(element["cost"]) * 100) / 100) * parseInt(element["count"]);
-    //     });
-    //     console.log(sum);
-    //     return sum;
-    //     // return productList.reduce((totalCost, { cost: itemCost }) => totalCost + parseFloat(itemCost), 0);
-    // };
-
-    const handleClick = async () => {
-        console.log("Order Button Clicked")
-        try {
-            const response = await fetch('https://project3-api.onrender.com/order/submit?id=1&type=0&payment=20.00', {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                },
-            });
-
-            if (!response.ok) {
-                throw new Error(`Error! status: ${response.status}`);
-            }
-            
-            const result = await response.json(openModal);
-
-            console.log('result is: ', JSON.stringify(result, null, 4));
-            openModal()
-        } catch (err) {
-            console.log(err)
-        }
-    };
 
     return (
         <div className='employee-page-style'>
@@ -127,18 +103,19 @@ const EmployeePage = () => {
                         )
                     })}
                     <div className='total-items'>
-                        <h4>Total Price: ${round(cart.reduce((total, item) => total + parseInt(item.count) * parseFloat(item.price), 0), 2)}</h4>
+                        <h4>Subtotal: ${round(cart.reduce((total, item) => total + parseInt(item.count) * parseFloat(item.price), 0), 2)}</h4>
+                        <h4>Total Price: ${round((cart.reduce((total, item) => total + parseInt(item.count) * parseFloat(item.price), 0) * 1.0825), 2)}</h4>
                         {/* <h4>Total Price: ${getTotalCost(cart)}</h4> */}
                     </div>
                 </div>
                 <div className='submit-div'>
-                    <button className='logout-btn' onClick={handleClick}>Submit Order</button>
+                    <button className='logout-btn' onClick={openModal}>Submit Order</button>
                     {/* <button className='logout-btn'>Edit Order</button> */}
                     <button className='logout-btn' onClick={clearCart}>Clear Order</button>
                     <button className='logout-btn' onClick={() => navigate('../')}>Logout</button>
                 </div>
             </div>
-            <PaymentModal openModal={openModal} modalIsOpen={modalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeModal}></PaymentModal>
+            <PaymentModal openModal={openModal} modalIsOpen={modalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeModal} cart={cart} setCart={setCart} employee={employee}></PaymentModal>
         </div>
     );
 };

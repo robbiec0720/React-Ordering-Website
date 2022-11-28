@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Login.css'
 import { useNavigate } from 'react-router-dom';
 
@@ -10,12 +10,32 @@ const Login = () => {
     // console.log(event.target.elements.username.value) // from elements property
     // console.log(event.target.username.value)    
           // or directly
-          const username = event.target.username.value
-          const password = event.target.password.value
-          if(username && password){
-            localStorage.setItem("user", JSON.stringify({username: username, password: password, role: "manager"}))
-          }
-    navigate('../employee');
+  const username = event.target.username.value
+  const password = event.target.password.value
+  if(username && password){
+      localStorage.setItem("user", JSON.stringify({username: username, password: password, role: "manager"}))
+   }
+
+    // console.log(event.target.password.value) // from elements property
+    // console.log(event.target.username.value)          // or directly
+    const loginRequest = 'https://project3-api.onrender.com/login?name=' + event.target.username.value + '&id=' + event.target.password.value;
+    fetch(loginRequest, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json'
+      },
+    }).then(response => {
+      if (!response.ok) {
+        throw new Error(`Error! status: ${response.status}`)
+      }
+
+      response.json().then(json => {
+        if (parseInt(json) == 1 || parseInt(json) == 2) {
+          navigate('../employee', {state: parseInt(event.target.password.value)});
+        }
+      })
+    })
+
   }
 
   const navigate = useNavigate();
@@ -26,7 +46,7 @@ const Login = () => {
         <div className="form-group">
           <input
             className="login-input"
-            name = "username"
+            name="username"
             placeholder="Your name"
             required
           />
@@ -34,7 +54,7 @@ const Login = () => {
         <div className="form-group">
           <input
             type="password"
-            name = "password"
+            name="password"
             className="login-input"
             placeholder="Password"
             required
@@ -42,7 +62,7 @@ const Login = () => {
         </div>
         <div className="">
           <button type="submit" className="submit-button">
-            Submit
+            Login
           </button>
         </div>
       </div>
