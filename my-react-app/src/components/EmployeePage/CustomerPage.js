@@ -73,25 +73,7 @@ const CustomerPage = () => {
 
     const handleClick = async () => {
         console.log("Order Button Clicked")
-        try {
-            const response = await fetch('https://project3-api.onrender.com/order/submit?id=1&type=0&payment=20.00', {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                },
-            });
-
-            if (!response.ok) {
-                throw new Error(`Error! status: ${response.status}`);
-            }
-            
-            const result = await response.json(openModal);
-
-            console.log('result is: ', JSON.stringify(result, null, 4));
-            openModal()
-        } catch (err) {
-            console.log(err)
-        }
+        openModal()
     };
 
     return (
@@ -134,7 +116,7 @@ const CustomerPage = () => {
                     <button className='logout-btn' onClick={() => navigate('../')}>Deliver</button>
                 </div>
             </div>
-            <PaymentModal openModal={openModal} modalIsOpen={modalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeModal} cart={cart} setCart={setCart}></PaymentModal>
+            <PaymentModal openModal={openModal} modalIsOpen={modalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeModal} cost={round((cart.reduce((total, item) => total + parseInt(item.count) * parseFloat(item.price), 0) * 1.0825), 2)} setCart={setCart}></PaymentModal>
         </div>
     );
 };
