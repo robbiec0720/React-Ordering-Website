@@ -1,11 +1,11 @@
 import React from 'react';
 import './FoodItem.css';
 const FoodItem = ({ food, cart, setCart }) => {
-  var condiments = [26, 27]
   const { id, name, price, img, count } = food;
   const url = 'https://project3-api.onrender.com/order/add/' + id.toString()
-  //const encodedID = encodeURIComponent(id);
+  
   const handleClick = async () => {
+    console.log(url)
     await fetch(url, {
       method: 'GET',
       headers: {
