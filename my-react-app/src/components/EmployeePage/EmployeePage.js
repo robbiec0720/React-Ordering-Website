@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import './EmployeePage.css';
 import FoodItem from './FoodItem';
 import PaymentModal from './PaymentModal';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const EmployeePage = () => {
     const navigate = useNavigate();
     const [foods, setFoods] = useState([]);
     const [cart, setCart] = useState([]);
     const [totalPrice, setTotal] = useState([]);
+    const [employee, setEmployee] = useState(parseInt(useLocation().state));
 
     let subtitle;
     const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -82,8 +83,25 @@ const EmployeePage = () => {
 
     const handleClick = async () => {
         console.log("Order Button Clicked")
-        openModal()
-        clearCart()
+        try {
+            const response = await fetch('https://project3-api.onrender.com/order/submit?id=1&type=0&payment=20.00', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error! status: ${response.status}`);
+            }
+            
+            const result = await response.json(openModal);
+
+            console.log('result is: ', JSON.stringify(result, null, 4));
+            openModal()
+        } catch (err) {
+            console.log(err)
+        }
     };
 
     return (
