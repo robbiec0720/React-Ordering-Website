@@ -24,12 +24,12 @@ const Login = () => {
     event.preventDefault();
     // console.log(event.target.elements.username.value) // from elements property
     // console.log(event.target.username.value)    
-          // or directly
-  const username = event.target.username.value
-  const password = event.target.password.value
-  if(username && password){
-      localStorage.setItem("user", JSON.stringify({username: username, password: password, role: "manager"}))
-   }
+    // or directly
+    const username = event.target.username.value
+    const password = event.target.password.value
+    // if (username && password) {
+    //   localStorage.setItem("user", JSON.stringify({ username: username, password: password, role: "manager" }))
+    // }
 
     // console.log(event.target.password.value) // from elements property
     // console.log(event.target.username.value)          // or directly
@@ -45,8 +45,19 @@ const Login = () => {
       }
 
       response.json().then(json => {
+        if (parseInt(json) == 2) {
+          localStorage.setItem("user", JSON.stringify({ username: username, password: password, role: "manager" }))
+        }
+        else if (parseInt(json) == 1) {
+          localStorage.setItem("user", JSON.stringify({ username: username, password: password, role: "employee" }))
+        }
         if (parseInt(json) == 1 || parseInt(json) == 2) {
-          navigate('../employee', { state: parseInt(event.target.password.value) });
+          navigate('../employee', {
+            state: {
+              employeeID: parseInt(event.target.password.value),
+              managerStatus: parseInt(json)
+            }
+          });
         }
       })
     })
