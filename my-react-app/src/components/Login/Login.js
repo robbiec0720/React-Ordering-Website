@@ -22,7 +22,6 @@ const Login = () => {
 
       response.json().then(json => {
         if (parseInt(json) == 1 || parseInt(json) == 2) {
-          setEmployee(parseInt(event.target.password.value));
           navigate('../employee', {state: parseInt(event.target.password.value)});
         }
       })
