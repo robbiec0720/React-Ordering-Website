@@ -8,7 +8,13 @@ const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     // console.log(event.target.elements.username.value) // from elements property
-    // console.log(event.target.username.value)          // or directly
+    // console.log(event.target.username.value)    
+          // or directly
+          const username = event.target.username.value
+          const password = event.target.password.value
+          if(username && password){
+            localStorage.setItem("user", JSON.stringify({username: username, password: password, role: "manager"}))
+          }
     navigate('../employee');
   }
 
@@ -22,6 +28,7 @@ const Login = () => {
             className="login-input"
             name = "username"
             placeholder="Your name"
+            required
           />
         </div>
         <div className="form-group">
@@ -30,6 +37,7 @@ const Login = () => {
             name = "password"
             className="login-input"
             placeholder="Password"
+            required
           />
         </div>
         <div className="">
