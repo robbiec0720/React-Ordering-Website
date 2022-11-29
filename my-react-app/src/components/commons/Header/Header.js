@@ -4,14 +4,17 @@ import { AiOutlineMenu } from 'react-icons/ai'
 import { BsFillMoonFill, BsFillSunFill } from 'react-icons/bs'
 import { useNavigate } from 'react-router-dom';
 import { LangContext, ThemeContext } from '../../../App';
-import { MDBDropdown, MDBDropdownMenu, MDBDropdownToggle, MDBDropdownItem } from 'mdb-react-ui-kit';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 const Header = () => {
     const navigate = useNavigate()
     const { lang, setLang } = useContext(LangContext)
     const { theme, setTheme } = useContext(ThemeContext)
-    const handleClick = (newLang) => {
-        setLang(newLang)
+    const handleChange = (event) => {
+        setLang(event.target.value)
     }
 
     return (
@@ -28,16 +31,22 @@ const Header = () => {
                 }
 
                 <div className={theme === "light" ? "dropdown" : "dropdown-dark"}>
-                    <MDBDropdown>
-                        <MDBDropdownToggle>Dropdown button</MDBDropdownToggle>
-                        <MDBDropdownMenu dark={theme !== "light"}>
-                            <MDBDropdownItem onClick={handleClick('English')}>English</MDBDropdownItem>
-                            <MDBDropdownItem onClick={handleClick('Spanish')}>Spanish</MDBDropdownItem>
-                            <MDBDropdownItem onClick={handleClick('French')}>French</MDBDropdownItem>
-                            <MDBDropdownItem onClick={handleClick('German')}>German</MDBDropdownItem>
-                            <MDBDropdownItem onClick={handleClick('Russian')}>Russian</MDBDropdownItem>
-                        </MDBDropdownMenu>
-                    </MDBDropdown>
+                    <FormControl fullWidth size="small">
+                        <InputLabel id="select-label">Language</InputLabel>
+                        <Select
+                            labelId="select-label"
+                            id="simple-select"
+                            value={lang}
+                            label="Language"
+                            onChange={handleChange}
+                        >
+                            <MenuItem value={'English'}>English</MenuItem>
+                            <MenuItem value={'Spanish'}>Spanish</MenuItem>
+                            <MenuItem value={'German'}>German</MenuItem>
+                            <MenuItem value={'French'}>French</MenuItem>
+                            <MenuItem value={'Russian'}>Russian</MenuItem>
+                        </Select>
+                    </FormControl>
                 </div>
 
                 <div className={theme === "light" ? "dropdown" : "dropdown-dark"}>
