@@ -150,13 +150,3 @@
   margin-right: 20px;
   cursor: pointer;
 }
-
-.MuiMenuItem-active {
-  color: black;
-  background-color: red;
-}
-
-.menu-dark {
-  color: white;
-  background-color: #282c34;
-}

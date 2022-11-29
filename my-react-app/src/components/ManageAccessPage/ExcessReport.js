@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { ThemeContext } from '../../App';
 import './ManageAccess.css'
 
@@ -17,6 +18,16 @@ const ExcessReport = () => {
     const [excess, setExcess] = React.useState()
     const [start, setStart] = React.useState('2022-10-02')
     const {theme} = useContext(ThemeContext)
+    const lightTheme = createTheme({
+        palette: {
+            mode: 'light'
+        }
+    })
+    const darkTheme = createTheme({
+        palette: {
+            mode: 'dark'
+        }
+    })
 
     React.useEffect(() => {
         let tempExcess = []
@@ -87,16 +98,17 @@ const ExcessReport = () => {
         <div className={theme === 'light' ? 'table' : 'table-dark'}>
             <h1>Excess Report from {start} to 2022-10-25</h1>
             <StartForm></StartForm>
-            <DataGrid
-                sx={{color: theme === 'light' ? 'black' : 'white'}}
-                getRowId={(row) => row.ingredient_id}
-                rows={excess ? excess : []}
-                columns={excessCols}
-                pageSize={10}
-                rowsPerPageOptions={[10]}
-                checkboxSelection={false}
-                disableColumnMenu={true}
-            />
+            <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+                <DataGrid
+                    getRowId={(row) => row.ingredient_id}
+                    rows={excess ? excess : []}
+                    columns={excessCols}
+                    pageSize={10}
+                    rowsPerPageOptions={[10]}
+                    checkboxSelection={false}
+                    disableColumnMenu={true}
+                />
+            </ThemeProvider>
         </div>
     );
 };
