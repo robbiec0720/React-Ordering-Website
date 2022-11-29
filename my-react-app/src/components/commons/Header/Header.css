@@ -151,10 +151,12 @@
   cursor: pointer;
 }
 
-.menu-light {
-
+.MuiMenuItem-active {
+  color: black;
+  background-color: red;
 }
 
 .menu-dark {
-  
+  color: white;
+  background-color: #282c34;
 }

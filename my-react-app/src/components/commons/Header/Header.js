@@ -4,6 +4,7 @@ import { AiOutlineMenu } from 'react-icons/ai'
 import { BsFillMoonFill, BsFillSunFill } from 'react-icons/bs'
 import { useNavigate } from 'react-router-dom';
 import { LangContext, ThemeContext } from '../../../App';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -13,6 +14,16 @@ const Header = () => {
     const navigate = useNavigate()
     const { lang, setLang } = useContext(LangContext)
     const { theme, setTheme } = useContext(ThemeContext)
+    const lightTheme = createTheme({
+        palette: {
+            mode: 'light'
+        }
+    })
+    const darkTheme = createTheme({
+        palette: {
+            mode: 'dark'
+        }
+    })
     const handleChange = (event) => {
         setLang(event.target.value)
     }
@@ -31,22 +42,24 @@ const Header = () => {
                 }
 
                 <div className={theme === "light" ? "dropdown" : "dropdown-dark"}>
-                    <FormControl fullWidth size="small">
-                        <InputLabel id="select-label">Language</InputLabel>
-                        <Select
-                            labelId="select-label"
-                            id="simple-select"
-                            value={lang}
-                            label="Language"
-                            onChange={handleChange}
-                        >
-                            <MenuItem value={'English'}>English</MenuItem>
-                            <MenuItem value={'Spanish'}>Spanish</MenuItem>
-                            <MenuItem value={'German'}>German</MenuItem>
-                            <MenuItem value={'French'}>French</MenuItem>
-                            <MenuItem value={'Russian'}>Russian</MenuItem>
-                        </Select>
-                    </FormControl>
+                    <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+                        <FormControl fullWidth size="small">
+                            <InputLabel id="select-label">Language</InputLabel>
+                            <Select
+                                labelId="select-label"
+                                id="simple-select"
+                                value={lang}
+                                label="Language"
+                                onChange={handleChange}
+                            >
+                                <MenuItem value={'English'}>English</MenuItem>
+                                <MenuItem value={'Spanish'}>Spanish</MenuItem>
+                                <MenuItem value={'German'}>German</MenuItem>
+                                <MenuItem value={'French'}>French</MenuItem>
+                                <MenuItem value={'Russian'}>Russian</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </ThemeProvider>
                 </div>
 
                 <div className={theme === "light" ? "dropdown" : "dropdown-dark"}>
