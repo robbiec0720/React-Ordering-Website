@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Modal from 'react-modal';
 import './PaymentModal.css'
 import { FaTimes } from 'react-icons/fa'
@@ -26,6 +26,7 @@ const customStylesDark = {
   },
 };
 const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, cart, setCart, employee}) => {
+  const [showInput, setShowInput] = useState(false)
 
   const handleClick = async (payment_type) => {
     console.log("Order Button Clicked with value " + payment_type + "Employee ID = " + employee)
@@ -42,7 +43,7 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, cart, setCart, 
       }
 
       const result = await response.json();
-
+      setShowInput(true)
       console.log('result is: ', JSON.stringify(result, null, 4));
       // openModal()
     } catch (err) {
@@ -64,7 +65,15 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, cart, setCart, 
         contentLabel="Example Modal"
       >
         <div className='modal-style'>
-          <div onClick={() => handleClick(1)} className="modal-item">Card</div>
+          {
+            showInput ?
+            <form>
+              <input type="text" id="amount" />
+              <input type="submit" value="Confirm" />
+            </form>
+            :
+            <div onClick={() => handleClick(1)} className="modal-item">Card</div>
+          }
           <div onClick={() => handleClick(0)} className="modal-item">Cash</div>
           <div onClick={() => handleClick(2)} className="modal-item">Dining Dollars</div>
         </div>
