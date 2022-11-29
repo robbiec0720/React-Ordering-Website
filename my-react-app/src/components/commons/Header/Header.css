@@ -1,11 +1,11 @@
-.header-style{
-    background-color: aliceblue;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-left: 5%;
-    padding-right: 5%;
-    
+.header-style {
+  background-color: aliceblue;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 5%;
+  padding-right: 5%;
+
 }
 
 .header-style-dark {
@@ -18,28 +18,32 @@
   padding-right: 5%;
 }
 
-.logout-btn{
-    background-color: orange;
-    color: white;
-    border: 1px solid orange;
-    padding: 10px 15px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 7px;
+.logout-btn {
+  background-color: orange;
+  color: white;
+  border: 1px solid orange;
+  padding: 10px 15px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 7px;
 }
-.logout-btn:hover{
-    background-color: white;
-    color: orange;
+
+.logout-btn:hover {
+  background-color: white;
+  color: orange;
 }
-.logout-btn:active{
-    background-color: red;
-    color: white;
-    border: 1px solid red;
+
+.logout-btn:active {
+  background-color: red;
+  color: white;
+  border: 1px solid red;
 }
-.dropdown-icon{
-    color: black;
-    font-size: 20px;
+
+.dropdown-icon {
+  color: black;
+  font-size: 20px;
+  align-content: center;
 }
 
 .dropdown-icon-dark {
@@ -47,101 +51,102 @@
   font-size: 20px;
 }
 
-.logo{
-    cursor: pointer;
+.logo {
+  cursor: pointer;
 }
+
 .dropdown {
-    position: relative;
-    display: inline-block;
-    margin-right: 50px;
-    cursor: pointer;
-  }
+  position: relative;
+  display: inline-block;
+  margin-right: 50px;
+  cursor: pointer;
+}
 
-  .dropdown-dark {
-    position: relative;
-    display: inline-block;
-    margin-right: 50px;
-    cursor: pointer;
-    background-color: black;
-    color: white;
-  }
-  
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-    cursor: pointer;
-  }
+.dropdown-dark {
+  position: relative;
+  display: inline-block;
+  margin-right: 50px;
+  cursor: pointer;
+  background-color: black;
+  color: white;
+}
 
-  .dropdown-content-dark {
-    display: none;
-    position: absolute;
-    background-color: black;
-    color: white;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    cursor: pointer;
-  }
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  cursor: pointer;
+}
 
-  .manage-access{
-    background-color: whitesmoke;
-    padding: 8px 15px;
-  }
+.dropdown-content-dark {
+  display: none;
+  position: absolute;
+  background-color: black;
+  color: white;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  cursor: pointer;
+}
 
-  .manage-access-dark{
-    padding: 8px 15px;
-    background-color: black;
-    color: white;
-  }
+.manage-access {
+  background-color: whitesmoke;
+  padding: 8px 15px;
+}
 
-  .manage-access:hover{
-    background-color: rgb(7, 69, 241);
-    color: white;
-  }
+.manage-access-dark {
+  padding: 8px 15px;
+  background-color: black;
+  color: white;
+}
 
-  .manage-access-dark:hover {
-    background-color: rgb(7, 69, 241);
-    color: white;
-  }
+.manage-access:hover {
+  background-color: rgb(7, 69, 241);
+  color: white;
+}
 
-  .manage-access:active{
-    background-color: rgb(255, 5, 10);
-    color: white;
-  }
+.manage-access-dark:hover {
+  background-color: rgb(7, 69, 241);
+  color: white;
+}
 
-  .manage-access-dark:active {
-    background-color: rgb(255, 5, 10);
-    color: white;
-  }
+.manage-access:active {
+  background-color: rgb(255, 5, 10);
+  color: white;
+}
 
-  .dropdown:hover .dropdown-content {
-    display: block;
-  }
+.manage-access-dark:active {
+  background-color: rgb(255, 5, 10);
+  color: white;
+}
 
-  .dropdown-dark:hover .dropdown-content-dark {
-    display: block;
-  }
+.dropdown:hover .dropdown-content {
+  display: block;
+}
 
-  .theme-btn-dark{
-    background-color: white;
-    border: 1px solid white;
-    color: black !important;
-    padding: 5px;
-    border-radius: 5px;
-    color: white;
-    margin-right: 20px;
-    cursor: pointer;
-  }
-  
-  .theme-btn-light{
-    background-color: black;
-    padding: 5px;
-    border-radius: 5px;
-    color: white;
-    margin-right: 20px;
-    cursor: pointer;
-  }
+.dropdown-dark:hover .dropdown-content-dark {
+  display: block;
+}
+
+.theme-btn-dark {
+  background-color: white;
+  border: 1px solid white;
+  color: black !important;
+  padding: 5px;
+  border-radius: 5px;
+  color: white;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.theme-btn-light {
+  background-color: black;
+  padding: 5px;
+  border-radius: 5px;
+  color: white;
+  margin-right: 20px;
+  cursor: pointer;
+}
