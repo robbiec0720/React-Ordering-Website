@@ -400,7 +400,7 @@ const login = async (request, response) => {
       }
     })
   })
-  if (check.localeCompare(name) != 0) {
+  if (check.localeCompare(id) != 0) {
     response.status(200).json(-1)
   }
   else if (check.localeCompare(id) != 0) {
