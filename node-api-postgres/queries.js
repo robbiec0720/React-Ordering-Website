@@ -393,7 +393,7 @@ const login = async (request, response) => {
       }
       if (results.rowCount == 0) {
         console.log("Invalid employee")
-        resolve(-1)
+        resolve("-1")
       }
       else {
         resolve(String(results.rows[0].password))
