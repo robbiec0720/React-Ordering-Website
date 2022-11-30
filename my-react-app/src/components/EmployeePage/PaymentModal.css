@@ -45,3 +45,38 @@
     color: red;
     cursor: pointer;
 }
+.form-cash-style{
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+
+}
+.form-cash-style > p{
+    margin-bottom: 2px;
+    font-weight: bold;
+}
+.cash-input-style{
+    font-size: 16px;
+    outline: 0;
+    border: 2px solid black;
+    padding: 6px 10px;
+    border-radius: 4px;
+}
+/* .cash-input-style:focus{
+    font-weight: bold;
+} */
+.cash-amount-btn{
+    margin-top: 15px;
+    padding: 6px 15px;
+    border-radius: 5px;
+    background-color: orange;
+    color: white;
+    border: 1px solid white;
+}
+.cash-amount-btn:hover{
+    background-color: white;
+    color: orange;
+}

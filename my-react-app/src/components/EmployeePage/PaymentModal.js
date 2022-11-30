@@ -43,16 +43,27 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, cart, setCart, 
       }
 
       const result = await response.json();
-      setShowInput(true)
+      if(payment_type === 0){
+        setShowInput(true)
+      }else{
+        closeModal()
+        setShowInput(false)
+        setCart([]);
+      }
       console.log('result is: ', JSON.stringify(result, null, 4));
       // openModal()
     } catch (err) {
       console.log(err)
     }
-    setCart([]);
-    closeModal();
+    
+    // closeModal();
   };
-
+  const handleAmount = (e)=>{
+    e.preventDefault()
+    setShowInput(false)
+    closeModal()
+    setCart([]);
+  }
   const { theme } = useContext(ThemeContext)
   return (
     <div>
@@ -64,18 +75,23 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, cart, setCart, 
         style={theme === 'light' ? customStyles : customStylesDark}
         contentLabel="Example Modal"
       >
-        <div className='modal-style'>
+        <div>
           {
             showInput ?
-            <form>
-              <input type="text" id="amount" />
-              <input type="submit" value="Confirm" />
-            </form>
+            <form onSubmit={handleAmount} className='form-cash-style'>
+              <p>Cash Payment</p>
+              <input className='cash-input-style'  type="number" step="0.01" id="amount" placeholder='Enter The Amount'/>
+              <input className='cash-amount-btn' type="submit" value="Confirm" />
+              <button onClick={()=> setShowInput(false)} className='cash-amount-btn'>Cancel</button>
+              </form>
             :
+            <div  className='modal-style'>
             <div onClick={() => handleClick(1)} className="modal-item">Card</div>
-          }
-          <div onClick={() => handleClick(0)} className="modal-item">Cash</div>
+            <div onClick={() => handleClick(0)} className="modal-item">Cash</div>
           <div onClick={() => handleClick(2)} className="modal-item">Dining Dollars</div>
+          </div>
+          }
+          
         </div>
         <button onClick={closeModal} className='close-btn'><FaTimes /></button>
       </Modal>

@@ -38,13 +38,15 @@ const Login = () => {
       method: 'GET',
       headers: {
         Accept: 'application/json'
-      },
+    },
     }).then(response => {
+      console.log(response)
       if (!response.ok) {
         throw new Error(`Error! status: ${response.status}`)
       }
 
       response.json().then(json => {
+        console.log(json)
         if (parseInt(json) == 2) {
           localStorage.setItem("user", JSON.stringify({ username: username, password: password, role: "manager" }))
         }
