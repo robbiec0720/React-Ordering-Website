@@ -319,6 +319,24 @@ const editTable = async (request, response) => {
   response.status(200).json(msg)
 }
 
+const getEmployeeID = async (request, response) => {
+  const email = String(request.query.email);
+  // console.log("EMAIL = " + email)
+  const query = "SELECT employee_id FROM employee WHERE email = '" + email + "';";
+  const id = await new Promise((resolve => {
+    pool.query(query, (error, results) => {
+      if (error) {
+        console.log(error.stack);
+        return "Error";
+      }
+      console.log(results)
+      resolve(parseInt(results.rows[0].employee_id))
+    })
+  }))
+
+  response.status(200).json(id);
+}
+
 async function editItem(table, id, col, val, idCol) {
   // checking if item exists
   const exists = "SELECT COUNT(*) FROM " + table + " WHERE " + idCol + " = " + id + ";"
@@ -349,13 +367,13 @@ async function editItem(table, id, col, val, idCol) {
 
 const login = async (request, response) => {
   const name = String(request.query.name)
-  const id = parseInt(request.query.id)
+  const id = String(request.query.id)
 
   console.log(name + " " + id);
 
-  var check = -1
+  var check = "-1"
   check = await new Promise((resolve) => {
-    pool.query("SELECT employee_id FROM employee WHERE employee_name = $1;", [name], (error, results) => {
+    pool.query("SELECT password FROM employee WHERE email = $1;", [name], (error, results) => {
       if (error) {
         console.log(error.stack)
         return
@@ -366,19 +384,19 @@ const login = async (request, response) => {
         resolve(-1)
       }
       else {
-        resolve(parseInt(results.rows[0].employee_id))
+        resolve(String(results.rows[0].password))
       }
     })
   })
-  if (check == -1) {
+  if (check.localeCompare(check) != 0) {
     response.status(200).json(-1)
   }
-  else if (check != id) {
+  else if (check.localeCompare(id) != 0) {
     response.status(200).json(0)
   }
   else {
     const mngr = await new Promise((resolve) => {
-      pool.query("SELECT is_manager FROM employee WHERE employee_name = $1;", [name], (error, results) => {
+      pool.query("SELECT is_manager FROM employee WHERE email = $1;", [name], (error, results) => {
         if (error) {
           console.log(error.stack)
           return
@@ -615,5 +633,6 @@ module.exports = {
   restock,
   addItem,
   removeItem,
-  clearCart
+  clearCart,
+  getEmployeeID
 }
