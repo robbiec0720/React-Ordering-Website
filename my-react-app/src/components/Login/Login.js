@@ -11,13 +11,63 @@ const Login = () => {
   // Terrible sphaghetti code, will fix later
   const onSuccess = (res) => {
     console.log("Login success");
-    console.log(res);
+    const email = res.profileObj.email.replace('@', '%40');
+    const googleID = res.profileObj.googleId;
 
     refreshTokenSetup(res);
+
+    const idRequest = 'https://project3-api.onrender.com/employee/getID?email=' + email;
+    let employeeID = -1
+    fetch(idRequest, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json'
+      },
+    }).then(response => {
+      if (!response.ok) {
+        throw new Error(`Error! status: ${response.status}`)
+      }
+
+      response.json().then(json => {
+        employeeID = parseInt(json);
+      })
+    })
+
+    const loginRequest = 'https://project3-api.onrender.com/login?name=' + email + '&id=' + googleID;
+    fetch(loginRequest, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json'
+      },
+    }).then(response => {
+      if (!response.ok) {
+        throw new Error(`Error! status: ${response.status}`)
+      }
+
+      response.json().then(json => {
+        if (parseInt(json) == 2) {
+          localStorage.setItem("user", JSON.stringify({ username: email, password: googleID, role: "manager" }))
+        }
+        else if (parseInt(json) == 1) {
+          localStorage.setItem("user", JSON.stringify({ username: email, password: googleID, role: "employee" }))
+        }
+        if (parseInt(json) == 1 || parseInt(json) == 2) {
+          navigate('../employee', {
+            state: {
+              employeeID: employeeID,
+              managerStatus: parseInt(json)
+            }
+          });
+        }
+      })
+    })
+
+
   };
 
   const onFailure = (res) => {
-    console.log("Login failure" + res)
+    console.log("Login failure");
+    console.log(res);
   };
 
   const handleSubmit = (event) => {
@@ -33,7 +83,26 @@ const Login = () => {
 
     // console.log(event.target.password.value) // from elements property
     // console.log(event.target.username.value)          // or directly
-    const loginRequest = 'https://project3-api.onrender.com/login?name=' + event.target.username.value + '&id=' + event.target.password.value;
+
+    const idRequest = 'https://project3-api.onrender.com/employee/getID?email=' + event.target.username.value;
+    const encodedIDRequest = idRequest.replace('@', '%40');
+    let employeeID = -1
+    fetch(encodedIDRequest, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json'
+      },
+    }).then(response => {
+      if (!response.ok) {
+        throw new Error(`Error! status: ${response.status}`)
+      }
+
+      response.json().then(json => {
+        employeeID = parseInt(json);
+      })
+    })
+
+    const loginRequest = 'https://project3-api.onrender.com/login?name=' + event.target.username.value.replace('@', '%40') + '&id=' + event.target.password.value;
     fetch(loginRequest, {
       method: 'GET',
       headers: {
@@ -54,7 +123,7 @@ const Login = () => {
         if (parseInt(json) == 1 || parseInt(json) == 2) {
           navigate('../employee', {
             state: {
-              employeeID: parseInt(event.target.password.value),
+              employeeID: employeeID,
               managerStatus: parseInt(json)
             }
           });
