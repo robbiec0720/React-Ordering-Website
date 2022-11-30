@@ -343,7 +343,6 @@ const getEmployeeID = async (request, response) => {
         console.log(error.stack);
         return "Error";
       }
-      console.log("Succesfully returned emplyee id " + id);
       resolve(parseInt(results.rows[0].employee_id))
     })
   }))
@@ -392,7 +391,6 @@ const login = async (request, response) => {
         console.log(error.stack)
         return
       }
-      console.log(results)
       if (results.rowCount == 0) {
         console.log("Invalid employee")
         resolve(-1)
@@ -409,7 +407,7 @@ const login = async (request, response) => {
     response.status(200).json(0)
   }
   else {
-    console.log("Succesful login with email = " + email + ", password = " + password + ".");
+    console.log("Succesful login with email = " + name + ", password = " + id + ".");
     const mngr = await new Promise((resolve) => {
       pool.query("SELECT is_manager FROM employee WHERE email = $1;", [name], (error, results) => {
         if (error) {
@@ -606,8 +604,8 @@ async function updateInventory() {
 const addItem = (request, response) => {
   const id = parseInt(request.params.id)
   order.push(id)
-  console.log(order)
   console.log("Succesfully added item with id = " + id + ".");
+  console.log("Current state of order = " + order);
   response.status(200).json("Item " + id + " successfully added to order!")
 }
 
