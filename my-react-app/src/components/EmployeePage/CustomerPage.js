@@ -3,6 +3,7 @@ import './EmployeePage.css';
 import FoodItem from './FoodItem';
 import { useNavigate } from "react-router-dom";
 import PaymentModal from './PaymentModal';
+import MapModal from'./MapModal';
 //import Popup from 'reactjs-popup';
 
 
@@ -14,9 +15,13 @@ const CustomerPage = () => {
 
     let subtitle;
     const [modalIsOpen, setIsOpen] = React.useState(false);
+    const [mapmodalIsOpen, setMapIsOpen] = React.useState(false);
 
     function openModal() {
         setIsOpen(true);
+    }
+    function openMap(){
+      setMapIsOpen(true);
     }
 
     function afterOpenModal() {
@@ -27,6 +32,9 @@ const CustomerPage = () => {
     function closeModal() {
         setIsOpen(false);
     }
+    function closeMapModal() {
+      setMapIsOpen(false);
+  }
 
 
 
@@ -126,10 +134,11 @@ const CustomerPage = () => {
                 <div className='submit-div'>
                     <button className='logout-btn' onClick={openModal}>Dine-In</button>
                     <button className='logout-btn' onClick={clearCart}>Clear Order</button>
-                    <button className='logout-btn' onClick={() => navigate('../')}>Deliver</button>
+                    <button className='logout-btn' onClick={openMap}>Deliver</button>
                 </div>
             </div>
             <PaymentModal openModal={openModal} modalIsOpen={modalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeModal} cart={cart} setCart={setCart}></PaymentModal>
+            <MapModal openMap={openMap}modalIsOpen={mapmodalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeMapModal}></MapModal>
         </div>
     );
 };
