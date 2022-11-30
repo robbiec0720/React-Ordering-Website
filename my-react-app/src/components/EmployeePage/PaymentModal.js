@@ -27,7 +27,7 @@ const customStylesDark = {
 };
 const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, cart, setCart, employee}) => {
   const [showInput, setShowInput] = useState(false)
-
+  const user = JSON.parse(localStorage.getItem("user"))
   const handleClick = async (payment_type) => {
     console.log("Order Button Clicked with value " + payment_type + "Employee ID = " + employee)
     try {
@@ -85,11 +85,22 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, cart, setCart, 
               <button onClick={()=> setShowInput(false)} className='cash-amount-btn'>Cancel</button>
               </form>
             :
-            <div  className='modal-style'>
+            <>
+            {
+              user ? 
+              <div  className='modal-style'>
             <div onClick={() => handleClick(1)} className="modal-item">Card</div>
             <div onClick={() => handleClick(0)} className="modal-item">Cash</div>
           <div onClick={() => handleClick(2)} className="modal-item">Dining Dollars</div>
           </div>
+              :
+              <div  className='modal-style-not-user'>
+            <div onClick={() => handleClick(1)} className="modal-item">Card</div>
+            
+          <div onClick={() => handleClick(2)} className="modal-item">Dining Dollars</div>
+          </div>
+            }
+            </>
           }
           
         </div>

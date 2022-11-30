@@ -5,6 +5,12 @@
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 20px;
 }
+.modal-style-not-user{
+    margin: 30px 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+}
 .modal-item{
     display: flex;
     justify-content: center;
