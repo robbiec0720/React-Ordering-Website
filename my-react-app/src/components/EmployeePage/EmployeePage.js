@@ -9,17 +9,15 @@ const EmployeePage = () => {
     const [foods, setFoods] = useState([]);
     const [cart, setCart] = useState([]);
     const [totalPrice, setTotal] = useState([]);
-    const [employee, setEmployee] = useState(parseInt(useLocation().state));
+    const [employeeID, setEmployee] = useState(parseInt(useLocation().state["employeeID"]));
+    const [managerStatus, ManagerStatus] = useState(parseInt(useLocation().state["managerStatus"]));
+
 
     let subtitle;
     const [modalIsOpen, setIsOpen] = React.useState(false);
 
     function openModal() {
         setIsOpen(true);
-    }
-
-    function getEmployee() {
-        return employee;
     }
 
     function afterOpenModal() {
@@ -115,7 +113,7 @@ const EmployeePage = () => {
                     <button className='logout-btn' onClick={() => navigate('../')}>Logout</button>
                 </div>
             </div>
-            <PaymentModal openModal={openModal} modalIsOpen={modalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeModal} cart={cart} setCart={setCart} employee={employee}></PaymentModal>
+            <PaymentModal openModal={openModal} modalIsOpen={modalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeModal} cart={cart} setCart={setCart} employee={employeeID}></PaymentModal>
         </div>
     );
 };

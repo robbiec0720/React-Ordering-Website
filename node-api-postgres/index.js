@@ -24,6 +24,7 @@ app.listen(port, () => {
     console.log(`App running on port ${port}.`)
 })
 
+app.get('/employee/getId', cors(corsOptions), db.getEmployeeID)
 app.get('/menuItems', cors(corsOptions), db.displayMenu)
 app.get('/menuItems/permanent', cors(corsOptions), db.getMenuItems)
 app.get('/menuItems/:id', cors(corsOptions), db.getItemName)
