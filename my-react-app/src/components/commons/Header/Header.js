@@ -52,11 +52,11 @@ const Header = () => {
                                 label="Language"
                                 onChange={handleChange}
                             >
-                                <MenuItem value={'English'}>English</MenuItem>
-                                <MenuItem value={'Spanish'}>Spanish</MenuItem>
-                                <MenuItem value={'German'}>German</MenuItem>
-                                <MenuItem value={'French'}>French</MenuItem>
-                                <MenuItem value={'Russian'}>Russian</MenuItem>
+                                <MenuItem value={'en'}>English</MenuItem>
+                                <MenuItem value={'es'}>Spanish</MenuItem>
+                                <MenuItem value={'de'}>German</MenuItem>
+                                <MenuItem value={'fr'}>French</MenuItem>
+                                <MenuItem value={'ru'}>Russian</MenuItem>
                             </Select>
                         </FormControl>
                     </ThemeProvider>
