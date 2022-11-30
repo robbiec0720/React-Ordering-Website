@@ -2,7 +2,7 @@ import React from 'react';
 import './FoodItem.css';
 const FoodItem = ({ food, cart, setCart }) => {
   const { id, name, price, img, count } = food;
-  const url = 'https://project3-api.onrender.com/order/add/' + id.toString()
+  const url = 'http://localhost:8081/order/add/' + id.toString()
   
   const handleClick = async () => {
     await fetch(url, {

@@ -16,7 +16,7 @@ const Login = () => {
 
     refreshTokenSetup(res);
 
-    const idRequest = 'https://project3-api.onrender.com/employee/getID?email=' + email;
+    const idRequest = 'http://localhost:8081/employee/getID?email=' + email;
     let employeeID = -1
     fetch(idRequest, {
       method: 'GET',
@@ -33,7 +33,7 @@ const Login = () => {
       })
     })
 
-    const loginRequest = 'https://project3-api.onrender.com/login?name=' + email + '&id=' + googleID;
+    const loginRequest = 'http://localhost:8081/login?name=' + email + '&id=' + googleID;
     fetch(loginRequest, {
       method: 'GET',
       headers: {
@@ -84,7 +84,7 @@ const Login = () => {
     // console.log(event.target.password.value) // from elements property
     // console.log(event.target.username.value)          // or directly
 
-    const idRequest = 'https://project3-api.onrender.com/employee/getID?email=' + event.target.username.value;
+    const idRequest = 'http://localhost:8081/employee/getID?email=' + event.target.username.value;
     const encodedIDRequest = idRequest.replace('@', '%40');
     let employeeID = -1
     fetch(encodedIDRequest, {
@@ -102,7 +102,7 @@ const Login = () => {
       })
     })
 
-    const loginRequest = 'https://project3-api.onrender.com/login?name=' + event.target.username.value.replace('@', '%40') + '&id=' + event.target.password.value;
+    const loginRequest = 'http://localhost:8081/login?name=' + event.target.username.value.replace('@', '%40') + '&id=' + event.target.password.value;
     fetch(loginRequest, {
       method: 'GET',
       headers: {
