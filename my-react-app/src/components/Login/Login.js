@@ -45,6 +45,7 @@ const Login = () => {
       }
 
       response.json().then(json => {
+        console.log(json);
         if (parseInt(json) == 2) {
           localStorage.setItem("user", JSON.stringify({ username: email, password: googleID, role: "manager" }))
         }
@@ -52,6 +53,7 @@ const Login = () => {
           localStorage.setItem("user", JSON.stringify({ username: email, password: googleID, role: "employee" }))
         }
         if (parseInt(json) == 1 || parseInt(json) == 2) {
+          console.log("Got here")
           navigate('../employee', {
             state: {
               employeeID: employeeID,
