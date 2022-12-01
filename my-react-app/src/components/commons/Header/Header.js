@@ -26,6 +26,7 @@ const Header = () => {
     })
     const handleChange = (event) => {
         setLang(event.target.value)
+        //window.location.reload(false);
     }
 
     return (

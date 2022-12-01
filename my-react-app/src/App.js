@@ -25,7 +25,7 @@ export const LangContext = createContext();
 
 function App() {
   const [theme, setTheme] = useState('light')
-  const [lang, setLang] = useState('English')
+  const [lang, setLang] = useState('en')
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
       <LangContext.Provider value={{ lang, setLang }}>
