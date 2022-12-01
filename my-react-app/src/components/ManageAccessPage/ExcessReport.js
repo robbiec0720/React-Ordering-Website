@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { ThemeContext } from '../../App';
 import './ManageAccess.css'
 
@@ -96,6 +96,7 @@ const ExcessReport = () => {
                 rowsPerPageOptions={[10]}
                 checkboxSelection={false}
                 disableColumnMenu={true}
+                components={{ Toolbar: GridToolbar }}
             />
         </div>
     );
