@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { ThemeContext } from '../../App';
+import { ThemeContext, LangContext, PrevLangContext } from '../../App';
 import './ManageAccess.css'
 
 const SalesReport = () => {
@@ -17,6 +17,13 @@ const SalesReport = () => {
     const [start, setStart] = React.useState('2022-10-02')
     const [end, setEnd] = React.useState('2022-10-25')
     const { theme } = useContext(ThemeContext)
+    const { lang } = useContext(LangContext)
+    const { prevLang } = useContext(PrevLangContext)
+    const [sDate, setSDate] = React.useState('Start Date')
+    const [eDate, setEDate] = React.useState('End Date')
+    const [report, setReport] = React.useState('Sales Report from')
+    const [to, setTo] = React.useState('to')
+    const [submit, setSubmit] = React.useState('Submit')
     const lightTheme = createTheme({
         palette: {
             mode: 'light'
@@ -56,7 +63,43 @@ const SalesReport = () => {
             console.log(err)
         }
 
-    }, [start, end])
+        let t = [sDate, eDate, report, to, submit]
+        let text = t.join(';')
+        if (lang !== prevLang) {
+            const API_KEY = 'AIzaSyANYWkU1YhvNE5flUIvzJv8g-y0KCHva-0'
+            let url = `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`
+            url += '&q=' + encodeURI(text)
+            url += `&source=${prevLang}`
+            url += `&target=${lang}`
+            let translated = new Promise(function (resolve, reject) {
+                fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json"
+                    }
+                })
+                    .then(res => res.json())
+                    .then((response) => {
+                        //console.log("response from google: ", response.data.translations[0].translatedText)
+                        resolve(response.data.translations[0].translatedText)
+                    })
+                    .catch(error => {
+                        console.log("There was an error with the translation request: ", error)
+                    });
+            })
+            translated.then((result) => {
+                var split = result.split(';')
+                console.log(split)
+                setSDate(split[0])
+                setEDate(split[1])
+                setReport(split[2])
+                setTo(split[3])
+                setSubmit(split[4])
+            })
+        }
+
+    }, [start, end, eDate, sDate, lang, prevLang, report, submit, to])
 
     // form to get start date input
     class StartForm extends React.Component {
@@ -82,13 +125,13 @@ const SalesReport = () => {
             return (
                 <form onSubmit={this.handleSubmit}>
                     <label>
-                        Start Date (YYYY-MM-DD):&nbsp;
+                        {sDate} (YYYY-MM-DD):&nbsp;
                         <input type="text" value={this.state.value} onChange={this.handleChange} />
                     </label>
                     <label>
                         &nbsp;&nbsp;&nbsp;&nbsp;
                     </label>
-                    <input className="submit-btn" type="submit" value="Submit" />
+                    <input className="submit-btn" type="submit" value={submit} />
                 </form>
             )
         }
@@ -118,13 +161,13 @@ const SalesReport = () => {
             return (
                 <form onSubmit={this.handleSubmit}>
                     <label>
-                        End Date (YYYY-MM-DD):&nbsp;
+                        {eDate} (YYYY-MM-DD):&nbsp;
                         <input type="text" value={this.state.value} onChange={this.handleChange} />
                     </label>
                     <label>
                         &nbsp;&nbsp;&nbsp;&nbsp;
                     </label>
-                    <input className="submit-btn" type="submit" value="Submit" />
+                    <input className="submit-btn" type="submit" value={submit} />
                 </form>
             )
         }
@@ -132,7 +175,7 @@ const SalesReport = () => {
 
     return (
         <div className={theme === 'light' ? 'table' : 'table-dark'}>
-            <h1>Sales Report from {start} to {end}</h1>
+            <h1>{report} {start} {to} {end}</h1>
             <StartForm></StartForm>
             <EndForm></EndForm>
             <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>

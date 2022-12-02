@@ -29,7 +29,9 @@ const Header = () => {
     const handleChange = (event) => {
         setPrevLang(lang)
         setLang(event.target.value)
-        // window.location.reload(false);
+        if(event.target.value === 'en') {
+            window.location.reload(false);
+        }
     }
    
     const handleLogout = () =>{

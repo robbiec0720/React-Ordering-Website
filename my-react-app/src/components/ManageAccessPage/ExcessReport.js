@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { ThemeContext } from '../../App';
+import { LangContext, PrevLangContext, ThemeContext } from '../../App';
 import './ManageAccess.css'
 
 const ExcessReport = () => {
@@ -18,6 +18,13 @@ const ExcessReport = () => {
     const [excess, setExcess] = React.useState()
     const [start, setStart] = React.useState('2022-10-02')
     const { theme } = useContext(ThemeContext)
+    const { lang } = useContext(LangContext)
+    const { prevLang } = useContext(PrevLangContext)
+    const [date, setDate] = React.useState('Start Date')
+    const [report, setReport] = React.useState('Excess Report from')
+    const [to, setTo] = React.useState('to')
+    const [submit, setSubmit] = React.useState('Submit')
+
     const lightTheme = createTheme({
         palette: {
             mode: 'light'
@@ -56,7 +63,42 @@ const ExcessReport = () => {
             console.log(err)
         }
 
-    }, [start])
+        let t = [date, report, to, submit]
+        let text = t.join(';')
+        if (lang !== prevLang) {
+            const API_KEY = 'AIzaSyANYWkU1YhvNE5flUIvzJv8g-y0KCHva-0'
+            let url = `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`
+            url += '&q=' + encodeURI(text)
+            url += `&source=${prevLang}`
+            url += `&target=${lang}`
+            let translated = new Promise(function (resolve, reject) {
+                fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json"
+                    }
+                })
+                    .then(res => res.json())
+                    .then((response) => {
+                        //console.log("response from google: ", response.data.translations[0].translatedText)
+                        resolve(response.data.translations[0].translatedText)
+                    })
+                    .catch(error => {
+                        console.log("There was an error with the translation request: ", error)
+                    });
+            })
+            translated.then((result) => {
+                var split = result.split(';')
+                console.log(split)
+                setDate(split[0])
+                setReport(split[1])
+                setTo(split[2])
+                setSubmit(split[3])
+            })
+        }
+
+    }, [start, date, submit, to, report, lang, prevLang])
 
     // form to get start date input
     class StartForm extends React.Component {
@@ -82,13 +124,13 @@ const ExcessReport = () => {
             return (
                 <form onSubmit={this.handleSubmit}>
                     <label>
-                        Start Date (YYYY-MM-DD):&nbsp;
+                        {date} (YYYY-MM-DD):&nbsp;
                         <input type="text" value={this.state.value} onChange={this.handleChange} />
                     </label>
                     <label>
                         &nbsp;&nbsp;&nbsp;&nbsp;
                     </label>
-                    <input className="submit-btn" type="submit" value="Submit" />
+                    <input className="submit-btn" type="submit" value={submit} />
                 </form>
             )
         }
@@ -96,7 +138,7 @@ const ExcessReport = () => {
 
     return (
         <div className={theme === 'light' ? 'table' : 'table-dark'}>
-            <h1>Excess Report from {start} to 2022-10-25</h1>
+            <h1>{report} {start} {to} 2022-10-25</h1>
             <StartForm></StartForm>
             <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
                 <DataGrid
