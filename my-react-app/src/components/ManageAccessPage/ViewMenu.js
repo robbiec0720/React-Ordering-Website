@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { ThemeContext } from '../../App';
 import './ManageAccess.css'
 
@@ -13,9 +14,19 @@ const ViewMenu = () => {
         { field: 'item_type', headerName: 'Item Type', width: 100 },
         { field: 'is_seasonal', headerName: 'Seasonal?', width: 90 }
     ]
-    
+
     const [menu, setMenu] = React.useState()
-    const {theme} = useContext(ThemeContext)
+    const { theme } = useContext(ThemeContext)
+    const lightTheme = createTheme({
+        palette: {
+            mode: 'light'
+        }
+    })
+    const darkTheme = createTheme({
+        palette: {
+            mode: 'dark'
+        }
+    })
 
     React.useEffect(() => {
         let tempMenu = []
@@ -47,17 +58,18 @@ const ViewMenu = () => {
     return (
         <div className={theme === 'light' ? 'table' : 'table-dark'}>
             <h1>View Menu</h1>
-            <DataGrid
-                sx={{color: theme === 'light' ? 'black' : 'white'}}
-                getRowId={(row) => row.food_id}
-                rows={menu ? menu : []}
-                columns={menuCols}
-                pageSize={10}
-                rowsPerPageOptions={[10]}
-                checkboxSelection={false}
-                disableColumnMenu={true}
-                components={{ Toolbar: GridToolbar }}
-            />
+            <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+                <DataGrid
+                    getRowId={(row) => row.food_id}
+                    rows={menu ? menu : []}
+                    columns={menuCols}
+                    pageSize={10}
+                    rowsPerPageOptions={[10]}
+                    checkboxSelection={false}
+                    disableColumnMenu={true}
+                    components={{ Toolbar: GridToolbar }}
+                />
+            </ThemeProvider>
         </div>
     );
 };

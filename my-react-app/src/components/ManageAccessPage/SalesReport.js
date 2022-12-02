@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { ThemeContext } from '../../App';
 import './ManageAccess.css'
 
@@ -15,7 +16,17 @@ const SalesReport = () => {
     const [sales, setSales] = React.useState()
     const [start, setStart] = React.useState('2022-10-02')
     const [end, setEnd] = React.useState('2022-10-25')
-    const {theme} = useContext(ThemeContext)
+    const { theme } = useContext(ThemeContext)
+    const lightTheme = createTheme({
+        palette: {
+            mode: 'light'
+        }
+    })
+    const darkTheme = createTheme({
+        palette: {
+            mode: 'dark'
+        }
+    })
 
     React.useEffect(() => {
         let tempSales = []
@@ -58,13 +69,13 @@ const SalesReport = () => {
         }
 
         handleChange(event) {
-            this.setState({ value: event.target.value})
+            this.setState({ value: event.target.value })
         }
 
-        handleSubmit(event) {  
-            event.preventDefault();     
+        handleSubmit(event) {
+            event.preventDefault();
             console.log(this.state.value)
-            setStart(this.state.value)          
+            setStart(this.state.value)
         }
 
         render() {
@@ -94,7 +105,7 @@ const SalesReport = () => {
         }
 
         handleChange(event) {
-            this.setState({ value: event.target.value})
+            this.setState({ value: event.target.value })
         }
 
         handleSubmit(event) {
@@ -124,17 +135,18 @@ const SalesReport = () => {
             <h1>Sales Report from {start} to {end}</h1>
             <StartForm></StartForm>
             <EndForm></EndForm>
-            <DataGrid
-                sx={{color: theme === 'light' ? 'black' : 'white'}}
-                getRowId={(row) => row.food_id}
-                rows={sales ? sales : []}
-                columns={salesCols}
-                pageSize={10}
-                rowsPerPageOptions={[10]}
-                checkboxSelection={false}
-                disableColumnMenu={true}
-                components={{ Toolbar: GridToolbar }}
-            />
+            <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+                <DataGrid
+                    getRowId={(row) => row.food_id}
+                    rows={sales ? sales : []}
+                    columns={salesCols}
+                    pageSize={10}
+                    rowsPerPageOptions={[10]}
+                    checkboxSelection={false}
+                    disableColumnMenu={true}
+                    components={{ Toolbar: GridToolbar }}
+                />
+            </ThemeProvider>
         </div>
     );
 };

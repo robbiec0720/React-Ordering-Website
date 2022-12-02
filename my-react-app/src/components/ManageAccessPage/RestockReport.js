@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { ThemeContext } from '../../App';
 import './ManageAccess.css'
 
@@ -14,7 +15,17 @@ const RestockReport = () => {
         { field: 'cost', headerName: 'Cost', width: 75 }
     ]
     const [restock, setRestock] = React.useState()
-    const {theme} = useContext(ThemeContext)
+    const { theme } = useContext(ThemeContext)
+    const lightTheme = createTheme({
+        palette: {
+            mode: 'light'
+        }
+    })
+    const darkTheme = createTheme({
+        palette: {
+            mode: 'dark'
+        }
+    })
 
     React.useEffect(() => {
         let tempRestock = []
@@ -59,24 +70,25 @@ const RestockReport = () => {
                 alert(json)
                 document.location.reload(true)
             })
-        })  
+        })
     }
 
     return (
         <div className={theme === 'light' ? 'table' : 'table-dark'}>
             <h1>Restock Report</h1>
             <button className='submit-btn' onClick={handleClick}>Restock</button>
-            <DataGrid
-                sx={{color: theme === 'light' ? 'black' : 'white'}}
-                getRowId={(row) => row.ingredient_id}
-                rows={restock ? restock : []}
-                columns={invCols}
-                pageSize={10}
-                rowsPerPageOptions={[10]}
-                checkboxSelection={false}
-                disableColumnMenu={true}
-                components={{ Toolbar: GridToolbar }}
-            />
+            <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+                <DataGrid
+                    getRowId={(row) => row.ingredient_id}
+                    rows={restock ? restock : []}
+                    columns={invCols}
+                    pageSize={10}
+                    rowsPerPageOptions={[10]}
+                    checkboxSelection={false}
+                    disableColumnMenu={true}
+                    components={{ Toolbar: GridToolbar }}
+                />
+            </ThemeProvider>
         </div>
     );
 };

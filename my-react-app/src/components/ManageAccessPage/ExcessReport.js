@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { ThemeContext } from '../../App';
 import './ManageAccess.css'
 
@@ -16,31 +17,41 @@ const ExcessReport = () => {
     // state columns
     const [excess, setExcess] = React.useState()
     const [start, setStart] = React.useState('2022-10-02')
-    const {theme} = useContext(ThemeContext)
+    const { theme } = useContext(ThemeContext)
+    const lightTheme = createTheme({
+        palette: {
+            mode: 'light'
+        }
+    })
+    const darkTheme = createTheme({
+        palette: {
+            mode: 'dark'
+        }
+    })
 
     React.useEffect(() => {
         let tempExcess = []
 
         try {
-             // getting excess report through api
-             const apiExcess = 'https://project3-api.onrender.com/excess/' + start + '/2022-10-25'
-             fetch(apiExcess, {
-                 method: 'GET',
-                 headers: {
-                     Accept: 'application/json',
-                 },
-             }).then(response => {
-                 if (!response.ok) {
-                     throw new Error(`Error! status: ${response.status}`)
-                 }
- 
-                 response.json().then(json => {
-                     for (var key in json) {
-                         tempExcess.push(json[key])
-                     }
-                     setExcess(tempExcess)
-                 })
-             })
+            // getting excess report through api
+            const apiExcess = 'https://project3-api.onrender.com/excess/' + start + '/2022-10-25'
+            fetch(apiExcess, {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                },
+            }).then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error! status: ${response.status}`)
+                }
+
+                response.json().then(json => {
+                    for (var key in json) {
+                        tempExcess.push(json[key])
+                    }
+                    setExcess(tempExcess)
+                })
+            })
         } catch (err) {
             console.log(err)
         }
@@ -58,13 +69,13 @@ const ExcessReport = () => {
         }
 
         handleChange(event) {
-            this.setState({ value: event.target.value})
+            this.setState({ value: event.target.value })
         }
 
-        handleSubmit(event) {  
-            event.preventDefault();     
+        handleSubmit(event) {
+            event.preventDefault();
             console.log(this.state.value)
-            setStart(this.state.value)          
+            setStart(this.state.value)
         }
 
         render() {
@@ -87,17 +98,18 @@ const ExcessReport = () => {
         <div className={theme === 'light' ? 'table' : 'table-dark'}>
             <h1>Excess Report from {start} to 2022-10-25</h1>
             <StartForm></StartForm>
-            <DataGrid
-                sx={{color: theme === 'light' ? 'black' : 'white'}}
-                getRowId={(row) => row.ingredient_id}
-                rows={excess ? excess : []}
-                columns={excessCols}
-                pageSize={10}
-                rowsPerPageOptions={[10]}
-                checkboxSelection={false}
-                disableColumnMenu={true}
-                components={{ Toolbar: GridToolbar }}
-            />
+            <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+                <DataGrid
+                    getRowId={(row) => row.ingredient_id}
+                    rows={excess ? excess : []}
+                    columns={excessCols}
+                    pageSize={10}
+                    rowsPerPageOptions={[10]}
+                    checkboxSelection={false}
+                    disableColumnMenu={true}
+                    components={{ Toolbar: GridToolbar }}
+                />
+            </ThemeProvider>
         </div>
     );
 };
