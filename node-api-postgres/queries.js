@@ -17,6 +17,7 @@ const getMenuItems = (request, response) => {
     if (error) {
       throw error.stack
     }
+    console.log("Succesfully returned menu items");
     response.status(200).json(results.rows)
   })
 }
@@ -26,6 +27,7 @@ const getSeasonalItems = (request, response) => {
     if (error) {
       throw error.stack
     }
+    console.log("Succesfully returned seasonal itemss.");
     response.status(200).json(results.rows)
   })
 }
@@ -42,6 +44,7 @@ const getItemName = (request, response) => {
       console.log("Food item does not exist")
       return
     }
+    console.log("Succesfully got item name for id = " + id + ".");
     response.status(200).json(results.rows)
   })
 }
@@ -52,6 +55,7 @@ const displayMenu = (request, response) => {
       console.log(error.stack)
       return
     }
+    console.log("Succesfully displayed menu.");
     response.status(200).json(results.rows)
   })
 }
@@ -104,7 +108,8 @@ const salesReport = async (request, response) => {
     sales[i] = { "food_id": menu[i].food_id, "item_name": menu[i].item_name, "amount_sold": amounts[i] }
   }
 
-  response.status(200).json(sales)
+  console.log("Succesfully returned sales report starting at date " + start + " and ending at date " + end + ".");
+  response.status(200).json(sales);
 }
 
 const displayOrder = async (request, response) => {
@@ -122,6 +127,7 @@ const displayOrder = async (request, response) => {
   }
 
   // TODO: Add error checking
+  console.log("Succesfully displayed order.");
   response.status(200).json(display)
 
 }
@@ -154,6 +160,7 @@ const deleteEntry = async (request, response) => {
         response.status(200).json('Error in deleting entry from ' + tableName + 'with ID: ' + id)
         return
       }
+      console.log("Succesfully deleted " + colName + " = " + id + " from table " + tableName + ".");
       response.status(200).json('Deleted entry from ' + tableName + 'with ID: ' + id)
     })
   }
@@ -165,6 +172,7 @@ const restockReport = (request, response) => {
       console.log(error.stack)
       return
     }
+    console.log("Succesfully returned restock repot.");
     response.status(200).json(results.rows)
   })
 }
@@ -184,6 +192,7 @@ const restock = async (request, response) => {
     editItem('Inventory', reorder[i].ingredient_id, 'unit_quantity', reorder[i].reorder_value, 'ingredient_id')
   }
 
+  console.log("Succesfully completed restock.");
   response.status(200).json('Inventory has been restocked!')
 }
 
@@ -193,6 +202,7 @@ const displayInventory = (request, response) => {
       console.log(error.stack)
       return
     }
+    console.log("Succesfully displayed inventory.");
     response.status(200).json(results.rows)
   })
 }
@@ -247,6 +257,7 @@ const excessReport = async (request, response) => {
     }
   }
 
+  console.log("Succesfully completed excess report query.");
   response.status(200).json(excess)
 }
 
@@ -274,6 +285,7 @@ const addIngredient = async (request, response) => {
         response.status(201).json('Error in adding ingredient')
         return
       }
+      console.log('Ingredient added with ID: ' + id);
       response.status(201).json('Ingredient added with ID: ' + id)
     })
 }
@@ -304,6 +316,7 @@ const addFoodItem = async (request, response) => {
         console.log(error.stack)
         return
       }
+      console.log('Food Item added with ID: ' + id);
       response.status(201).json('Food Item added with ID: ' + id)
     })
 }
@@ -316,7 +329,26 @@ const editTable = async (request, response) => {
   const val = params[3]
   const idCol = String(params[4])
   const msg = await editItem(table, id, col, val, idCol)
+  console.log("Succesfully edited table with information: table = " + table + ", id = " + id + ", column = " + col + ", value = " + val + ", column_id = " + idCol + ".");
   response.status(200).json(msg)
+}
+
+const getEmployeeID = async (request, response) => {
+  const email = String(request.query.email);
+  // console.log("EMAIL = " + email)
+  const query = "SELECT employee_id FROM employee WHERE email = '" + email + "';";
+  const id = await new Promise((resolve => {
+    pool.query(query, (error, results) => {
+      if (error) {
+        console.log(error.stack);
+        return "Error";
+      }
+      resolve(parseInt(results.rows[0].employee_id))
+    })
+  }))
+
+  console.log("Succesfully got employee_id = " + id + " where email = " + email + ".");
+  response.status(200).json(id);
 }
 
 async function editItem(table, id, col, val, idCol) {
@@ -344,41 +376,40 @@ async function editItem(table, id, col, val, idCol) {
       return "Error"
     }
   })
+  console.log("Succesfully updated item from " + table + " with ID: " + id + ".");
   return ("Updated item from " + table + " with ID: " + id)
 }
 
 const login = async (request, response) => {
   const name = String(request.query.name)
-  const id = parseInt(request.query.id)
+  const id = String(request.query.id)
 
-  console.log(name + " " + id);
-
-  var check = -1
+  var check = "-1"
   check = await new Promise((resolve) => {
-    pool.query("SELECT employee_id FROM employee WHERE employee_name = $1;", [name], (error, results) => {
+    pool.query("SELECT password FROM employee WHERE email = $1;", [name], (error, results) => {
       if (error) {
         console.log(error.stack)
         return
       }
-      console.log(results)
       if (results.rowCount == 0) {
         console.log("Invalid employee")
-        resolve(-1)
+        resolve("-1")
       }
       else {
-        resolve(parseInt(results.rows[0].employee_id))
+        resolve(String(results.rows[0].password))
       }
     })
   })
-  if (check == -1) {
+  if (check.localeCompare(id) != 0) {
     response.status(200).json(-1)
   }
-  else if (check != id) {
+  else if (check.localeCompare(id) != 0) {
     response.status(200).json(0)
   }
   else {
+    console.log("Succesful login with email = " + name + ", password = " + id + ".");
     const mngr = await new Promise((resolve) => {
-      pool.query("SELECT is_manager FROM employee WHERE employee_name = $1;", [name], (error, results) => {
+      pool.query("SELECT is_manager FROM employee WHERE email = $1;", [name], (error, results) => {
         if (error) {
           console.log(error.stack)
           return
@@ -395,28 +426,35 @@ const login = async (request, response) => {
   }
 }
 
+/**
+ * Function called when an order is submitted. Not to be confused with "placeOrder()"
+ * which actually handles the functionality of placing the current order in the database.
+ * 
+ * @param {*} request API request.
+ * @param {*} response Response in JSON format.
+ */
 const orderSubmitted = async (request, response) => {
-  const id = parseInt(request.query.id)
-  const payType = parseInt(request.query.type)
-  const payment = parseFloat(request.query.payment)
+  const id = parseInt(request.query.id);             
+  const payType = parseInt(request.query.type);
+  const payment = parseFloat(request.query.payment);
 
-  condiments.push(26)
-  condiments.push(27)
+  condiments.push(26);
+  condiments.push(27);
 
-  const orderInfo = await placeOrder(payment, payType)
+  const orderInfo = await placeOrder(payment, payType);
 
   if (orderInfo == null) {
-    response.status(200).json(-1)
+    response.status(200).json(-1);
   }
   else {
-    placeTransaction(orderInfo[0], id, payType, orderInfo[1], payment)
-    updateInventory()
-    response.status(200).json(0)
+    placeTransaction(orderInfo[0], id, payType, orderInfo[1], payment);
+    updateInventory();
+    response.status(200).json(0);
   }
 
-  console.log("Order placed sucessfully")
-  order = []
-  condiments = []
+  console.log("Succesfully placed order with id = " + id + ", paymentType = " + payment + ", payment = " + payment + ".");
+  order = [];
+  condiments = [];
 }
 
 async function placeOrder(payment, payType) {
@@ -523,6 +561,8 @@ async function placeTransaction(orderID, employeeID, payType, subtotal, payment)
         return
       }
     })
+
+  console.log("Succesfully placed transaction with orderID = " + orderID + ", employeeID = " + employeeID + ", paymentType = " + payType + ", subtotal = " + subtotal + ", payment = " + payment + ".");
 }
 
 async function updateInventory() {
@@ -565,12 +605,14 @@ async function updateInventory() {
     }) - 1
     editItem('Inventory', c_id, "unit_quantity", c_val, "ingredient_id")
   }
+  console.log("Succesfully updated inventory.");
 }
 
 const addItem = (request, response) => {
   const id = parseInt(request.params.id)
   order.push(id)
-  console.log(order)
+  console.log("Succesfully added item with id = " + id + ".");
+  console.log("Current state of order = " + order);
   response.status(200).json("Item " + id + " successfully added to order!")
 }
 
@@ -580,16 +622,19 @@ const removeItem = (request, response) => {
   if (index > -1) {
     order.splice(index, 1)
     console.log(order)
-    response.status(200).json("Item " + id + " successfully removed from order.")
+    console.log("Succesfully removed item " + id + "from order.");
+    response.status(200).json("Item with id = " + id + " successfully removed from order.")
   }
   else {
+    console.log("Failed to remove item with id = " + id + "from order. Is it currently in the order?");
     response.status(200).json("Item " + id + " not found in order.")
   }
 }
 
 const clearCart = (request, response) => {
   order = []
-  console.log(order)
+  console.log("Current state of order = " + order)
+  console.log("Succesfully cleared cart");
   response.status(200).json("Cart successfully cleared.")
 }
 
@@ -615,5 +660,6 @@ module.exports = {
   restock,
   addItem,
   removeItem,
-  clearCart
+  clearCart,
+  getEmployeeID
 }

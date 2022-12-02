@@ -9,7 +9,9 @@ const EmployeePage = () => {
     const [foods, setFoods] = useState([]);
     const [cart, setCart] = useState([]);
     const [totalPrice, setTotal] = useState([]);
-    const [employee, setEmployee] = useState(parseInt(useLocation().state));
+    const [employeeID, setEmployee] = useState(parseInt(useLocation().state["employeeID"]));
+    const [managerStatus, ManagerStatus] = useState(parseInt(useLocation().state["managerStatus"]));
+
 
     let subtitle;
     const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -70,11 +72,6 @@ const EmployeePage = () => {
         console.log(cart);
     }
 
-    const handleClick = async () => {
-        console.log("Order Button Clicked")
-        openModal()
-    };
-
     return (
         <div className='employee-page-style'>
             <div className='sub-employee-one'>
@@ -110,13 +107,13 @@ const EmployeePage = () => {
                     </div>
                 </div>
                 <div className='submit-div'>
-                    <button className='logout-btn' onClick={handleClick}>Submit Order</button>
+                    <button className='logout-btn' onClick={openModal}>Submit Order</button>
                     {/* <button className='logout-btn'>Edit Order</button> */}
                     <button className='logout-btn' onClick={clearCart}>Clear Order</button>
                     <button className='logout-btn' onClick={() => navigate('../')}>Logout</button>
                 </div>
             </div>
-            <PaymentModal openModal={openModal} modalIsOpen={modalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeModal} cost={round(cart.reduce((total, item) => total + parseInt(item.count) * parseFloat(item.price), 0), 2)} clearCart={clearCart}></PaymentModal>
+            <PaymentModal openModal={openModal} modalIsOpen={modalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeModal} cart={cart} setCart={setCart} employee={employeeID}></PaymentModal>
         </div>
     );
 };

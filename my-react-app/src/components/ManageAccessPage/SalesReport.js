@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { ThemeContext } from '../../App';
 import './ManageAccess.css'
 
@@ -135,18 +134,17 @@ const SalesReport = () => {
             <h1>Sales Report from {start} to {end}</h1>
             <StartForm></StartForm>
             <EndForm></EndForm>
-            <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
-                <DataGrid
-                    sx={{color: theme === 'light' ? 'black' : 'white'}}
-                    getRowId={(row) => row.food_id}
-                    rows={sales ? sales : []}
-                    columns={salesCols}
-                    pageSize={10}
-                    rowsPerPageOptions={[10]}
-                    checkboxSelection={false}
-                    disableColumnMenu={true}
-                />
-            </ThemeProvider>
+            <DataGrid
+                sx={{color: theme === 'light' ? 'black' : 'white'}}
+                getRowId={(row) => row.food_id}
+                rows={sales ? sales : []}
+                columns={salesCols}
+                pageSize={10}
+                rowsPerPageOptions={[10]}
+                checkboxSelection={false}
+                disableColumnMenu={true}
+                components={{ Toolbar: GridToolbar }}
+            />
         </div>
     );
 };

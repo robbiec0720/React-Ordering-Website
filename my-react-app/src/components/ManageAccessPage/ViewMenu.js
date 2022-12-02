@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { ThemeContext } from '../../App';
 import './ManageAccess.css'
 
@@ -68,7 +67,8 @@ const ViewMenu = () => {
                     rowsPerPageOptions={[10]}
                     checkboxSelection={false}
                     disableColumnMenu={true}
-                />
+                    components={{ Toolbar: GridToolbar }}
+            />
             </ThemeProvider>
         </div>
     );

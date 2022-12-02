@@ -25,13 +25,12 @@ const customStylesDark = {
     transform: 'translate(-50%, -50%)',
   },
 };
-const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, cost, clearCart}) => {
+const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, cart, setCart, employee}) => {
 
   const handleClick = async (payment_type) => {
-    console.log("Order Button Clicked with Value: " + payment_type)
-    const url = 'https://project3-api.onrender.com/order/submit?id=1&type=' + payment_type + '&payment=' + cost
+    console.log("Order Button Clicked with value " + payment_type + "Employee ID = " + employee)
     try {
-      const response = await fetch(url, {
+      const response = await fetch('https://project3-api.onrender.com/order/submit?id=' + employee + '&type=' + payment_type + '&payment=20.00', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -49,8 +48,8 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, cost, clearCart
     } catch (err) {
       console.log(err)
     }
-    clearCart()
-    closeModal()
+    setCart([]);
+    closeModal();
   };
 
   const { theme } = useContext(ThemeContext)

@@ -116,7 +116,7 @@ const CustomerPage = () => {
                     <button className='logout-btn' onClick={() => navigate('../')}>Deliver</button>
                 </div>
             </div>
-            <PaymentModal openModal={openModal} modalIsOpen={modalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeModal} cost={round((cart.reduce((total, item) => total + parseInt(item.count) * parseFloat(item.price), 0) * 1.0825), 2)} setCart={setCart}></PaymentModal>
+            <PaymentModal openModal={openModal} modalIsOpen={modalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeModal} employee={0} setCart={setCart}></PaymentModal>
         </div>
     );
 };

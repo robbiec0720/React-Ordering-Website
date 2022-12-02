@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { createContext } from 'react';
+import { createContext, useEffect, useState } from 'react';
+import { gapi } from 'gapi-script';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Footer from './components/commons/Footer/Footer';
@@ -24,7 +24,21 @@ export const ThemeContext = createContext();
 export const LangContext = createContext();
 export const PrevLangContext = createContext();
 
+const clientId = '1061498518280-61io1snf32r4vai9ghighvuio2b2n30r.apps.googleusercontent.com';
+
 function App() {
+
+  useEffect(() => {
+    function start() {
+      gapi.client.init({
+        clientId: clientId,
+        scope: ""
+      })
+    };
+
+    gapi.load('client:auth2', start);
+  })
+
   const [theme, setTheme] = useState('light')
   const [lang, setLang] = useState('en')
   const [prevLang, setPrevLang] = useState('en')

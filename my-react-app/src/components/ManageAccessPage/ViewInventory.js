@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { ThemeContext } from '../../App';
 import './ManageAccess.css'
 
@@ -56,18 +55,17 @@ const ViewInventory = () => {
     return (
         <div className={theme === 'light' ? 'table' : 'table-dark'}>
             <h1>View Inventory</h1>
-            <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
-                <DataGrid
-                    sx={{color: theme === 'light' ? 'black' : 'white'}}
-                    getRowId={(row) => row.ingredient_id}
-                    rows={inv ? inv : []}
-                    columns={invCols}
-                    pageSize={10}
-                    rowsPerPageOptions={[10]}
-                    checkboxSelection={false}
-                    disableColumnMenu={true}
-                />              
-            </ThemeProvider>
+            <DataGrid
+                sx={{color: theme === 'light' ? 'black' : 'white'}}
+                getRowId={(row) => row.ingredient_id}
+                rows={inv ? inv : []}
+                columns={invCols}
+                pageSize={10}
+                rowsPerPageOptions={[10]}
+                checkboxSelection={false}
+                disableColumnMenu={true}
+                components={{ Toolbar: GridToolbar }}
+            />              
         </div>
     );
 };
