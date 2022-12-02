@@ -13,7 +13,7 @@ const customStyles = {
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
   },
-};
+}
 const customStylesDark = {
   content: {
     top: '50%',
@@ -24,10 +24,10 @@ const customStylesDark = {
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
   },
-};
+}
 const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, employee }) => {
-  const [showInput, setShowInput] = useState(false);
-  const [cashInput, setCashInput] = useState(0.0);
+  const [showInput, setShowInput] = useState(false)
+  const [cashInput, setCashInput] = useState(0.0)
 
   const user = JSON.parse(localStorage.getItem("user"))
   const handleClick = async (payment_type) => {
@@ -41,18 +41,18 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, empl
           headers: {
             Accept: 'application/json',
           },
-        });
+        })
 
         if (!response.ok) {
-          throw new Error(`Error! status: ${response.status}`);
+          throw new Error(`Error! status: ${response.status}`)
         }
 
-        const result = await response.json();
+        const result = await response.json()
 
         closeModal()
         setShowInput(false)
-        setCart([]);
-        console.log('result is: ', JSON.stringify(result, null, 4));
+        clearCart()
+        console.log('result is: ', JSON.stringify(result, null, 4))
       }
 
       // openModal()
@@ -61,19 +61,19 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, empl
     }
 
     // closeModal();
-  };
+  }
   const handleAmount = (e) => {
     e.preventDefault()
     setShowInput(false)
     closeModal()
-    setCart([]);
+    clearCart()
   }
 
   const handleCashSubmit = async (event) => {
-    event.preventDefault();
-    console.log(cashInput);
+    event.preventDefault()
+    console.log(cashInput)
 
-    const url = 'https://project3-api.onrender.com/order/submit?id=' + employee + '&type=0&payment=' + cashInput;
+    const url = 'https://project3-api.onrender.com/order/submit?id=' + employee + '&type=0&payment=' + cashInput
     console.log(url)
     try {
       const response = await fetch(url, {
@@ -81,18 +81,18 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, empl
         headers: {
           Accept: 'application/json',
         },
-      });
+      })
 
       if (!response.ok) {
-        throw new Error(`Error! status: ${response.status}`);
+        throw new Error(`Error! status: ${response.status}`)
       }
 
-      const result = await response.json();
+      const result = await response.json()
 
-      closeModal();
-      setShowInput(false);
-      clearCart();
-      console.log('result is: ', JSON.stringify(result, null, 4));
+      closeModal()
+      setShowInput(false)
+      clearCart()
+      console.log('result is: ', JSON.stringify(result, null, 4))
 
 
       // openModal()
@@ -102,7 +102,7 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, empl
   }
 
   const updateInput = (event) => {
-    setCashInput(event.target.value);
+    setCashInput(event.target.value)
   }
 
   const { theme } = useContext(ThemeContext)
