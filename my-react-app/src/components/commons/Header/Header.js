@@ -83,7 +83,7 @@ const Header = () => {
                         }
                         
                        {
-                           user?.role === "manager" &&  <p onClick={() => navigate('/manage-access')} className={theme === 'light' ? 'manage-access' : 'manage-access-dark'}><small>Manage Access</small></p>
+                           user?.role === "manager" &&  <p onClick={() => navigate('/manage-access')} className={theme === 'light' ? 'manage-access' : 'manage-access-dark'}><small>Manager Access</small></p>
                        }
                     </div>
                 </div>

@@ -85,7 +85,8 @@ const ExcessReport = () => {
                         resolve(response.data.translations[0].translatedText)
                     })
                     .catch(error => {
-                        console.log("There was an error with the translation request: ", error)
+                        alert("There was an error during translation. Reverting back to English")
+                        window.location.reload(false);
                     });
             })
             translated.then((result) => {
