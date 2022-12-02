@@ -3,7 +3,7 @@ import './Header.css';
 import { AiOutlineMenu } from 'react-icons/ai'
 import { BsFillMoonFill, BsFillSunFill } from 'react-icons/bs'
 import { useNavigate } from 'react-router-dom';
-import { LangContext, ThemeContext } from '../../../App';
+import { LangContext, PrevLangContext, ThemeContext } from '../../../App';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -13,6 +13,7 @@ import Select from '@mui/material/Select';
 const Header = () => {
     const navigate = useNavigate()
     const { lang, setLang } = useContext(LangContext)
+    const { setPrevLang } = useContext(PrevLangContext)
     const { theme, setTheme } = useContext(ThemeContext)
     const lightTheme = createTheme({
         palette: {
@@ -25,8 +26,9 @@ const Header = () => {
         }
     })
     const handleChange = (event) => {
+        setPrevLang(lang)
         setLang(event.target.value)
-        //window.location.reload(false);
+        // window.location.reload(false);
     }
 
     return (

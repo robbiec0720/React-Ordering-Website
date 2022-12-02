@@ -1,11 +1,11 @@
 import { useContext } from "react"
 import { LangContext } from "../../App";
 
-function Translate(text) {
+async function Translate(text) {
     const { lang } = useContext(LangContext)
 
     if (lang === 'en') {
-        return <p>{text}</p>
+        return text
     }
     else {
         const API_KEY = 'AIzaSyANYWkU1YhvNE5flUIvzJv8g-y0KCHva-0'
@@ -23,17 +23,18 @@ function Translate(text) {
             })
                 .then(res => res.json())
                 .then((response) => {
-                    console.log("response from google: ", response.data.translations[0].translatedText)
+                    //console.log("response from google: ", response.data.translations[0].translatedText)
                     resolve(response.data.translations[0].translatedText)           
                 })
                 .catch(error => {
                     console.log("There was an error with the translation request: ", error)
                 });
         })
-        translated.then((result) => {
+        let trans = await translated.then((result) => {
             console.log(result)
-            return <p>{result}</p>      
+            return result
         })   
+        console.log(trans);
     }
 }
 
