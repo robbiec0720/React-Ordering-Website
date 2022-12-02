@@ -47,7 +47,7 @@ const Auth = () => {
         setBtn(split[3])
       })
     }
-  }, [lang, spicy, welcome, deliv, btn])
+  }, [prevLang, lang, spicy, welcome, deliv, btn])
 
   return (
     <div id="Nav Page">
