@@ -85,9 +85,11 @@ const SalesReport = () => {
                         resolve(response.data.translations[0].translatedText)
                     })
                     .catch(error => {
-                        alert("There was an error during translation. Reverting back to English")
-                        window.location.reload(false);
-                    });
+                        if(lang !== 'en') {
+                            alert("There was an error during translation. Reverting back to English")
+                            window.location.reload(false)
+                        }
+                    })
             })
             translated.then((result) => {
                 var split = result.split(';')

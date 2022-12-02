@@ -30,7 +30,7 @@ const Header = () => {
         setPrevLang(lang)
         setLang(event.target.value)
         if(event.target.value === 'en') {
-            window.location.reload(false);
+            window.location.reload(false)
         }
     }
    
