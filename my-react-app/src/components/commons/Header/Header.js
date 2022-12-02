@@ -12,6 +12,7 @@ import Select from '@mui/material/Select';
 
 const Header = () => {
     const navigate = useNavigate()
+    const user = JSON.parse(localStorage.getItem("user"))
     const { lang, setLang } = useContext(LangContext)
     const { setPrevLang } = useContext(PrevLangContext)
     const { theme, setTheme } = useContext(ThemeContext)
@@ -30,14 +31,7 @@ const Header = () => {
         setLang(event.target.value)
         // window.location.reload(false);
     }
-
-import { useContext } from 'react';
-import { ThemeContext } from '../../../App';
-
-const Header = () => {
-    const navigate = useNavigate();
-    const {theme, setTheme}  = useContext(ThemeContext)
-    const user = JSON.parse(localStorage.getItem("user"))
+   
     const handleLogout = () =>{
         localStorage.removeItem("user")
         navigate('/')

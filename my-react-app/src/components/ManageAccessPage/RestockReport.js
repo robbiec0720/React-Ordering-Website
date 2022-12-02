@@ -15,7 +15,7 @@ const RestockReport = () => {
         { field: 'cost', headerName: 'Cost', width: 75 }
     ]
     const [restock, setRestock] = React.useState()
-    const {theme} = useContext(ThemeContext)
+    const { theme } = useContext(ThemeContext)
     const lightTheme = createTheme({
         palette: {
             mode: 'light'
@@ -70,7 +70,7 @@ const RestockReport = () => {
                 alert(json)
                 document.location.reload(true)
             })
-        })  
+        })
     }
 
     return (
@@ -79,7 +79,6 @@ const RestockReport = () => {
             <button className='submit-btn' onClick={handleClick}>Restock</button>
             <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
                 <DataGrid
-                    sx={{color: theme === 'light' ? 'black' : 'white'}}
                     getRowId={(row) => row.ingredient_id}
                     rows={restock ? restock : []}
                     columns={invCols}
@@ -87,6 +86,7 @@ const RestockReport = () => {
                     rowsPerPageOptions={[10]}
                     checkboxSelection={false}
                     disableColumnMenu={true}
+                    components={{ Toolbar: GridToolbar }}
                 />
             </ThemeProvider>
         </div>

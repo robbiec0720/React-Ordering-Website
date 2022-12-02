@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { ThemeContext } from '../../App';
 import './ManageAccess.css'
 
@@ -11,10 +12,10 @@ const ViewInventory = () => {
         { field: 'unit_quantity', headerName: 'Unit Quantity', width: 130 },
         { field: 'order_threshold', headerName: 'Order Threshold', width: 130 },
         { field: 'reorder_value', headerName: 'Reorder Value', width: 130 },
-        { field: 'cost', headerName: 'Cost', width: 75 } 
+        { field: 'cost', headerName: 'Cost', width: 75 }
     ]
     const [inv, setInv] = React.useState()
-    const {theme} = useContext(ThemeContext)
+    const { theme } = useContext(ThemeContext)
     const lightTheme = createTheme({
         palette: {
             mode: 'light'
@@ -55,17 +56,18 @@ const ViewInventory = () => {
     return (
         <div className={theme === 'light' ? 'table' : 'table-dark'}>
             <h1>View Inventory</h1>
-            <DataGrid
-                sx={{color: theme === 'light' ? 'black' : 'white'}}
-                getRowId={(row) => row.ingredient_id}
-                rows={inv ? inv : []}
-                columns={invCols}
-                pageSize={10}
-                rowsPerPageOptions={[10]}
-                checkboxSelection={false}
-                disableColumnMenu={true}
-                components={{ Toolbar: GridToolbar }}
-            />              
+            <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+                <DataGrid
+                    getRowId={(row) => row.ingredient_id}
+                    rows={inv ? inv : []}
+                    columns={invCols}
+                    pageSize={10}
+                    rowsPerPageOptions={[10]}
+                    checkboxSelection={false}
+                    disableColumnMenu={true}
+                    components={{ Toolbar: GridToolbar }}
+                />
+            </ThemeProvider>
         </div>
     );
 };
