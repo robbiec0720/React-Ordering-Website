@@ -113,7 +113,7 @@ const EmployeePage = () => {
                     <button className='logout-btn' onClick={() => navigate('../')}>Logout</button>
                 </div>
             </div>
-            <PaymentModal openModal={openModal} modalIsOpen={modalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeModal} cart={cart} setCart={setCart} employee={employeeID}></PaymentModal>
+            <PaymentModal openModal={openModal} modalIsOpen={modalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeModal} clearCart={clearCart} employee={employeeID}></PaymentModal>
         </div>
     );
 };

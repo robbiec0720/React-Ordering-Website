@@ -25,7 +25,7 @@ const customStylesDark = {
     transform: 'translate(-50%, -50%)',
   },
 };
-const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, cart, setCart, employee}) => {
+const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, employee}) => {
 
   const handleClick = async (payment_type) => {
     console.log("Order Button Clicked with value " + payment_type + "Employee ID = " + employee)
@@ -48,7 +48,7 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, cart, setCart, 
     } catch (err) {
       console.log(err)
     }
-    setCart([]);
+    clearCart();
     closeModal();
   };
 
