@@ -41,7 +41,7 @@ const ExcessReport = () => {
 
         try {
             // getting excess report through api
-            const apiExcess = 'https://project3-api.onrender.com/excess/' + start + '/2022-10-25'
+            const apiExcess = 'http://localhost:8081/excess/' + start + '/2022-10-25'
             fetch(apiExcess, {
                 method: 'GET',
                 headers: {
