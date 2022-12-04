@@ -6,7 +6,7 @@ import { LangContext, PrevLangContext } from "../App";
 const Auth = () => {
   const navigate = useNavigate()
   const { lang } = useContext(LangContext)
-  const {prevLang} = useContext(PrevLangContext)
+  const { prevLang } = useContext(PrevLangContext)
   const [spicy, setSpicy] = React.useState('Get our Spicy Chicken Sandwhich')
   const [welcome, setWelcome] = React.useState('Welcome to Chick-Fil-A')
   const [deliv, setDeliv] = React.useState('Send your loved ones Chick-fil-A for the holidays. Introducing order delivery.')
@@ -15,7 +15,7 @@ const Auth = () => {
   React.useEffect(() => {
     let t = [spicy, welcome, deliv, btn]
     let text = t.join(';')
-    if(lang !== prevLang) {
+    if (lang !== prevLang) {
       const API_KEY = 'AIzaSyANYWkU1YhvNE5flUIvzJv8g-y0KCHva-0'
       let url = `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`
       url += '&q=' + encodeURI(text)
@@ -35,10 +35,13 @@ const Auth = () => {
             resolve(response.data.translations[0].translatedText)
           })
           .catch(error => {
-            console.log("There was an error with the translation request: ", error)
-          });
+            if (lang !== 'en') {
+              alert("There was an error during translation. Reverting back to English")
+              window.location.reload(false)
+            }
+          })
       })
-      translated.then((result) => {      
+      translated.then((result) => {
         var split = result.split(';')
         console.log(split)
         setSpicy(split[0])

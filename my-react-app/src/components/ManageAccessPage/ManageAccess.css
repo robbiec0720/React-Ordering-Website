@@ -99,6 +99,7 @@
     font-family: apercu,sans-serif;
     padding-inline: 5px;
     line-height: 25px;
+    align-items: center;
 }
 
 .submit-btn{
