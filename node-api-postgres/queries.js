@@ -343,7 +343,6 @@ const getEmployeeID = async (request, response) => {
         console.log(error.stack);
         return "Error";
       }
-      console.log("Succesfully returned emplyee id " + id);
       resolve(parseInt(results.rows[0].employee_id))
     })
   }))
@@ -392,24 +391,23 @@ const login = async (request, response) => {
         console.log(error.stack)
         return
       }
-      console.log(results)
       if (results.rowCount == 0) {
         console.log("Invalid employee")
-        resolve(-1)
+        resolve("-1")
       }
       else {
         resolve(String(results.rows[0].password))
       }
     })
   })
-  if (check.localeCompare(check) != 0) {
+  if (check.localeCompare(id) != 0) {
     response.status(200).json(-1)
   }
   else if (check.localeCompare(id) != 0) {
     response.status(200).json(0)
   }
   else {
-    console.log("Succesful login with email = " + email + ", password = " + password + ".");
+    console.log("Succesful login with email = " + name + ", password = " + id + ".");
     const mngr = await new Promise((resolve) => {
       pool.query("SELECT is_manager FROM employee WHERE email = $1;", [name], (error, results) => {
         if (error) {
@@ -428,28 +426,35 @@ const login = async (request, response) => {
   }
 }
 
+/**
+ * Function called when an order is submitted. Not to be confused with "placeOrder()"
+ * which actually handles the functionality of placing the current order in the database.
+ * 
+ * @param {*} request API request.
+ * @param {*} response Response in JSON format.
+ */
 const orderSubmitted = async (request, response) => {
-  const id = parseInt(request.query.id)
-  const payType = parseInt(request.query.type)
-  const payment = parseFloat(request.query.payment)
+  const id = parseInt(request.query.id);             
+  const payType = parseInt(request.query.type);
+  const payment = parseFloat(request.query.payment);
 
-  condiments.push(26)
-  condiments.push(27)
+  condiments.push(26);
+  condiments.push(27);
 
-  const orderInfo = await placeOrder(payment, payType)
+  const orderInfo = await placeOrder(payment, payType);
 
   if (orderInfo == null) {
-    response.status(200).json(-1)
+    response.status(200).json(-1);
   }
   else {
-    placeTransaction(orderInfo[0], id, payType, orderInfo[1], payment)
-    updateInventory()
-    response.status(200).json(0)
+    placeTransaction(orderInfo[0], id, payType, orderInfo[1], payment);
+    updateInventory();
+    response.status(200).json(0);
   }
 
   console.log("Succesfully placed order with id = " + id + ", paymentType = " + payment + ", payment = " + payment + ".");
-  order = []
-  condiments = []
+  order = [];
+  condiments = [];
 }
 
 async function placeOrder(payment, payType) {
@@ -606,8 +611,8 @@ async function updateInventory() {
 const addItem = (request, response) => {
   const id = parseInt(request.params.id)
   order.push(id)
-  console.log(order)
   console.log("Succesfully added item with id = " + id + ".");
+  console.log("Current state of order = " + order);
   response.status(200).json("Item " + id + " successfully added to order!")
 }
 
