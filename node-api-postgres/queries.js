@@ -343,11 +343,22 @@ const getEmployeeID = async (request, response) => {
         console.log(error.stack);
         return "Error";
       }
+      if (results.rowCount == 0) {
+        console.log("Invalid employee")
+        resolve(-1);
+        return;
+      }
       resolve(parseInt(results.rows[0].employee_id))
     })
   }))
 
-  console.log("Succesfully got employee_id = " + id + " where email = " + email + ".");
+
+  if (id == - 1) {
+    console.log("Employee with email " + email + " does not exist. Returning with error code -1.");
+  }
+  else {
+    console.log("Succesfully got employee_id = " + id + " where email = " + email + ".");
+  }
   response.status(200).json(id);
 }
 
@@ -434,7 +445,7 @@ const login = async (request, response) => {
  * @param {*} response Response in JSON format.
  */
 const orderSubmitted = async (request, response) => {
-  const id = parseInt(request.query.id);             
+  const id = parseInt(request.query.id);
   const payType = parseInt(request.query.type);
   const payment = parseFloat(request.query.payment);
 
