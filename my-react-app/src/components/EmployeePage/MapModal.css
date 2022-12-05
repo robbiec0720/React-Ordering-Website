@@ -1,0 +1,50 @@
+
+.modal-style{
+    margin: 30px 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+}
+
+.modal-item:active{
+    background-color: red;
+    border: 1px solid red;
+}
+#msc-map{
+    margin-left: 2px;
+}
+  
+form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    max-width: 400px;
+    font-family: "Roboto", sans-serif;
+    font-size: 18px;
+    color: black;
+}
+input {
+    width: 100%;
+    margin-top: 0;
+    padding: 0.5em;
+    border: 0;
+    border-bottom: 2px solid gray;
+    font-family: "Roboto", sans-serif;
+    font-size: 18px;
+  }
+  .submit {
+    width: 100%;
+    margin-top: 0;
+    padding: 0.5em;
+    border: 0;
+    border-bottom: 2px solid gray;
+    font-family: "Roboto", sans-serif;
+    font-size: 18px;
+  }
+  
+  input:focus {
+    border-bottom: 4px solid black;
+  }
+  
+
+  
