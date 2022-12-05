@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { LangContext, PrevLangContext } from '../../App';
 
-const EditInventory = () => {
+const EditMenu = () => {
     const { lang } = useContext(LangContext)
     const { prevLang } = useContext(PrevLangContext)
     const [report, setReport] = React.useState('Edit Menu')
@@ -120,4 +120,4 @@ const EditInventory = () => {
     );
 };
 
-export default EditInventory;
+export default EditMenu;
