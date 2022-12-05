@@ -21,7 +21,7 @@ const EmployeePage = () => {
     const [dine, setDine] = useState('Submit Order')
     const [clear, setClear] = useState('Clear Order')
     const [log, setLog] = useState('Logout')
-
+    const [showInput, setShowInput] = useState(false)
 
     let subtitle;
     const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -37,6 +37,7 @@ const EmployeePage = () => {
 
     function closeModal() {
         setIsOpen(false);
+        setShowInput(false)
     }
 
     useEffect(() => {
@@ -162,7 +163,7 @@ const EmployeePage = () => {
                     <button className='logout-btn' onClick={() => navigate('../')}>{log}</button>
                 </div>
             </div>
-            <PaymentModal openModal={openModal} modalIsOpen={modalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeModal} clearCart={clearCart} employee={employeeID}></PaymentModal>
+            <PaymentModal showInput={showInput} setShowInput={setShowInput} openModal={openModal} modalIsOpen={modalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeModal} clearCart={clearCart} employee={employeeID}></PaymentModal>
         </div>
     );
 };

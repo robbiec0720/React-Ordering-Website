@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import './Header.css';
 import { AiOutlineMenu } from 'react-icons/ai'
 import { BsFillMoonFill, BsFillSunFill } from 'react-icons/bs'
@@ -14,12 +14,8 @@ const Header = () => {
     const navigate = useNavigate()
     const user = JSON.parse(localStorage.getItem("user"))
     const { lang, setLang } = useContext(LangContext)
-    const { prevLang, setPrevLang } = useContext(PrevLangContext)
+    const { setPrevLang } = useContext(PrevLangContext)
     const { theme, setTheme } = useContext(ThemeContext)
-    const [login, setLogin] = useState('Login')
-    const [logout, setLogout] = useState('Logout')
-    const [manage, setManage] = useState('Manager Access')
-    const [drop, setDrop] = useState('Language')
     const lightTheme = createTheme({
         palette: {
             mode: 'light'
@@ -30,53 +26,10 @@ const Header = () => {
             mode: 'dark'
         }
     })
-
-    useEffect(() => {
-        let t = [login, logout, manage, drop]
-        let text = t.join(';')
-        if (lang !== prevLang) {
-            const API_KEY = 'AIzaSyANYWkU1YhvNE5flUIvzJv8g-y0KCHva-0'
-            let url = `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`
-            url += '&q=' + encodeURI(text)
-            url += `&source=${prevLang}`
-            url += `&target=${lang}`
-            let translated = new Promise(function (resolve, reject) {
-                fetch(url, {
-                    method: 'GET',
-                    headers: {
-                        "Content-Type": "application/json",
-                        Accept: "application/json"
-                    }
-                })
-                    .then(res => res.json())
-                    .then((response) => {
-                        //console.log("response from google: ", response.data.translations[0].translatedText)
-                        resolve(response.data.translations[0].translatedText)
-                    })
-                    .catch(error => {
-                        if (lang !== 'en') {
-                            alert("There was an error during translation. Reverting back to English")
-                            window.location.reload(false)
-                        }
-                    })
-            })
-            translated.then((result) => {
-                var split = result.split(';')
-                console.log(split)
-                setLogin(split[0])
-                setLogout(split[1])
-                setManage(split[2])
-                setDrop(split[3])
-            })
-        }
-    }, [prevLang, lang, login, logout, manage, drop])
-
     const handleChange = (event) => {
         setPrevLang(lang)
         setLang(event.target.value)
-        if (event.target.value === 'en') {
-            window.location.reload(false)
-        }
+        // window.location.reload(false);
     }
 
     const handleLogout = () => {
@@ -84,27 +37,49 @@ const Header = () => {
         navigate('/')
     }
     return (
-        <div className={theme === 'light' ? 'header-style' : 'header-style-dark'}>
+        <div className={`${theme === 'light' && 'header-style'} ${theme === 'dark' && 'header-style-dark'} ${theme === 'highContrast' && 'header-style-high-contrast'}`}>
             <div onClick={() => navigate('/')} className='logo'>
                 <img src="https://i.ibb.co/vskyMYP/Chick-fil-A-logo.png" height="70px" width="120px" alt="" />
             </div>
             <div>
-                {
+                {/* {
                     theme !== 'light' ?
                         <button onClick={() => setTheme('light')} className='theme-btn-dark'><BsFillSunFill /></button>
                         :
                         <button onClick={() => setTheme('dark')} className='theme-btn-light'><BsFillMoonFill /></button>
-                }
+                } */}
+
+                {/* dropdown for dark and light mode */}
+                <div className={theme === "light" ? "dropdown" : "dropdown-dark"}>
+                    <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+                        <FormControl fullWidth size="small">
+                            <InputLabel id="select-label">Themes</InputLabel>
+                            <Select
+                                labelId="select-label"
+                                id="simple-select"
+                                value={theme}
+                                label="Language"
+                                onChange={e => setTheme(e.target.value)}
+                            >
+                                <MenuItem value={'light'}>Light</MenuItem>
+                                <MenuItem value={'highContrast'}>High Contrast</MenuItem>
+                                <MenuItem value={'dark'}>Dark</MenuItem>
+
+                            </Select>
+                        </FormControl>
+                    </ThemeProvider>
+                </div>
+                {/* finished */}
 
                 <div className={theme === "light" ? "dropdown" : "dropdown-dark"}>
                     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
                         <FormControl fullWidth size="small">
-                            <InputLabel id="select-label">{drop}</InputLabel>
+                            <InputLabel id="select-label">Language</InputLabel>
                             <Select
                                 labelId="select-label"
                                 id="simple-select"
                                 value={lang}
-                                label={drop}
+                                label="Language"
                                 onChange={handleChange}
                             >
                                 <MenuItem value={'en'}>English</MenuItem>
@@ -122,13 +97,13 @@ const Header = () => {
                     <div className={theme === 'light' ? "dropdown-content" : "dropdown-content-dark"}>
                         {
                             user ?
-                                <p onClick={handleLogout} className={theme === 'light' ? 'manage-access' : 'manage-access-dark'}><small>{logout}</small></p>
+                                <p onClick={handleLogout} className={theme === 'light' ? 'manage-access' : 'manage-access-dark'}><small>Logout</small></p>
                                 :
-                                <p onClick={() => navigate('/Login')} className={theme === 'light' ? 'manage-access' : 'manage-access-dark'}><small>{login}</small></p>
+                                <p onClick={() => navigate('/Login')} className={theme === 'light' ? 'manage-access' : 'manage-access-dark'}><small>Login</small></p>
                         }
 
                         {
-                            user?.role === "manager" && <p onClick={() => navigate('/manage-access')} className={theme === 'light' ? 'manage-access' : 'manage-access-dark'}><small>{manage}</small></p>
+                            user?.role === "manager" && <p onClick={() => navigate('/manage-access')} className={theme === 'light' ? 'manage-access' : 'manage-access-dark'}><small>Manage Access</small></p>
                         }
                     </div>
                 </div>

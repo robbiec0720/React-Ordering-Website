@@ -1,8 +1,9 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import Modal from 'react-modal';
 import './PaymentModal.css'
 import { FaTimes } from 'react-icons/fa'
-import { LangContext, PrevLangContext, ThemeContext } from '../../App';
+import { ThemeContext } from '../../App';
+import SuccessModal from './SuccessModal';
 const customStyles = {
   content: {
     top: '50%',
@@ -26,58 +27,28 @@ const customStylesDark = {
   },
 }
 const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, employee }) => {
-  const { lang } = useContext(LangContext)
-  const { prevLang } = useContext(PrevLangContext)
   const [showInput, setShowInput] = useState(false)
   const [cashInput, setCashInput] = useState(0.0)
-  const [card, setCard]= useState('Card')
-  const [cash, setCash] = useState('Cash')
-  const [cancel, setCancel] = useState('Cancel')
-  const [pay, setPay] = useState('Cash Payment')
+  let subtitle;
+  const [modalIsOpenSuccess, setIsOpenSuccess] = React.useState(false);
 
-  useEffect(() => {
-    let t = [card, cash, cancel, pay]
-    let text = t.join(';')
-    if (lang !== prevLang) {
-      const API_KEY = 'AIzaSyANYWkU1YhvNE5flUIvzJv8g-y0KCHva-0'
-      let url = `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`
-      url += '&q=' + encodeURI(text)
-      url += `&source=${prevLang}`
-      url += `&target=${lang}`
-      let translated = new Promise(function (resolve, reject) {
-        fetch(url, {
-          method: 'GET',
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json"
-          }
-        })
-          .then(res => res.json())
-          .then((response) => {
-            //console.log("response from google: ", response.data.translations[0].translatedText)
-            resolve(response.data.translations[0].translatedText)
-          })
-          .catch(error => {
-            if (lang !== 'en') {
-              alert("There was an error during translation. Reverting back to English")
-              window.location.reload(false)
-            }
-          })
-      })
-      translated.then((result) => {
-        var split = result.split(';')
-        console.log(split)
-        setCard(split[0])
-        setCash(split[1])
-        setCancel(split[2])
-        setPay(split[3])
-      })
-    }
-  }, [prevLang, lang, card, cash, cancel, pay])
+  function openModalSuccess() {
+    setIsOpenSuccess(true);
+  }
+
+  function afterOpenModalSuccess() {
+    // references are now sync'd and can be accessed.
+    subtitle.style.color = '#f00';
+  }
+
+  function closeModalSuccess() {
+    setIsOpenSuccess(false);
+  }
+
 
   const user = JSON.parse(localStorage.getItem("user"))
   const handleClick = async (payment_type) => {
-    console.log("Order Button Clicked with value " + payment_type + "\nEmployee ID = " + employee)
+    console.log("Order Button Clicked with value " + payment_type + "Employee ID = " + employee)
     try {
       if (payment_type === 0) {
         setShowInput(true)
@@ -98,6 +69,7 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, empl
         closeModal()
         setShowInput(false)
         clearCart()
+        openModalSuccess()
         console.log('result is: ', JSON.stringify(result, null, 4))
       }
 
@@ -166,23 +138,23 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, empl
           {
             showInput ?
               <form onSubmit={handleAmount} className='form-cash-style'>
-                <p>{pay}</p>
+                <p>Cash Payment</p>
                 <input onChange={updateInput} className='cash-input-style' type="number" step="0.01" id="amount" placeholder='Enter The Amount' />
                 <input onClick={handleCashSubmit} className='cash-amount-btn' type="submit" value="Confirm" />
-                <button onClick={() => setShowInput(false)} className='cash-amount-btn'>{cancel}</button>
+                <button onClick={() => setShowInput(false)} className='cash-amount-btn'>Cancel</button>
               </form>
               :
               <>
                 {
                   user ?
                     <div className='modal-style'>
-                      <div onClick={() => handleClick(1)} className="modal-item">{card}</div>
-                      <div onClick={() => handleClick(0)} className="modal-item">{cash}</div>
+                      <div onClick={() => handleClick(1)} className="modal-item">Card</div>
+                      <div onClick={() => handleClick(0)} className="modal-item">Cash</div>
                       <div onClick={() => handleClick(2)} className="modal-item">Dining Dollars</div>
                     </div>
                     :
                     <div className='modal-style-not-user'>
-                      <div onClick={() => handleClick(1)} className="modal-item">{card}</div>
+                      <div onClick={() => handleClick(1)} className="modal-item">Card</div>
 
                       <div onClick={() => handleClick(2)} className="modal-item">Dining Dollars</div>
                     </div>
@@ -193,6 +165,11 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, empl
         </div>
         <button onClick={closeModal} className='close-btn'><FaTimes /></button>
       </Modal>
+      <SuccessModal
+        modalIsOpenSuccess={modalIsOpenSuccess}
+        afterOpenModalSuccess={afterOpenModalSuccess}
+        closeModalSuccess={closeModalSuccess}
+      ></SuccessModal>
     </div>
   );
 };

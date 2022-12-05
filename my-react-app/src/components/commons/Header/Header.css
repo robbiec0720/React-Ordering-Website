@@ -17,7 +17,15 @@
   padding-left: 5%;
   padding-right: 5%;
 }
-
+.header-style-high-contrast{
+  background-color: black;
+  color: rgb(0, 255, 0);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 5%;
+  padding-right: 5%;
+}
 .logout-btn {
   background-color: orange;
   color: white;

@@ -71,7 +71,7 @@ const Sidebar = () => {
     }, [prevLang, lang, inv, menu, func, editM, addM, delM, editI, addI, delI, restock, excess, sales])
 
     return (
-        <div className={theme === 'light' ? 'sidebar-style' : 'sidebar-style-dark'}>
+        <div className={`${theme === 'light' && 'sidebar-style'} ${theme === 'dark' && 'sidebar-style-dark'} ${theme === 'highContrast' && 'sidebar-style-high-contrast'}`}>
             <Navigation
                 // you can use your own router's api to get pathname
                 activeItemId="/manage-access/members"
