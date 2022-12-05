@@ -3,16 +3,12 @@ import './EmployeePage.css';
 import FoodItem from './FoodItem';
 import { useNavigate } from "react-router-dom";
 import PaymentModal from './PaymentModal';
-<<<<<<< HEAD
 import { LangContext, PrevLangContext } from '../../App';
-=======
 import MapModal from'./MapModal';
->>>>>>> umaSprint3
 //import Popup from 'reactjs-popup';
 
 
 const CustomerPage = () => {
-<<<<<<< HEAD
     const navigate = useNavigate()
     const { lang } = useContext(LangContext)
     const { prevLang } = useContext(PrevLangContext)
@@ -29,16 +25,7 @@ const CustomerPage = () => {
 
     let subtitle
     const [modalIsOpen, setIsOpen] = React.useState(false)
-=======
-    const navigate = useNavigate();
-    const [foods, setFoods] = useState([]);
-    const [cart, setCart] = useState([]);
-    const [totalPrice, setTotal] = useState([]);
-
-    let subtitle;
-    const [modalIsOpen, setIsOpen] = React.useState(false);
     const [mapmodalIsOpen, setMapIsOpen] = React.useState(false);
->>>>>>> umaSprint3
 
     function openModal() {
         setIsOpen(true)
@@ -183,22 +170,13 @@ const CustomerPage = () => {
                     </div>
                 </div>
                 <div className='submit-div'>
-<<<<<<< HEAD
                     <button className='logout-btn' onClick={handleClick}>{dine}</button>
                     <button className='logout-btn' onClick={clearCart}>{clear}</button>
-                    <button className='logout-btn' onClick={() => navigate('../')}>{deliv}</button>
+                    <button className='logout-btn' onClick={openMap}>{deliv}</button>
                 </div>
             </div>
             <PaymentModal openModal={openModal} modalIsOpen={modalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeModal} clearCart={clearCart} employee={0}></PaymentModal>
-=======
-                    <button className='logout-btn' onClick={openModal}>Dine-In</button>
-                    <button className='logout-btn' onClick={clearCart}>Clear Order</button>
-                    <button className='logout-btn' onClick={openMap}>Deliver</button>
-                </div>
-            </div>
-            <PaymentModal openModal={openModal} modalIsOpen={modalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeModal} cart={cart} setCart={setCart}></PaymentModal>
             <MapModal openMap={openMap}modalIsOpen={mapmodalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeMapModal}></MapModal>
->>>>>>> umaSprint3
         </div>
     );
 };
