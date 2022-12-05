@@ -23,7 +23,7 @@ const customStylesDark = {
     left: '50%',
     right: 'auto',
     bottom: 'auto',
-    background: 'black',
+    background: 'grey',
     color: 'white',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
@@ -107,8 +107,12 @@ const MapModal = ({ modalIsOpen, afterOpenModal, closeModal, cart, setCart}) => 
         <span class="form-label">Country/Region*</span>
         <input id="country" name="country" required />
       </label>
-      <button type="button" class="my-button">Save address</button>
-      <input type="reset" value ="Submit"></input>
+      <label for="cars">Choose a payment option:</label>
+<select name="payment" id="pay">
+  <option value="Cash">Cash</option>
+  <option value="Dining">Dining</option>
+</select>
+      <button onClick={closeModal}type="button" class="submit">Save address and Submit</button>
       <input type="reset" value="Clear form" />
     </form>
     <div id="map">
