@@ -1,10 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import './MapModal.css'
 import { FaTimes } from 'react-icons/fa'
-import { ThemeContext } from '../../App';
-//import { Map, GoogleApiWrapper } from 'google-maps-react';
-import { withTheme } from '@mui/material';
+import { LangContext, PrevLangContext, ThemeContext } from '../../App';
+
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 const customStyles = {
   content: {
@@ -36,11 +35,59 @@ const location = {
 }
 
 const MapModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, cost }) => {
+  const { theme } = useContext(ThemeContext)
+  const { lang } = useContext(LangContext)
+  const { prevLang } = useContext(PrevLangContext)
+  const [card, setCard]= useState('Card')
+  const [country, setCountry] = useState('Country or Region')
+  const [code, setCode] = useState('Postal Code')
+  const [pay, setPay] = useState('Choose a Payment Option')
+
+  useEffect(() => {
+    let t = [card, country, code, pay]
+    let text = t.join(';')
+    if (lang !== prevLang) {
+      const API_KEY = 'AIzaSyANYWkU1YhvNE5flUIvzJv8g-y0KCHva-0'
+      let url = `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`
+      url += '&q=' + encodeURI(text)
+      url += `&source=${prevLang}`
+      url += `&target=${lang}`
+      let translated = new Promise(function (resolve, reject) {
+        fetch(url, {
+          method: 'GET',
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
+          }
+        })
+          .then(res => res.json())
+          .then((response) => {
+            //console.log("response from google: ", response.data.translations[0].translatedText)
+            resolve(response.data.translations[0].translatedText)
+          })
+          .catch(error => {
+            if (lang !== 'en') {
+              alert("There was an error during translation. Reverting back to English")
+              window.location.reload(false)
+            }
+          })
+      })
+      translated.then((result) => {
+        var split = result.split(';')
+        console.log(split)
+        setCard(split[0])
+        setCode(split[1])
+        setCountry(split[2])
+        setPay(split[3])
+      })
+    }
+  }, [prevLang, lang, card, code, country, pay])
+
 
   const handleClick = async (payment_type) => {
     console.log("Order Button Clicked with value " + payment_type)
     try {
-      const response = await fetch('https://project3-api.onrender.com/order/submit?id=0&type=' + payment_type + '&payment=' + cost, {
+      const response = await fetch('https://project3-api.onrender.com/order/submit?id=0&type=1&payment=' + cost, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -62,7 +109,6 @@ const MapModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, cost }) 
     closeModal();
   };
 
-  const { theme } = useContext(ThemeContext)
   return (
     <div>
       <Modal
@@ -74,13 +120,14 @@ const MapModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, cost }) 
         contentLabel="Example Modal"
       >
         <div className='modal-style'>
-          <form id="address-form" action="" method="get" autocomplete="off">
+          <form classname="form-map" id="address-form" action="" method="get" autocomplete="off">
             <p class="title">Enter address for Delivery</p>
             <p class="note"><em>* = required field</em></p>
             <label class="full-field">
 
               <span class="form-label">Deliver to*</span>
               <input
+                className="input-map"
                 id="ship-address"
                 name="ship-address"
                 required
@@ -89,31 +136,31 @@ const MapModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, cost }) 
             </label>
             <label class="full-field">
               <span class="form-label">Apartment, unit, suite, or floor #</span>
-              <input id="address2" name="address2" />
+              <input className="input-map" id="address2" name="address2" />
             </label>
             <label class="full-field">
               <span class="form-label">City*</span>
-              <input id="locality" name="locality" required />
+              <input className="input-map" id="locality" name="locality" required />
             </label>
             <label class="slim-field-left">
               <span class="form-label">State/Province*</span>
-              <input id="state" name="state" required />
+              <input className="input-map" id="state" name="state" required />
             </label>
             <label class="slim-field-right" for="postal_code">
-              <span class="form-label">Postal code*</span>
-              <input id="postcode" name="postcode" required />
+              <span class="form-label">{code}*</span>
+              <input className="input-map" id="postcode" name="postcode" required />
             </label>
             <label class="full-field">
-              <span class="form-label">Country/Region*</span>
-              <input id="country" name="country" required />
+              <span class="form-label">{country}*</span>
+              <input className="input-map" id="country" name="country" required />
             </label>
-            <label for="cars">Choose a payment option:</label>
+            <label for="cars">{pay}:</label>
             <select name="payment" id="pay">
-              <option value="Cash">Cash</option>
-              <option value="Dining">Dining</option>
+              <option value="Cash">{card}</option>
+              <option value="Dining">Dining Dollars</option>
             </select>
             <button onClick={handleClick} type="button" class="submit">Save address and Submit</button>
-            <input type="reset" value="Clear form" />
+            <input className="input-map" type="reset" value="Clear form" />
           </form>
           <div id="map">
             <iframe id="msc-map"

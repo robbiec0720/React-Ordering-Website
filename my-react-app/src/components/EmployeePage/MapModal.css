@@ -13,7 +13,7 @@
   margin-left: 2px;
 }
 
-form {
+.form-map {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -23,7 +23,7 @@ form {
   color: black;
 }
 
-input {
+.input-map {
   width: 100%;
   margin-top: 0;
   padding: 0.5em;

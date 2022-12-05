@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import './PaymentModal.css'
 import { FaTimes } from 'react-icons/fa'
 import { LangContext, PrevLangContext, ThemeContext } from '../../App';
+
 const customStyles = {
   content: {
     top: '50%',

@@ -68,14 +68,15 @@
 }
 
 .table {
-    height: 631px;
+    height: 667px;
     width: 100%;
-    padding-bottom: 150px;
+    padding-bottom: 200px;
 }
+
 .table-dark{
-    height: 631px;
+    height: 667px;
     width: 100%;
-    padding-bottom: 150px;
+    padding-bottom: 200px;
 }
 
 .sidebar-style{
