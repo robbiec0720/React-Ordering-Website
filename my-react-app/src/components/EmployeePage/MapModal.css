@@ -10,6 +10,9 @@
     background-color: red;
     border: 1px solid red;
 }
+#msc-map{
+    margin-left: 2px;
+}
   
 form {
     display: flex;
@@ -34,4 +37,5 @@ input {
     border-bottom: 4px solid black;
   }
   
+
   

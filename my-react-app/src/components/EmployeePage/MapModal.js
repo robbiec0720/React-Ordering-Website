@@ -3,8 +3,9 @@ import Modal from 'react-modal';
 import './MapModal.css'
 import { FaTimes } from 'react-icons/fa'
 import { ThemeContext } from '../../App';
-import MapSection from './Map'
+//import { Map, GoogleApiWrapper } from 'google-maps-react';
 import { withTheme } from '@mui/material';
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 const customStyles = {
   content: {
     top: '50%',
@@ -107,9 +108,21 @@ const MapModal = ({ modalIsOpen, afterOpenModal, closeModal, cart, setCart}) => 
         <input id="country" name="country" required />
       </label>
       <button type="button" class="my-button">Save address</button>
+      <input type="reset" value ="Submit"></input>
       <input type="reset" value="Clear form" />
     </form>
-    <MapSection location={location} zoomLevel={17} /> {/* include it here */}
+    <div id="map">
+    <iframe id="msc-map"
+  width="600"
+  height="450"
+  loading="lazy"
+  allowfullscreen
+  title="name"
+  referrerpolicy="no-referrer-when-downgrade"
+  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBOkjc0jDF0N-fPFXOOppRJ3MbySWygPbk
+    &q=Memorial+Student+Center,CollegeStation+TX">
+</iframe>
+    </div>
         </div>
         <button onClick={closeModal} className='close-btn'><FaTimes /></button>
       </Modal>
@@ -120,3 +133,4 @@ const MapModal = ({ modalIsOpen, afterOpenModal, closeModal, cart, setCart}) => 
 
 export default MapModal;
 //api key: 'AIzaSyBOkjc0jDF0N-fPFXOOppRJ3MbySWygPbk'
+//<MapSection location={location} zoomLevel={17} /> {/* include it here */} 
