@@ -1,17 +1,18 @@
-
-.modal-style{
+.modal-style {
     margin: 30px 20px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 20px;
 }
-.modal-style-not-user{
+
+.modal-style-not-user {
     margin: 30px 20px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 20px;
 }
-.modal-item{
+
+.modal-item {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -25,17 +26,20 @@
     color: white;
 
 }
-.modal-item:hover{
+
+.modal-item:hover {
     transform: scale(1.03);
     transition: transform .5s ease-out;
     background-color: rgb(255, 136, 0);
     color: white;
 }
-.modal-item:active{
+
+.modal-item:active {
     background-color: red;
     border: 1px solid red;
 }
-.close-btn{
+
+.close-btn {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -46,35 +50,35 @@
     justify-content: center;
     align-items: center;
 }
-.close-btn:hover{
+
+.close-btn:hover {
     border: 1px solid red;
     color: red;
     cursor: pointer;
 }
-.form-cash-style{
+
+.form-cash-style {
     margin: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
-
 }
-.form-cash-style > p{
+
+.form-cash-style>p {
     margin-bottom: 2px;
     font-weight: bold;
 }
-.cash-input-style{
+
+.cash-input-style {
     font-size: 16px;
     outline: 0;
     border: 2px solid black;
     padding: 6px 10px;
     border-radius: 4px;
 }
-/* .cash-input-style:focus{
-    font-weight: bold;
-} */
-.cash-amount-btn{
+
+.cash-amount-btn {
     margin-top: 15px;
     padding: 6px 15px;
     border-radius: 5px;
@@ -82,7 +86,8 @@
     color: white;
     border: 1px solid white;
 }
-.cash-amount-btn:hover{
+
+.cash-amount-btn:hover {
     background-color: white;
     color: orange;
 }

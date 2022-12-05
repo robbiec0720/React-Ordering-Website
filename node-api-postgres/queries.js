@@ -291,9 +291,10 @@ const addIngredient = async (request, response) => {
 }
 
 const addFoodItem = async (request, response) => {
-  const params = request.query.array.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g)
+  const params = request.query.array.split(',')
+  console.log(params)
   const name = String(params[0])
-  const ingredients = JSON.parse(params[1]).split(',').map(element => {
+  const ingredients = params[1].split(':').map(element => {
     return Number(element);
   });
 
@@ -445,7 +446,7 @@ const login = async (request, response) => {
  * @param {*} response Response in JSON format.
  */
 const orderSubmitted = async (request, response) => {
-  const id = parseInt(request.query.id);             
+  const id = parseInt(request.query.id);
   const payType = parseInt(request.query.type);
   const payment = parseFloat(request.query.payment);
 

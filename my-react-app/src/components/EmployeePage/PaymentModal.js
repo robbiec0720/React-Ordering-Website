@@ -26,7 +26,10 @@ const customStylesDark = {
     transform: 'translate(-50%, -50%)',
   },
 }
-const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, employee }) => {
+
+const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, employee, cost }) => {
+  const { lang } = useContext(LangContext)
+  const { prevLang } = useContext(PrevLangContext)
   const [showInput, setShowInput] = useState(false)
   const [cashInput, setCashInput] = useState(0.0)
   let subtitle;
@@ -53,7 +56,7 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, empl
       if (payment_type === 0) {
         setShowInput(true)
       } else {
-        const response = await fetch('https://project3-api.onrender.com/order/submit?id=' + employee + '&type=' + payment_type + '&payment=20.00', {
+        const response = await fetch('https://project3-api.onrender.com/order/submit?id=' + employee + '&type=' + payment_type + '&payment=' + cost, {
           method: 'POST',
           headers: {
             Accept: 'application/json',
@@ -72,13 +75,9 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, empl
         openModalSuccess()
         console.log('result is: ', JSON.stringify(result, null, 4))
       }
-
-      // openModal()
     } catch (err) {
       console.log(err)
     }
-
-    // closeModal();
   }
   const handleAmount = (e) => {
     e.preventDefault()
@@ -111,9 +110,6 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, empl
       setShowInput(false)
       clearCart()
       console.log('result is: ', JSON.stringify(result, null, 4))
-
-
-      // openModal()
     } catch (err) {
       console.log(err)
     }

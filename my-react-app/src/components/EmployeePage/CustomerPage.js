@@ -4,6 +4,7 @@ import FoodItem from './FoodItem';
 import { useNavigate } from "react-router-dom";
 import PaymentModal from './PaymentModal';
 import { LangContext, PrevLangContext } from '../../App';
+import MapModal from'./MapModal';
 //import Popup from 'reactjs-popup';
 
 
@@ -24,9 +25,13 @@ const CustomerPage = () => {
 
     let subtitle
     const [modalIsOpen, setIsOpen] = React.useState(false)
+    const [mapModalIsOpen, setMapIsOpen] = React.useState(false);
 
     function openModal() {
         setIsOpen(true)
+    }
+    function openMap(){
+      setMapIsOpen(true);
     }
 
     function afterOpenModal() {
@@ -37,6 +42,9 @@ const CustomerPage = () => {
     function closeModal() {
         setIsOpen(false)
     }
+    function closeMapModal() {
+      setMapIsOpen(false);
+  }
 
     useEffect(() => {
         fetch('foods.json')
@@ -164,10 +172,11 @@ const CustomerPage = () => {
                 <div className='submit-div'>
                     <button className='logout-btn' onClick={handleClick}>{dine}</button>
                     <button className='logout-btn' onClick={clearCart}>{clear}</button>
-                    <button className='logout-btn' onClick={() => navigate('../')}>{deliv}</button>
+                    <button className='logout-btn' onClick={openMap}>{deliv}</button>
                 </div>
             </div>
-            <PaymentModal openModal={openModal} modalIsOpen={modalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeModal} clearCart={clearCart} employee={0}></PaymentModal>
+            <PaymentModal openModal={openModal} modalIsOpen={modalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeModal} clearCart={clearCart} employee={0} cost={round((cart.reduce((total, item) => total + parseInt(item.count) * parseFloat(item.price), 0) * 1.0825), 2)}></PaymentModal>
+            <MapModal openMap={openMap}modalIsOpen={mapModalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeMapModal} clearCart={clearCart} cost={round((cart.reduce((total, item) => total + parseInt(item.count) * parseFloat(item.price), 0) * 1.0825), 2)}></MapModal>
         </div>
     );
 };

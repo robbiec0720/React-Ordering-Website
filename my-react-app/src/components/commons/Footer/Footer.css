@@ -6,12 +6,12 @@
 }
 
 .footer-style-dark{
-    background-color: black;
+    background-color: rgb(11, 58, 135);
     color: white;
     padding-top: 20px;
     padding-bottom: 20px;
 }
-.footer-style > h5{
+.footer-style > h4{
     margin-bottom: 0;
     padding: 0;
 }
