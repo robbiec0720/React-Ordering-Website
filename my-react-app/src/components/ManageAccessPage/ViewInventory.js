@@ -35,7 +35,7 @@ const ViewInventory = () => {
 
         try {
             // getting inventory through api
-            fetch('https://project3-api.onrender.com/inventory', {
+            fetch('http://localhost:8081/inventory', {
                 method: 'GET',
                 headers: {
                     Accept: 'application/json',

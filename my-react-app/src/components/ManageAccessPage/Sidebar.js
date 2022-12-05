@@ -104,7 +104,7 @@ const Sidebar = () => {
                             },
                             {
                                 title: delM,
-                                itemId: '/manage-access/delete-Items',
+                                itemId: '/manage-access/delete-items',
                             },             
                             {
                                 title: editI,
