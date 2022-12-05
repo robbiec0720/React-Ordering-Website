@@ -82,7 +82,7 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, empl
       if (payment_type === 0) {
         setShowInput(true)
       } else {
-        const response = await fetch('http://localhost:8081/order/submit?id=' + employee + '&type=' + payment_type + '&payment=20.00', {
+        const response = await fetch('https://project3-api.onrender.com/order/submit?id=' + employee + '&type=' + payment_type + '&payment=20.00', {
           method: 'POST',
           headers: {
             Accept: 'application/json',
@@ -119,7 +119,7 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, empl
     event.preventDefault()
     console.log(cashInput)
 
-    const url = 'http://localhost:8081/order/submit?id=' + employee + '&type=0&payment=' + cashInput
+    const url = 'https://project3-api.onrender.com/order/submit?id=' + employee + '&type=0&payment=' + cashInput
     console.log(url)
     try {
       const response = await fetch(url, {

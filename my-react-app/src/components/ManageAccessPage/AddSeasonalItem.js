@@ -76,7 +76,7 @@ const AddSeasonalItem = () => {
 
         handleSubmit(event) {
             event.preventDefault();
-            const url = 'http://localhost:8081/menuItems/add?array=' + this.state.name + ',' + this.state.ingredients + ',' + this.state.cost + ',' + this.state.type + ',1'
+            const url = 'https://project3-api.onrender.com/menuItems/add?array=' + this.state.name + ',' + this.state.ingredients + ',' + this.state.cost + ',' + this.state.type + ',1'
             fetch(url, {
                 method: 'POST',
                 headers: {

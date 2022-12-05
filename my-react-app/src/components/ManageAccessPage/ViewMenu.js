@@ -36,7 +36,7 @@ const ViewMenu = () => {
 
         try {
             // getting menu through api
-            fetch('http://localhost:8081/menuItems', {
+            fetch('https://project3-api.onrender.com/menuItems', {
                 method: 'GET',
                 headers: {
                     Accept: 'application/json',

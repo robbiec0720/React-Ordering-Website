@@ -39,7 +39,7 @@ const SalesReport = () => {
         let tempSales = []
 
         // getting sales report through api
-        const apiSales = 'http://localhost:8081/sales/' + start + '/' + end;
+        const apiSales = 'https://project3-api.onrender.com/sales/' + start + '/' + end;
         fetch(apiSales, {
             method: 'GET',
             headers: {
