@@ -25,7 +25,7 @@ const CustomerPage = () => {
 
     let subtitle
     const [modalIsOpen, setIsOpen] = React.useState(false)
-    const [mapmodalIsOpen, setMapIsOpen] = React.useState(false);
+    const [mapModalIsOpen, setMapIsOpen] = React.useState(false);
 
     function openModal() {
         setIsOpen(true)
@@ -175,8 +175,8 @@ const CustomerPage = () => {
                     <button className='logout-btn' onClick={openMap}>{deliv}</button>
                 </div>
             </div>
-            <PaymentModal openModal={openModal} modalIsOpen={modalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeModal} clearCart={clearCart} employee={0}></PaymentModal>
-            <MapModal openMap={openMap}modalIsOpen={mapmodalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeMapModal}></MapModal>
+            <PaymentModal openModal={openModal} modalIsOpen={modalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeModal} clearCart={clearCart} employee={0} cost={round((cart.reduce((total, item) => total + parseInt(item.count) * parseFloat(item.price), 0) * 1.0825), 2)}></PaymentModal>
+            <MapModal openMap={openMap}modalIsOpen={mapModalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeMapModal} clearCart={clearCart} cost={round((cart.reduce((total, item) => total + parseInt(item.count) * parseFloat(item.price), 0) * 1.0825), 2)}></MapModal>
         </div>
     );
 };
