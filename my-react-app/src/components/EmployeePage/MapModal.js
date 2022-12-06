@@ -1,8 +1,8 @@
-import React, { useContext, useState, useEffect } from 'react';
-import Modal from 'react-modal';
+import React, { useContext, useState, useEffect } from 'react'
+import Modal from 'react-modal'
 import './MapModal.css'
 import { FaTimes } from 'react-icons/fa'
-import { LangContext, PrevLangContext, ThemeContext } from '../../App';
+import { LangContext, PrevLangContext, ThemeContext } from '../../App'
 
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 const customStyles = {
@@ -15,7 +15,7 @@ const customStyles = {
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
   },
-};
+}
 const customStylesDark = {
   content: {
     top: '50%',
@@ -27,18 +27,18 @@ const customStylesDark = {
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
   },
-};
-const location = {
+}
+/* const location = {
   address: '275 Joe Routt Blvd, College Station, Texas.',
   lat: 30.6123,
   lng: -96.3415,
-}
+} */
 
 const MapModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, cost }) => {
   const { theme } = useContext(ThemeContext)
   const { lang } = useContext(LangContext)
   const { prevLang } = useContext(PrevLangContext)
-  const [card, setCard]= useState('Card')
+  const [card, setCard] = useState('Card')
   const [country, setCountry] = useState('Country or Region')
   const [code, setCode] = useState('Postal Code')
   const [pay, setPay] = useState('Choose a Payment Option')
@@ -53,7 +53,7 @@ const MapModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, cost }) 
 
   useEffect(() => {
     let t = [card, country, code, pay, addr, apt, state, sub, clear, deliv, req, city]
-    let text = t.join(';')
+    let text = t.join('')
     if (lang !== prevLang) {
       const API_KEY = 'AIzaSyANYWkU1YhvNE5flUIvzJv8g-y0KCHva-0'
       let url = `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`
@@ -81,7 +81,7 @@ const MapModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, cost }) 
           })
       })
       translated.then((result) => {
-        var split = result.split(';')
+        var split = result.split('')
         console.log(split)
         setCard(split[0])
         setCountry(split[1])
@@ -99,7 +99,6 @@ const MapModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, cost }) 
     }
   }, [prevLang, lang, card, country, code, pay, addr, apt, state, sub, clear, deliv, req, city])
 
-
   const handleClick = async (payment_type) => {
     console.log("Order Button Clicked with value " + payment_type)
     try {
@@ -108,22 +107,22 @@ const MapModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, cost }) 
         headers: {
           Accept: 'application/json',
         },
-      });
+      })
 
       if (!response.ok) {
-        throw new Error(`Error! status: ${response.status}`);
+        throw new Error(`Error! status: ${response.status}`)
       }
 
-      const result = await response.json();
+      const result = await response.json()
 
-      console.log('result is: ', JSON.stringify(result, null, 4));
+      console.log('result is: ', JSON.stringify(result, null, 4))
       // openModal()
     } catch (err) {
       console.log(err)
     }
-    clearCart();
-    closeModal();
-  };
+    clearCart()
+    closeModal()
+  }
 
   return (
     <div>
@@ -193,10 +192,9 @@ const MapModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, cost }) 
         <button onClick={closeModal} className='close-btn'><FaTimes /></button>
       </Modal>
     </div>
-  );
-};
+  )
+}
 
-
-export default MapModal;
+export default MapModal
 //api key: 'AIzaSyBOkjc0jDF0N-fPFXOOppRJ3MbySWygPbk'
 //<MapSection location={location} zoomLevel={17} /> {/* include it here */} 

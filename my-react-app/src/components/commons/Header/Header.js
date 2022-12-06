@@ -1,13 +1,13 @@
-import React, { useContext, useState, useEffect } from 'react';
-import './Header.css';
+import React, { useContext, useState, useEffect } from 'react'
+import './Header.css'
 import { AiOutlineMenu } from 'react-icons/ai'
-import { useNavigate } from 'react-router-dom';
-import { LangContext, PrevLangContext, ThemeContext } from '../../../App';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import { useNavigate } from 'react-router-dom'
+import { LangContext, PrevLangContext, ThemeContext } from '../../../App'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
+import FormControl from '@mui/material/FormControl'
+import Select from '@mui/material/Select'
 
 const Header = () => {
     const navigate = useNavigate()
@@ -19,7 +19,7 @@ const Header = () => {
     const [logout, setLogout] = useState('Logout')
     const [manage, setManage] = useState('Manager Access')
     const [drop, setDrop] = useState('Language')
-    const[tDrop, setTDrop] = useState('Theme')
+    const [tDrop, setTDrop] = useState('Theme')
     const [light, setLight] = useState('Light Mode')
     const [dark, setDark] = useState('Dark Mode')
     const [high, setHigh] = useState('High Contrast')
@@ -36,7 +36,7 @@ const Header = () => {
 
     useEffect(() => {
         let t = [login, logout, manage, drop, tDrop, light, dark, high]
-        let text = t.join(';')
+        let text = t.join('')
         if (lang !== prevLang) {
             const API_KEY = 'AIzaSyANYWkU1YhvNE5flUIvzJv8g-y0KCHva-0'
             let url = `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`
@@ -64,7 +64,7 @@ const Header = () => {
                     })
             })
             translated.then((result) => {
-                var split = result.split(';')
+                var split = result.split('')
                 console.log(split)
                 setLogin(split[0])
                 setLogout(split[1])
@@ -90,6 +90,7 @@ const Header = () => {
         localStorage.removeItem("user")
         navigate('/')
     }
+    
     return (
         <div className={`${theme === 'light' && 'header-style'} ${theme === 'dark' && 'header-style-dark'} ${theme === 'highContrast' && 'header-style-high-contrast'}`}>
             <div onClick={() => navigate('/')} className='logo'>
@@ -155,7 +156,7 @@ const Header = () => {
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default Header;
+export default Header

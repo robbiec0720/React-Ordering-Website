@@ -1,10 +1,9 @@
-import React, { useContext, useState, useEffect } from 'react';
-import Modal from 'react-modal';
+import React, { useContext, useState, useEffect } from 'react'
+import Modal from 'react-modal'
 import './PaymentModal.css'
 import { FaTimes } from 'react-icons/fa'
-// import { ThemeContext } from '../../App';
-import SuccessModal from './SuccessModal';
-import { LangContext, PrevLangContext, ThemeContext } from '../../App';
+import SuccessModal from './SuccessModal'
+import { LangContext, PrevLangContext, ThemeContext } from '../../App'
 
 const customStyles = {
   content: {
@@ -28,33 +27,35 @@ const customStylesDark = {
     transform: 'translate(-50%, -50%)',
   },
 }
-const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, employee, cost, subtitle}) => {
+
+const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, employee, cost, subtitle }) => {
   const { lang } = useContext(LangContext)
   const { prevLang } = useContext(PrevLangContext)
+  const { theme } = useContext(ThemeContext)
   const [showInput, setShowInput] = useState(false)
   const [cashInput, setCashInput] = useState(0.0)
-  const [card, setCard]= useState('Card')
+  const [card, setCard] = useState('Card')
   const [cash, setCash] = useState('Cash')
   const [cancel, setCancel] = useState('Cancel')
   const [pay, setPay] = useState('Cash Payment')
-  const [modalIsOpenSuccess, setIsOpenSuccess] = React.useState(false);
+  const [modalIsOpenSuccess, setIsOpenSuccess] = React.useState(false)
 
   function openModalSuccess() {
-    setIsOpenSuccess(true);
+    setIsOpenSuccess(true)
   }
 
   function afterOpenModalSuccess() {
     // references are now sync'd and can be accessed.
-    subtitle.style.color = '#f00';
+    subtitle.style.color = '#f00'
   }
 
   function closeModalSuccess() {
-    setIsOpenSuccess(false);
+    setIsOpenSuccess(false)
   }
 
   useEffect(() => {
     let t = [card, cash, cancel, pay]
-    let text = t.join(';')
+    let text = t.join('')
     if (lang !== prevLang) {
       const API_KEY = 'AIzaSyANYWkU1YhvNE5flUIvzJv8g-y0KCHva-0'
       let url = `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`
@@ -82,7 +83,7 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, empl
           })
       })
       translated.then((result) => {
-        var split = result.split(';')
+        var split = result.split('')
         console.log(split)
         setCard(split[0])
         setCash(split[1])
@@ -122,6 +123,7 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, empl
       console.log(err)
     }
   }
+
   const handleAmount = (e) => {
     e.preventDefault()
     setShowInput(false)
@@ -163,7 +165,6 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, empl
     setCashInput(event.target.value)
   }
 
-  const { theme } = useContext(ThemeContext)
   return (
     <div>
       <Modal
@@ -201,7 +202,6 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, empl
                 }
               </>
           }
-
         </div>
         <button onClick={closeModal} className='close-btn'><FaTimes /></button>
       </Modal>
@@ -211,7 +211,7 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, empl
         closeModalSuccess={closeModalSuccess}
       ></SuccessModal>
     </div>
-  );
-};
+  )
+}
 
-export default PaymentModal;
+export default PaymentModal

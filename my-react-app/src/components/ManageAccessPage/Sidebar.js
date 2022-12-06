@@ -1,30 +1,30 @@
-import React, { useContext } from 'react';
-import { Navigation } from 'react-minimal-side-navigation';
-import 'react-minimal-side-navigation/lib/ReactMinimalSideNavigation.css';
-import { useNavigate } from 'react-router-dom';
-import { LangContext, PrevLangContext, ThemeContext } from '../../App';
+import React, { useContext, useEffect, useState } from 'react'
+import { Navigation } from 'react-minimal-side-navigation'
+import 'react-minimal-side-navigation/lib/ReactMinimalSideNavigation.css'
+import { useNavigate } from 'react-router-dom'
+import { LangContext, PrevLangContext, ThemeContext } from '../../App'
 import './ManageAccess.css'
 const Sidebar = () => {
     const navigate = useNavigate()
     const { theme } = useContext(ThemeContext)
     const { lang } = useContext(LangContext)
     const { prevLang } = useContext(PrevLangContext)
-    const [inv, setInv] = React.useState('View Inventory')
-    const [menu, setMenu] = React.useState('View Menu')
-    const [func, setFunc] = React.useState('Edit Functions')
-    const [editM, setEditM] = React.useState('Edit Menu')
-    const [addM, setAddM] = React.useState('Add Seasonal Item')
-    const [delM, setDelM] = React.useState('Delete Menu Item')
-    const [editI, setEditI] = React.useState('Edit Inventory')
-    const [addI, setAddI] = React.useState('Add To Inventory')
-    const [delI, setDelI] = React.useState('Delete From Inventory')
-    const [restock, setRestock] = React.useState('Restock Report')
-    const [excess, setExcess] = React.useState('Excess Report')
-    const [sales, setSales] = React.useState('Sales Report')
+    const [inv, setInv] = useState('View Inventory')
+    const [menu, setMenu] = useState('View Menu')
+    const [func, setFunc] = useState('Edit Functions')
+    const [editM, setEditM] = useState('Edit Menu')
+    const [addM, setAddM] = useState('Add Seasonal Item')
+    const [delM, setDelM] = useState('Delete Menu Item')
+    const [editI, setEditI] = useState('Edit Inventory')
+    const [addI, setAddI] = useState('Add To Inventory')
+    const [delI, setDelI] = useState('Delete From Inventory')
+    const [restock, setRestock] = useState('Restock Report')
+    const [excess, setExcess] = useState('Excess Report')
+    const [sales, setSales] = useState('Sales Report')
 
-    React.useEffect(() => {
+    useEffect(() => {
         let t = [inv, menu, func, editM, addM, delM, editI, addI, delI, restock, excess, sales]
-        let text = t.join(';')
+        let text = t.join('')
         if (lang !== prevLang) {
             const API_KEY = 'AIzaSyANYWkU1YhvNE5flUIvzJv8g-y0KCHva-0'
             let url = `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`
@@ -45,14 +45,14 @@ const Sidebar = () => {
                         resolve(response.data.translations[0].translatedText)
                     })
                     .catch(error => {
-                        if(lang !== 'en') {
+                        if (lang !== 'en') {
                             alert("There was an error during translation. Reverting back to English")
                             window.location.reload(false)
                         }
                     })
             })
             translated.then((result) => {
-                var split = result.split(';')
+                var split = result.split('')
                 console.log(split)
                 setInv(split[0])
                 setMenu(split[1])
@@ -105,7 +105,7 @@ const Sidebar = () => {
                             {
                                 title: delM,
                                 itemId: '/manage-access/delete-items',
-                            },             
+                            },
                             {
                                 title: editI,
                                 itemId: '/manage-access/edit-inventory',
@@ -135,7 +135,7 @@ const Sidebar = () => {
                 ]}
             />
         </div>
-    );
-};
+    )
+}
 
-export default Sidebar;
+export default Sidebar

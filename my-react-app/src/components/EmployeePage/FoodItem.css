@@ -1,16 +1,16 @@
-.grid-item{
+.grid-item {
     background-color: rgba(0, 0, 0, 0.05);
     padding: 5px 15px;
     border-radius: 8px;
 }
 
-.grid-item:hover{
+.grid-item:hover {
     transform: scale(1.03);
     transition: transform .5s ease-out;
     overflow: hidden;
 }
 
-.desc{
+.desc {
     font-size: 14px;
     height: 80px;
     text-align: start;
@@ -18,7 +18,7 @@
     font-weight: bold;
 }
 
-.order-btn{
+.order-btn {
     background-color: #E51636;
     color: white;
     border: 1px solid #E51636;
@@ -31,17 +31,18 @@
     margin-top: 6px;
 }
 
-.order-btn:hover{
+.order-btn:hover {
     background-color: white;
     color: #E51636;
 }
 
-.order-btn:active{
+.order-btn:active {
     background-color: red;
     color: white;
     border: 1px solid red;
 }
-.ok-btn{
+
+.ok-btn {
     background-color: #E51636;
     color: white;
     border: 1px solid #E51636;
@@ -55,12 +56,13 @@
     margin-left: 40%;
     margin-right: 40%;
 }
-.ok-btn:hover{
+
+.ok-btn:hover {
     background-color: white;
     color: #E51636;
 }
 
-.ok-btn:active{
+.ok-btn:active {
     background-color: red;
     color: white;
     border: 1px solid red;

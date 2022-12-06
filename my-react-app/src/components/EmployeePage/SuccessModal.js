@@ -1,8 +1,8 @@
-import React, { useContext, useState, useEffect } from 'react';
-import Modal from 'react-modal';
+import React, { useContext, useState, useEffect } from 'react'
+import Modal from 'react-modal'
 import './SuccessModal.css'
 import { FaTimes } from 'react-icons/fa'
-import { LangContext, PrevLangContext, ThemeContext } from '../../App';
+import { LangContext, PrevLangContext, ThemeContext } from '../../App'
 
 const customStyles = {
     content: {
@@ -39,7 +39,7 @@ const SuccessModal = ({ modalIsOpenSuccess, afterOpenModalSuccess, closeModalSuc
 
     useEffect(() => {
         let t = [ok, confirm]
-        let text = t.join(';')
+        let text = t.join('')
         if (lang !== prevLang) {
           const API_KEY = 'AIzaSyANYWkU1YhvNE5flUIvzJv8g-y0KCHva-0'
           let url = `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`
@@ -67,7 +67,7 @@ const SuccessModal = ({ modalIsOpenSuccess, afterOpenModalSuccess, closeModalSuc
               })
           })
           translated.then((result) => {
-            var split = result.split(';')
+            var split = result.split('')
             console.log(split)
             setOk(split[0])
             setConfirm(split[1])
@@ -90,7 +90,7 @@ const SuccessModal = ({ modalIsOpenSuccess, afterOpenModalSuccess, closeModalSuc
                 <button onClick={closeModalSuccess} className='close-btn'><FaTimes /></button>
             </Modal>
         </div>
-    );
-};
+    )
+}
 
-export default SuccessModal;
+export default SuccessModal

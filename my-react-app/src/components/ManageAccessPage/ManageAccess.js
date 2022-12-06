@@ -1,7 +1,8 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
+import React from 'react'
+import { Outlet } from 'react-router-dom'
 import './ManageAccess.css'
-import Sidebar from './Sidebar';
+import Sidebar from './Sidebar'
+
 const ManageAccess = () => {
     return (
         <div className='manage-page-style'>
@@ -14,7 +15,7 @@ const ManageAccess = () => {
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default ManageAccess;
+export default ManageAccess

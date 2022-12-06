@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { LangContext, PrevLangContext, ThemeContext } from '../../App';
+import React, { useContext, useEffect, useState } from 'react'
+import { DataGrid, GridToolbar } from '@mui/x-data-grid'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
+import { LangContext, PrevLangContext, ThemeContext } from '../../App'
 import './ManageAccess.css'
 
 const ViewInventory = () => {
@@ -14,8 +14,8 @@ const ViewInventory = () => {
         { field: 'reorder_value', headerName: 'Reorder Value', width: 130 },
         { field: 'cost', headerName: 'Cost', width: 75 }
     ]
-    const [inv, setInv] = React.useState()
-    const [view, setView] = React.useState('View Inventory')
+    const [inv, setInv] = useState()
+    const [view, setView] = useState('View Inventory')
     const { theme } = useContext(ThemeContext)
     const { lang } = useContext(LangContext)
     const { prevLang } = useContext(PrevLangContext)
@@ -30,7 +30,7 @@ const ViewInventory = () => {
         }
     })
 
-    React.useEffect(() => {
+    useEffect(() => {
         let tempInv = []
 
         try {
@@ -76,7 +76,7 @@ const ViewInventory = () => {
                         resolve(response.data.translations[0].translatedText)
                     })
                     .catch(error => {
-                        if(lang !== 'en') {
+                        if (lang !== 'en') {
                             alert("There was an error during translation. Reverting back to English")
                             window.location.reload(false)
                         }
@@ -105,7 +105,7 @@ const ViewInventory = () => {
                 />
             </ThemeProvider>
         </div>
-    );
-};
+    )
+}
 
-export default ViewInventory;
+export default ViewInventory

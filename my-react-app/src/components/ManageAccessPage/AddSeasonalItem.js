@@ -1,15 +1,15 @@
-import React, { useContext, useEffect } from 'react';
-import { LangContext, PrevLangContext } from '../../App';
+import React, { useContext, useEffect, useState } from 'react'
+import { LangContext, PrevLangContext } from '../../App'
 
 const AddSeasonalItem = () => {
     const { lang } = useContext(LangContext)
     const { prevLang } = useContext(PrevLangContext)
-    const [report, setReport] = React.useState('Add To Menu')
-    const [btn, setBtn] = React.useState('Submit')
+    const [report, setReport] = useState('Add To Menu')
+    const [btn, setBtn] = useState('Submit')
 
     useEffect(() => {
         let t = [report, btn]
-        let text = t.join(';')
+        let text = t.join('')
         if (lang !== prevLang) {
             const API_KEY = 'AIzaSyANYWkU1YhvNE5flUIvzJv8g-y0KCHva-0'
             let url = `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`
@@ -37,7 +37,7 @@ const AddSeasonalItem = () => {
                     })
             })
             translated.then((result) => {
-                var split = result.split(';')
+                var split = result.split('')
                 console.log(split)
                 setReport(split[0])
                 setBtn(split[1])
@@ -49,7 +49,7 @@ const AddSeasonalItem = () => {
     class AddForm extends React.Component {
         constructor(props) {
             super(props)
-            this.state = { name: '', ingredients: '', type: '', cost: ''}
+            this.state = { name: '', ingredients: '', type: '', cost: '' }
 
             this.nameChange = this.nameChange.bind(this)
             this.ingredientChange = this.ingredientChange.bind(this)
@@ -75,7 +75,7 @@ const AddSeasonalItem = () => {
         }
 
         handleSubmit(event) {
-            event.preventDefault();
+            event.preventDefault()
             const url = 'https://project3-api.onrender.com/menuItems/add?array=' + this.state.name + ',' + this.state.ingredients + ',' + this.state.cost + ',' + this.state.type + ',1'
             fetch(url, {
                 method: 'POST',
@@ -96,19 +96,19 @@ const AddSeasonalItem = () => {
             return (
                 <form className="form" onSubmit={this.handleSubmit}>
                     <label>
-                        Item Name:&nbsp;
+                        Item Name:&nbsp
                         <input type="text" name={this.state.name} onChange={this.nameChange} />
                     </label>
                     <label>
-                        Ingredients (separated by :):&nbsp;
+                        Ingredients (separated by :):&nbsp
                         <input type="text" quantity={this.state.ingredients} onChange={this.ingredientChange} />
                     </label>
                     <label>
-                        Cost:&nbsp;
+                        Cost:&nbsp
                         <input type="text" threshold={this.state.threshold} onChange={this.costChange} />
                     </label>
                     <label>
-                        Item Type:&nbsp;
+                        Item Type:&nbsp
                         <input type="text" reorder={this.state.reorder} onChange={this.typeChange} />
                     </label>
                     <input className="submit-btn" type="submit" value={btn} />
@@ -122,7 +122,7 @@ const AddSeasonalItem = () => {
             <h1>{report}</h1>
             <AddForm></AddForm>
         </div>
-    );
-};
+    )
+}
 
-export default AddSeasonalItem;
+export default AddSeasonalItem

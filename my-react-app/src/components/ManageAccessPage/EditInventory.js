@@ -1,15 +1,15 @@
-import React, { useContext, useEffect } from 'react';
-import { LangContext, PrevLangContext } from '../../App';
+import React, { useContext, useEffect, useState } from 'react'
+import { LangContext, PrevLangContext } from '../../App'
 
 const EditInventory = () => {
     const { lang } = useContext(LangContext)
     const { prevLang } = useContext(PrevLangContext)
-    const [report, setReport] = React.useState('Edit Inventory')
-    const [btn, setBtn] = React.useState('Submit')
-    
+    const [report, setReport] = useState('Edit Inventory')
+    const [btn, setBtn] = useState('Submit')
+
     useEffect(() => {
         let t = [report, btn]
-        let text = t.join(';')
+        let text = t.join('')
         if (lang !== prevLang) {
             const API_KEY = 'AIzaSyANYWkU1YhvNE5flUIvzJv8g-y0KCHva-0'
             let url = `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`
@@ -30,14 +30,14 @@ const EditInventory = () => {
                         resolve(response.data.translations[0].translatedText)
                     })
                     .catch(error => {
-                        if(lang !== 'en') {
+                        if (lang !== 'en') {
                             alert("There was an error during translation. Reverting back to English")
                             window.location.reload(false)
                         }
                     })
             })
             translated.then((result) => {
-                var split = result.split(';')
+                var split = result.split('')
                 console.log(split)
                 setReport(split[0])
                 setBtn(split[1])
@@ -70,7 +70,7 @@ const EditInventory = () => {
         }
 
         handleSubmit(event) {
-            event.preventDefault();
+            event.preventDefault()
             // need to change to publicly hosted api
             const url = 'https://project3-api.onrender.com/edit?array=Inventory,' + this.state.id + ',' + this.state.col + ',' + this.state.value + ',ingredient_id'
             fetch(url, {
@@ -92,18 +92,18 @@ const EditInventory = () => {
             return (
                 <form className="form" onSubmit={this.handleSubmit}>
                     <label>
-                        ID:&nbsp;
+                        ID:&nbsp
                         <input type="text" id={this.state.id} onChange={this.idChange} />
                     </label>
                     <label>
-                        Column:&nbsp;
+                        Column:&nbsp
                         <input type="radio" name="Column" value="unit_quantity" onChange={this.colChange} />Unit Quantity
                         <input type="radio" name="Column" value="order_threshold" onChange={this.colChange} />Order Threshold
                         <input type="radio" name="Column" value="reorder_value" onChange={this.colChange} />Reorder Value
                         <input type="radio" name="Column" value="cost" onChange={this.colChange} />Cost
                     </label>
                     <label>
-                        New Value:&nbsp;
+                        New Value:&nbsp
                         <input type="text" value={this.state.value} onChange={this.valChange} />
                     </label>
                     <input className="submit-btn" type="submit" value={btn} />
@@ -117,7 +117,7 @@ const EditInventory = () => {
             <h1>{report}</h1>
             <EditForm></EditForm>
         </div>
-    );
-};
+    )
+}
 
-export default EditInventory;
+export default EditInventory

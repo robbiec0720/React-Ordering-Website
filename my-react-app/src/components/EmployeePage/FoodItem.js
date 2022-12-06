@@ -1,9 +1,9 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { LangContext, PrevLangContext } from '../../App';
-import './FoodItem.css';
+import React, { useContext, useState, useEffect } from 'react'
+import { LangContext, PrevLangContext } from '../../App'
+import './FoodItem.css'
 
 const FoodItem = ({ food, cart, setCart }) => {
-  const { id, name, price, img, count } = food
+  const { id, name, price, img } = food
   const url = 'https://project3-api.onrender.com/order/add/' + id.toString()
   const { lang } = useContext(LangContext)
   const { prevLang } = useContext(PrevLangContext)
@@ -38,20 +38,18 @@ const FoodItem = ({ food, cart, setCart }) => {
           })
       })
       translated.then((result) => {
-        // console.log(result)
         setOrder(result)
       })
     }
   }, [prevLang, lang, order])
 
   const handleClick = async () => {
-    console.log('test')
     if (cart.includes(food)) {
       cart[cart.indexOf(food)]["count"] += 1
       setCart([...cart])
     }
     else {
-      food.count += 1;
+      food.count += 1
       setCart([...cart, food])
     }
     await fetch(url, {
@@ -60,7 +58,6 @@ const FoodItem = ({ food, cart, setCart }) => {
         Accept: 'application/json',
       },
     })
-    console.log(cart)
   }
 
   return (
@@ -74,6 +71,7 @@ const FoodItem = ({ food, cart, setCart }) => {
       </div>
       <button className='order-btn' onClick={handleClick}>{order}</button>
     </div>
-  );
-};
-export default FoodItem;
+  )
+}
+
+export default FoodItem

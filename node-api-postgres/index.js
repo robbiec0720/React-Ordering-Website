@@ -14,7 +14,7 @@ app.use(
     })
 )
 
-const corsOptions = { origin : true }
+const corsOptions = { origin: true }
 
 app.get('/', cors(corsOptions), (request, response) => {
     response.json({ info: 'Node.js, Express, and Postgres API' })

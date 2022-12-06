@@ -24,7 +24,6 @@
     cursor: pointer;
     border-radius: 25px;
     color: white;
-
 }
 
 .modal-item:hover {
@@ -64,6 +63,7 @@
     justify-content: center;
     align-items: center;
 }
+
 .form-cash-dark{
     color: white;
     margin: 20px;
@@ -72,6 +72,7 @@
     justify-content: center;
     align-items: center;
 }
+
 .form-cash-high-contrast{
     color: rgb(0, 255, 0);
     margin: 20px;

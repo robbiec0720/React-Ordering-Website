@@ -1,15 +1,15 @@
-import React, { useContext, useEffect } from 'react';
-import { LangContext, PrevLangContext } from '../../App';
+import React, { useContext, useEffect, useState } from 'react'
+import { LangContext, PrevLangContext } from '../../App'
 
 const DeleteInventory = () => {
     const { lang } = useContext(LangContext)
     const { prevLang } = useContext(PrevLangContext)
-    const [report, setReport] = React.useState('Delete From Inventory')
-    const [btn, setBtn] = React.useState('Submit')
+    const [report, setReport] = useState('Delete From Inventory')
+    const [btn, setBtn] = useState('Submit')
 
     useEffect(() => {
         let t = [report, btn]
-        let text = t.join(';')
+        let text = t.join('')
         if (lang !== prevLang) {
             const API_KEY = 'AIzaSyANYWkU1YhvNE5flUIvzJv8g-y0KCHva-0'
             let url = `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`
@@ -30,14 +30,14 @@ const DeleteInventory = () => {
                         resolve(response.data.translations[0].translatedText)
                     })
                     .catch(error => {
-                        if(lang !== 'en') {
+                        if (lang !== 'en') {
                             alert("There was an error during translation. Reverting back to English")
                             window.location.reload(false)
                         }
                     })
             })
             translated.then((result) => {
-                var split = result.split(';')
+                var split = result.split('')
                 console.log(split)
                 setReport(split[0])
                 setBtn(split[1])
@@ -60,9 +60,9 @@ const DeleteInventory = () => {
         }
 
         handleSubmit(event) {
-            event.preventDefault();
+            event.preventDefault()
             // change to publicly hosted
-            const url = 'https://project3-api.onrender.com/entry/delete?id=' + this.state.id + '&table=Inventory&pkcol=ingredient_id';
+            const url = 'https://project3-api.onrender.com/entry/delete?id=' + this.state.id + '&table=Inventory&pkcol=ingredient_id'
             fetch(url, {
                 method: 'DELETE',
                 headers: {
@@ -82,7 +82,7 @@ const DeleteInventory = () => {
             return (
                 <form className="form" onSubmit={this.handleSubmit}>
                     <label>
-                        ID:&nbsp;
+                        ID:&nbsp
                         <input type="text" id={this.state.id} onChange={this.idChange} />
                     </label>
                     <input className="submit-btn" type="submit" value={btn} />
@@ -96,7 +96,7 @@ const DeleteInventory = () => {
             <h1>{report}</h1>
             <DeleteForm></DeleteForm>
         </div>
-    );
-};
+    )
+}
 
-export default DeleteInventory;
+export default DeleteInventory

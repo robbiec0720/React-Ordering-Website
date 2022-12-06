@@ -1,15 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
-import './EmployeePage.css';
-import FoodItem from './FoodItem';
-import { useNavigate } from "react-router-dom";
-import PaymentModal from './PaymentModal';
-import { LangContext, PrevLangContext } from '../../App';
-import MapModal from'./MapModal';
-//import Popup from 'reactjs-popup';
-
+import React, { useContext, useEffect, useState } from 'react'
+import './EmployeePage.css'
+import FoodItem from './FoodItem'
+import PaymentModal from './PaymentModal'
+import { LangContext, PrevLangContext } from '../../App'
+import MapModal from './MapModal'
 
 const CustomerPage = () => {
-    const navigate = useNavigate()
     const { lang } = useContext(LangContext)
     const { prevLang } = useContext(PrevLangContext)
     const [foods, setFoods] = useState([])
@@ -25,13 +21,14 @@ const CustomerPage = () => {
 
     let subtitle
     const [modalIsOpen, setIsOpen] = React.useState(false)
-    const [mapModalIsOpen, setMapIsOpen] = React.useState(false);
+    const [mapModalIsOpen, setMapIsOpen] = React.useState(false)
 
     function openModal() {
         setIsOpen(true)
     }
-    function openMap(){
-      setMapIsOpen(true);
+
+    function openMap() {
+        setMapIsOpen(true)
     }
 
     function afterOpenModal() {
@@ -42,16 +39,18 @@ const CustomerPage = () => {
     function closeModal() {
         setIsOpen(false)
     }
+
     function closeMapModal() {
-      setMapIsOpen(false);
-  }
+        setMapIsOpen(false)
+    }
 
     useEffect(() => {
         fetch('foods.json')
             .then(res => res.json())
             .then(result => setFoods(result))
+
         let t = [order, item, sub, price, dine, clear, deliv]
-        let text = t.join(';')
+        let text = t.join('')
         if (lang !== prevLang) {
             const API_KEY = 'AIzaSyANYWkU1YhvNE5flUIvzJv8g-y0KCHva-0'
             let url = `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`
@@ -79,7 +78,7 @@ const CustomerPage = () => {
                     })
             })
             translated.then((result) => {
-                var split = result.split(';')
+                var split = result.split('')
                 console.log(split)
                 setOrder(split[0])
                 setItem(split[1])
@@ -116,8 +115,8 @@ const CustomerPage = () => {
             item["count"]--
             setCart([...cart])
         }
-        if (item["count"] == 0) {
-            console.log(item == cart[0])
+        if (item["count"] === 0) {
+            console.log(item === cart[0])
             setCart(cart => cart.filter((_, i) => cart[i] !== item))
         }
         await fetch(url, {
@@ -133,7 +132,7 @@ const CustomerPage = () => {
     const handleClick = async () => {
         console.log("Order Button Clicked")
         openModal()
-    };
+    }
 
     return (
         <div className='employee-page-style'>
@@ -176,8 +175,9 @@ const CustomerPage = () => {
                 </div>
             </div>
             <PaymentModal openModal={openModal} modalIsOpen={modalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeModal} clearCart={clearCart} employee={0} cost={round((cart.reduce((total, item) => total + parseInt(item.count) * parseFloat(item.price), 0) * 1.0825), 2)}></PaymentModal>
-            <MapModal openMap={openMap}modalIsOpen={mapModalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeMapModal} clearCart={clearCart} cost={round((cart.reduce((total, item) => total + parseInt(item.count) * parseFloat(item.price), 0) * 1.0825), 2)}></MapModal>
+            <MapModal openMap={openMap} modalIsOpen={mapModalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeMapModal} clearCart={clearCart} cost={round((cart.reduce((total, item) => total + parseInt(item.count) * parseFloat(item.price), 0) * 1.0825), 2)}></MapModal>
         </div>
-    );
-};
-export default CustomerPage;
+    )
+}
+
+export default CustomerPage

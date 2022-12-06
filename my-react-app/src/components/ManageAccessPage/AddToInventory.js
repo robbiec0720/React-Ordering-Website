@@ -1,15 +1,15 @@
-import React, { useContext, useEffect } from 'react';
-import { LangContext, PrevLangContext } from '../../App';
+import React, { useContext, useEffect, useState } from 'react'
+import { LangContext, PrevLangContext } from '../../App'
 
 const AddToInventory = () => {
     const { lang } = useContext(LangContext)
     const { prevLang } = useContext(PrevLangContext)
-    const [report, setReport] = React.useState('Add To Inventory')
-    const [btn, setBtn] = React.useState('Submit')
+    const [report, setReport] = useState('Add To Inventory')
+    const [btn, setBtn] = useState('Submit')
 
     useEffect(() => {
         let t = [report, btn]
-        let text = t.join(';')
+        let text = t.join('')
         if (lang !== prevLang) {
             const API_KEY = 'AIzaSyANYWkU1YhvNE5flUIvzJv8g-y0KCHva-0'
             let url = `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`
@@ -30,14 +30,14 @@ const AddToInventory = () => {
                         resolve(response.data.translations[0].translatedText)
                     })
                     .catch(error => {
-                        if(lang !== 'en') {
+                        if (lang !== 'en') {
                             alert("There was an error during translation. Reverting back to English")
                             window.location.reload(false)
                         }
                     })
             })
             translated.then((result) => {
-                var split = result.split(';')
+                var split = result.split('')
                 console.log(split)
                 setReport(split[0])
                 setBtn(split[1])
@@ -80,7 +80,7 @@ const AddToInventory = () => {
         }
 
         handleSubmit(event) {
-            event.preventDefault();
+            event.preventDefault()
             const url = 'https://project3-api.onrender.com/inventory/add?array=' + this.state.name + ',' + this.state.quantity + ',' + this.state.threshold + ',' + this.state.reorder + ',' + this.state.cost
             fetch(url, {
                 method: 'POST',
@@ -101,23 +101,23 @@ const AddToInventory = () => {
             return (
                 <form className="form" onSubmit={this.handleSubmit}>
                     <label>
-                        Ingredient Name:&nbsp;
+                        Ingredient Name:&nbsp
                         <input type="text" name={this.state.name} onChange={this.nameChange} />
                     </label>
                     <label>
-                        Initial Quantity:&nbsp;
+                        Initial Quantity:&nbsp
                         <input type="text" quantity={this.state.quantity} onChange={this.quantityChange} />
                     </label>
                     <label>
-                        Order Threshold:&nbsp;
+                        Order Threshold:&nbsp
                         <input type="text" threshold={this.state.threshold} onChange={this.thresholdChange} />
                     </label>
                     <label>
-                        Reorder Value:&nbsp;
+                        Reorder Value:&nbsp
                         <input type="text" reorder={this.state.reorder} onChange={this.reorderChange} />
                     </label>
                     <label>
-                        Ingredient Cost:&nbsp;
+                        Ingredient Cost:&nbsp
                         <input type="text" cost={this.state.cost} onChange={this.costChange} />
                     </label>
                     <input className="submit-btn" type="submit" value={btn} />
@@ -131,7 +131,7 @@ const AddToInventory = () => {
             <h1>{report}</h1>
             <AddForm></AddForm>
         </div>
-    );
-};
+    )
+}
 
-export default AddToInventory;
+export default AddToInventory

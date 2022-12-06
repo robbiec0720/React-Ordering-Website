@@ -1,24 +1,24 @@
-import React, { useContext } from 'react';
-import { GoogleLogin } from 'react-google-login';
-import { refreshTokenSetup } from '../../utils/refreshToken';
-import './Login.css';
-import { useNavigate } from 'react-router-dom';
-import { LangContext, PrevLangContext } from '../../App';
+import React, { useContext, useEffect, useState } from 'react'
+import { GoogleLogin } from 'react-google-login'
+import { refreshTokenSetup } from '../../utils/refreshToken'
+import './Login.css'
+import { useNavigate } from 'react-router-dom'
+import { LangContext, PrevLangContext } from '../../App'
 
-const clientId = '1061498518280-61io1snf32r4vai9ghighvuio2b2n30r.apps.googleusercontent.com';
+const clientId = '1061498518280-61io1snf32r4vai9ghighvuio2b2n30r.apps.googleusercontent.com'
 
 const Login = () => {
   const { lang } = useContext(LangContext)
   const { prevLang } = useContext(PrevLangContext)
-  const [google, setGoogle] = React.useState('Login with Google')
-  const [log, setLog] = React.useState('If you are an Employee or a Manager: Sign In')
-  const [btn, setBtn] = React.useState('Login')
-  const [name, setName] = React.useState('Email')
-  const [pass, setPass] = React.useState('Password')
+  const [google, setGoogle] = useState('Login with Google')
+  const [log, setLog] = useState('If you are an Employee or a Manager: Sign In')
+  const [btn, setBtn] = useState('Login')
+  const [name, setName] = useState('Email')
+  const [pass, setPass] = useState('Password')
 
-  React.useEffect(() => {
+  useEffect(() => {
     let t = [google, log, btn, name, pass]
-    let text = t.join(';')
+    let text = t.join('')
     if (lang !== prevLang) {
       const API_KEY = 'AIzaSyANYWkU1YhvNE5flUIvzJv8g-y0KCHva-0'
       let url = `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`
@@ -46,7 +46,7 @@ const Login = () => {
           })
       })
       translated.then((result) => {
-        var split = result.split(';')
+        var split = result.split('')
         console.log(split)
         setGoogle(split[0])
         setLog(split[1])
@@ -59,13 +59,13 @@ const Login = () => {
 
   // Terrible sphaghetti code, will fix later
   const onSuccess = (res) => {
-    console.log("Login success");
-    const email = res.profileObj.email.replace('@', '%40');
-    const googleID = res.profileObj.googleId;
+    console.log("Login success")
+    const email = res.profileObj.email.replace('@', '%40')
+    const googleID = res.profileObj.googleId
 
-    refreshTokenSetup(res);
+    refreshTokenSetup(res)
 
-    const idRequest = 'https://project3-api.onrender.com/employee/getID?email=' + email;
+    const idRequest = 'https://project3-api.onrender.com/employee/getID?email=' + email
     let employeeID = -1
     fetch(idRequest, {
       method: 'GET',
@@ -78,11 +78,11 @@ const Login = () => {
       }
 
       response.json().then(json => {
-        employeeID = parseInt(json);
+        employeeID = parseInt(json)
       })
     })
 
-    const loginRequest = 'https://project3-api.onrender.com/login?name=' + email + '&id=' + googleID;
+    const loginRequest = 'https://project3-api.onrender.com/login?name=' + email + '&id=' + googleID
     fetch(loginRequest, {
       method: 'GET',
       headers: {
@@ -94,35 +94,35 @@ const Login = () => {
       }
 
       response.json().then(json => {
-        console.log(json);
-        if (parseInt(json) == 2) {
+        console.log(json)
+        if (parseInt(json) === 2) {
           localStorage.setItem("user", JSON.stringify({ username: email, password: googleID, role: "manager" }))
         }
-        else if (parseInt(json) == 1) {
+        else if (parseInt(json) === 1) {
           localStorage.setItem("user", JSON.stringify({ username: email, password: googleID, role: "employee" }))
         }
-        if (parseInt(json) == 1 || parseInt(json) == 2) {
+        if (parseInt(json) === 1 || parseInt(json) === 2) {
           console.log("Got here")
           navigate('../employee', {
             state: {
               employeeID: employeeID,
               managerStatus: parseInt(json)
             }
-          });
+          })
         }
       })
     })
 
 
-  };
+  }
 
   const onFailure = (res) => {
-    console.log("Login failure");
-    console.log(res);
-  };
+    console.log("Login failure")
+    console.log(res)
+  }
 
   const handleSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault()
     // console.log(event.target.elements.username.value) // from elements property
     // console.log(event.target.username.value)    
     // or directly
@@ -135,8 +135,8 @@ const Login = () => {
     // console.log(event.target.password.value) // from elements property
     // console.log(event.target.username.value)          // or directly
 
-    const idRequest = 'https://project3-api.onrender.com/employee/getID?email=' + event.target.username.value;
-    const encodedIDRequest = idRequest.replace('@', '%40');
+    const idRequest = 'https://project3-api.onrender.com/employee/getID?email=' + event.target.username.value
+    const encodedIDRequest = idRequest.replace('@', '%40')
     let employeeID = -1
     fetch(encodedIDRequest, {
       method: 'GET',
@@ -149,11 +149,11 @@ const Login = () => {
       }
 
       response.json().then(json => {
-        employeeID = parseInt(json);
+        employeeID = parseInt(json)
       })
     })
 
-    const loginRequest = 'https://project3-api.onrender.com/login?name=' + event.target.username.value.replace('@', '%40') + '&id=' + event.target.password.value;
+    const loginRequest = 'https://project3-api.onrender.com/login?name=' + event.target.username.value.replace('@', '%40') + '&id=' + event.target.password.value
     fetch(loginRequest, {
       method: 'GET',
       headers: {
@@ -167,26 +167,26 @@ const Login = () => {
 
       response.json().then(json => {
         console.log(json)
-        if (parseInt(json) == 2) {
+        if (parseInt(json) === 2) {
           localStorage.setItem("user", JSON.stringify({ username: username, password: password, role: "manager" }))
         }
-        else if (parseInt(json) == 1) {
+        else if (parseInt(json) === 1) {
           localStorage.setItem("user", JSON.stringify({ username: username, password: password, role: "employee" }))
         }
-        if (parseInt(json) == 1 || parseInt(json) == 2) {
+        if (parseInt(json) === 1 || parseInt(json) === 2) {
           navigate('../employee', {
             state: {
               employeeID: employeeID,
               managerStatus: parseInt(json)
             }
-          });
+          })
         }
       })
     })
 
   }
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   return (
     <div>
       <form onSubmit={handleSubmit} className="Auth-form">
@@ -227,7 +227,7 @@ const Login = () => {
         isSignedIn={false}
       />
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

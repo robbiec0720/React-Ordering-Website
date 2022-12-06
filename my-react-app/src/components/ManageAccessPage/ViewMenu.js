@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { LangContext, PrevLangContext, ThemeContext } from '../../App';
+import React, { useContext, useEffect, useState } from 'react'
+import { DataGrid, GridToolbar } from '@mui/x-data-grid'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
+import { LangContext, PrevLangContext, ThemeContext } from '../../App'
 import './ManageAccess.css'
 
 const ViewMenu = () => {
@@ -15,8 +15,8 @@ const ViewMenu = () => {
         { field: 'is_seasonal', headerName: 'Seasonal?', width: 90 }
     ]
 
-    const [menu, setMenu] = React.useState()
-    const [view, setView ] = React.useState('View Menu')
+    const [menu, setMenu] = useState()
+    const [view, setView] = useState('View Menu')
     const { theme } = useContext(ThemeContext)
     const { lang } = useContext(LangContext)
     const { prevLang } = useContext(PrevLangContext)
@@ -31,7 +31,7 @@ const ViewMenu = () => {
         }
     })
 
-    React.useEffect(() => {
+    useEffect(() => {
         let tempMenu = []
 
         try {
@@ -56,7 +56,7 @@ const ViewMenu = () => {
         } catch (err) {
             console.log(err)
         }
-        
+
         let text = view
         if (lang !== prevLang) {
             const API_KEY = 'AIzaSyANYWkU1YhvNE5flUIvzJv8g-y0KCHva-0'
@@ -78,7 +78,7 @@ const ViewMenu = () => {
                         resolve(response.data.translations[0].translatedText)
                     })
                     .catch(error => {
-                        if(lang !== 'en') {
+                        if (lang !== 'en') {
                             alert("There was an error during translation. Reverting back to English")
                             window.location.reload(false)
                         }
@@ -107,7 +107,7 @@ const ViewMenu = () => {
                 />
             </ThemeProvider>
         </div>
-    );
-};
+    )
+}
 
-export default ViewMenu;
+export default ViewMenu

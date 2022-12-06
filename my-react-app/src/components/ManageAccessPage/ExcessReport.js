@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { LangContext, PrevLangContext, ThemeContext } from '../../App';
+import React, { useContext, useEffect, useState } from 'react'
+import { DataGrid, GridToolbar } from '@mui/x-data-grid'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
+import { LangContext, PrevLangContext, ThemeContext } from '../../App'
 import './ManageAccess.css'
 
 const ExcessReport = () => {
@@ -15,15 +15,15 @@ const ExcessReport = () => {
     ]
 
     // state columns
-    const [excess, setExcess] = React.useState()
-    const [start, setStart] = React.useState('2022-10-02')
+    const [excess, setExcess] = useState()
+    const [start, setStart] = useState('2022-10-02')
     const { theme } = useContext(ThemeContext)
     const { lang } = useContext(LangContext)
     const { prevLang } = useContext(PrevLangContext)
-    const [date, setDate] = React.useState('Start Date')
-    const [report, setReport] = React.useState('Excess Report from')
-    const [to, setTo] = React.useState('to')
-    const [submit, setSubmit] = React.useState('Submit')
+    const [date, setDate] = useState('Start Date')
+    const [report, setReport] = useState('Excess Report from')
+    const [to, setTo] = useState('to')
+    const [submit, setSubmit] = useState('Submit')
 
     const lightTheme = createTheme({
         palette: {
@@ -36,7 +36,7 @@ const ExcessReport = () => {
         }
     })
 
-    React.useEffect(() => {
+    useEffect(() => {
         let tempExcess = []
 
         try {
@@ -64,7 +64,7 @@ const ExcessReport = () => {
         }
 
         let t = [date, report, to, submit]
-        let text = t.join(';')
+        let text = t.join('')
         if (lang !== prevLang) {
             const API_KEY = 'AIzaSyANYWkU1YhvNE5flUIvzJv8g-y0KCHva-0'
             let url = `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`
@@ -85,14 +85,14 @@ const ExcessReport = () => {
                         resolve(response.data.translations[0].translatedText)
                     })
                     .catch(error => {
-                        if(lang !== 'en') {
+                        if (lang !== 'en') {
                             alert("There was an error during translation. Reverting back to English")
                             window.location.reload(false)
                         }
                     })
             })
             translated.then((result) => {
-                var split = result.split(';')
+                var split = result.split('')
                 console.log(split)
                 setDate(split[0])
                 setReport(split[1])
@@ -118,7 +118,7 @@ const ExcessReport = () => {
         }
 
         handleSubmit(event) {
-            event.preventDefault();
+            event.preventDefault()
             console.log(this.state.value)
             setStart(this.state.value)
         }
@@ -127,11 +127,11 @@ const ExcessReport = () => {
             return (
                 <form onSubmit={this.handleSubmit}>
                     <label>
-                        {date} (YYYY-MM-DD):&nbsp;
+                        {date} (YYYY-MM-DD):&nbsp
                         <input type="text" value={this.state.value} onChange={this.handleChange} />
                     </label>
                     <label>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp&nbsp&nbsp&nbsp
                     </label>
                     <input className="submit-btn" type="submit" value={submit} />
                 </form>
@@ -156,7 +156,7 @@ const ExcessReport = () => {
                 />
             </ThemeProvider>
         </div>
-    );
-};
+    )
+}
 
-export default ExcessReport;
+export default ExcessReport

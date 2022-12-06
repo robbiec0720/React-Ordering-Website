@@ -1,27 +1,25 @@
-.footer-style{
+.footer-style {
     text-align: center;
     background-color: rgb(205, 217, 240);
     padding-top: 20px;
     padding-bottom: 20px;
 }
 
-.footer-style-dark{
+.footer-style-dark {
     background-color: rgb(11, 58, 135);
     color: white;
     padding-top: 20px;
     padding-bottom: 20px;
 }
-.footer-style-high-contrast{
+
+.footer-style-high-contrast {
     background-color: black;
     color: rgb(0, 255, 0);
     padding-top: 20px;
     padding-bottom: 20px;
 }
-.footer-style > h4{
-    margin-bottom: 0;
-    padding: 0;
-}
-.footer-style > p{
+
+.footer-style>p {
     margin-top: 5px;
     padding: 0;
 }

@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { LangContext, PrevLangContext, ThemeContext } from '../../App';
+import React, { useContext, useEffect, useState } from 'react'
+import { DataGrid, GridToolbar } from '@mui/x-data-grid'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
+import { LangContext, PrevLangContext, ThemeContext } from '../../App'
 import './ManageAccess.css'
 
 const RestockReport = () => {
@@ -14,9 +14,9 @@ const RestockReport = () => {
         { field: 'reorder_value', headerName: 'Reorder Value', width: 130 },
         { field: 'cost', headerName: 'Cost', width: 75 }
     ]
-    const [restock, setRestock] = React.useState()
-    const [report, setReport] = React.useState('Restock Report')
-    const [btn, setBtn] = React.useState('Restock')
+    const [restock, setRestock] = useState()
+    const [report, setReport] = useState('Restock Report')
+    const [btn, setBtn] = useState('Restock')
     const { theme } = useContext(ThemeContext)
     const { lang } = useContext(LangContext)
     const { prevLang } = useContext(PrevLangContext)
@@ -31,7 +31,7 @@ const RestockReport = () => {
         }
     })
 
-    React.useEffect(() => {
+    useEffect(() => {
         let tempRestock = []
 
         try {
@@ -58,7 +58,7 @@ const RestockReport = () => {
         }
 
         let t = [report, btn]
-        let text = t.join(';')
+        let text = t.join('')
         if (lang !== prevLang) {
             const API_KEY = 'AIzaSyANYWkU1YhvNE5flUIvzJv8g-y0KCHva-0'
             let url = `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`
@@ -79,14 +79,14 @@ const RestockReport = () => {
                         resolve(response.data.translations[0].translatedText)
                     })
                     .catch(error => {
-                        if(lang !== 'en') {
+                        if (lang !== 'en') {
                             alert("There was an error during translation. Reverting back to English")
                             window.location.reload(false)
                         }
                     })
             })
             translated.then((result) => {
-                var split = result.split(';')
+                var split = result.split('')
                 console.log(split)
                 setReport(split[0])
                 setBtn(split[1])
@@ -130,7 +130,7 @@ const RestockReport = () => {
                 />
             </ThemeProvider>
         </div>
-    );
-};
+    )
+}
 
-export default RestockReport;
+export default RestockReport

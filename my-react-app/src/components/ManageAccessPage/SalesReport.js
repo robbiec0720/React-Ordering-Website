@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { ThemeContext, LangContext, PrevLangContext } from '../../App';
+import React, { useContext, useEffect, useState } from 'react'
+import { DataGrid, GridToolbar } from '@mui/x-data-grid'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
+import { ThemeContext, LangContext, PrevLangContext } from '../../App'
 import './ManageAccess.css'
 
 const SalesReport = () => {
@@ -13,17 +13,17 @@ const SalesReport = () => {
     ]
 
     //state variables
-    const [sales, setSales] = React.useState()
-    const [start, setStart] = React.useState('2022-10-02')
+    const [sales, setSales] = useState()
+    const [start, setStart] = useState('2022-10-02')
     const [end, setEnd] = React.useState('2022-10-25')
     const { theme } = useContext(ThemeContext)
     const { lang } = useContext(LangContext)
     const { prevLang } = useContext(PrevLangContext)
-    const [sDate, setSDate] = React.useState('Start Date')
-    const [eDate, setEDate] = React.useState('End Date')
-    const [report, setReport] = React.useState('Sales Report from')
-    const [to, setTo] = React.useState('to')
-    const [submit, setSubmit] = React.useState('Submit')
+    const [sDate, setSDate] = useState('Start Date')
+    const [eDate, setEDate] = useState('End Date')
+    const [report, setReport] = useState('Sales Report from')
+    const [to, setTo] = useState('to')
+    const [submit, setSubmit] = useState('Submit')
     const lightTheme = createTheme({
         palette: {
             mode: 'light'
@@ -35,11 +35,11 @@ const SalesReport = () => {
         }
     })
 
-    React.useEffect(() => {
+    useEffect(() => {
         let tempSales = []
 
         // getting sales report through api
-        const apiSales = 'https://project3-api.onrender.com/sales/' + start + '/' + end;
+        const apiSales = 'https://project3-api.onrender.com/sales/' + start + '/' + end
         fetch(apiSales, {
             method: 'GET',
             headers: {
@@ -64,7 +64,7 @@ const SalesReport = () => {
         }
 
         let t = [sDate, eDate, report, to, submit]
-        let text = t.join(';')
+        let text = t.join('')
         if (lang !== prevLang) {
             const API_KEY = 'AIzaSyANYWkU1YhvNE5flUIvzJv8g-y0KCHva-0'
             let url = `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`
@@ -85,14 +85,14 @@ const SalesReport = () => {
                         resolve(response.data.translations[0].translatedText)
                     })
                     .catch(error => {
-                        if(lang !== 'en') {
+                        if (lang !== 'en') {
                             alert("There was an error during translation. Reverting back to English")
                             window.location.reload(false)
                         }
                     })
             })
             translated.then((result) => {
-                var split = result.split(';')
+                var split = result.split('')
                 console.log(split)
                 setSDate(split[0])
                 setEDate(split[1])
@@ -119,7 +119,7 @@ const SalesReport = () => {
         }
 
         handleSubmit(event) {
-            event.preventDefault();
+            event.preventDefault()
             console.log(this.state.value)
             setStart(this.state.value)
         }
@@ -128,11 +128,11 @@ const SalesReport = () => {
             return (
                 <form onSubmit={this.handleSubmit}>
                     <label>
-                        {sDate} (YYYY-MM-DD):&nbsp;
+                        {sDate} (YYYY-MM-DD):&nbsp
                         <input type="text" value={this.state.value} onChange={this.handleChange} />
                     </label>
                     <label>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp&nbsp&nbsp&nbsp
                     </label>
                     <input className="submit-btn" type="submit" value={submit} />
                 </form>
@@ -155,7 +155,7 @@ const SalesReport = () => {
         }
 
         handleSubmit(event) {
-            event.preventDefault();
+            event.preventDefault()
             console.log(this.state.value)
             setEnd(this.state.value)
         }
@@ -164,11 +164,11 @@ const SalesReport = () => {
             return (
                 <form onSubmit={this.handleSubmit}>
                     <label>
-                        {eDate} (YYYY-MM-DD):&nbsp;
+                        {eDate} (YYYY-MM-DD):&nbsp
                         <input type="text" value={this.state.value} onChange={this.handleChange} />
                     </label>
                     <label>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp&nbsp&nbsp&nbsp
                     </label>
                     <input className="submit-btn" type="submit" value={submit} />
                 </form>
@@ -194,7 +194,7 @@ const SalesReport = () => {
                 />
             </ThemeProvider>
         </div>
-    );
-};
+    )
+}
 
-export default SalesReport;
+export default SalesReport

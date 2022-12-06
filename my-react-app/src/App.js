@@ -1,32 +1,35 @@
-import { createContext, useEffect, useState } from 'react';
-import { gapi } from 'gapi-script';
-import { Route, Routes } from 'react-router-dom';
-import './App.css';
-import Footer from './components/commons/Footer/Footer';
-import Header from './components/commons/Header/Header';
-import EmployeePage from './components/EmployeePage/EmployeePage';
-import CustomerPage from './components/EmployeePage/CustomerPage';
-import Auth from './components/Auth';
-import ManageAccess from './components/ManageAccessPage/ManageAccess';
-import Login from './components/Login/Login';
-import AddSeasonalItem from './components/ManageAccessPage/AddSeasonalItem';
-import AddToInventory from './components/ManageAccessPage/AddToInventory';
-import DeleteInventory from './components/ManageAccessPage/DeleteInventory';
-import DeleteItems from './components/ManageAccessPage/DeleteItems';
-import EditInventory from './components/ManageAccessPage/EditInventory';
-import EditMenu from './components/ManageAccessPage/EditMenu';
-import ExcessReport from './components/ManageAccessPage/ExcessReport';
-import RestockReport from './components/ManageAccessPage/RestockReport';
-import SalesReport from './components/ManageAccessPage/SalesReport';
-import ViewInventory from './components/ManageAccessPage/ViewInventory';
-import ViewMenu from './components/ManageAccessPage/ViewMenu';
-export const ThemeContext = createContext();
-export const LangContext = createContext();
-export const PrevLangContext = createContext();
+import { createContext, useEffect, useState } from 'react'
+import { gapi } from 'gapi-script'
+import { Route, Routes } from 'react-router-dom'
+import './App.css'
+import Footer from './components/commons/Footer/Footer'
+import Header from './components/commons/Header/Header'
+import EmployeePage from './components/EmployeePage/EmployeePage'
+import CustomerPage from './components/EmployeePage/CustomerPage'
+import Auth from './components/Auth'
+import ManageAccess from './components/ManageAccessPage/ManageAccess'
+import Login from './components/Login/Login'
+import AddSeasonalItem from './components/ManageAccessPage/AddSeasonalItem'
+import AddToInventory from './components/ManageAccessPage/AddToInventory'
+import DeleteInventory from './components/ManageAccessPage/DeleteInventory'
+import DeleteItems from './components/ManageAccessPage/DeleteItems'
+import EditInventory from './components/ManageAccessPage/EditInventory'
+import EditMenu from './components/ManageAccessPage/EditMenu'
+import ExcessReport from './components/ManageAccessPage/ExcessReport'
+import RestockReport from './components/ManageAccessPage/RestockReport'
+import SalesReport from './components/ManageAccessPage/SalesReport'
+import ViewInventory from './components/ManageAccessPage/ViewInventory'
+import ViewMenu from './components/ManageAccessPage/ViewMenu'
+export const ThemeContext = createContext()
+export const LangContext = createContext()
+export const PrevLangContext = createContext()
 
-const clientId = '1061498518280-61io1snf32r4vai9ghighvuio2b2n30r.apps.googleusercontent.com';
+const clientId = '1061498518280-61io1snf32r4vai9ghighvuio2b2n30r.apps.googleusercontent.com'
 
 function App() {
+  const [theme, setTheme] = useState('light')
+  const [lang, setLang] = useState('en')
+  const [prevLang, setPrevLang] = useState('en')
 
   useEffect(() => {
     function start() {
@@ -34,14 +37,10 @@ function App() {
         clientId: clientId,
         scope: ""
       })
-    };
-
-    gapi.load('client:auth2', start);
+    }
+    gapi.load('client:auth2', start)
   })
 
-  const [theme, setTheme] = useState('light')
-  const [lang, setLang] = useState('en')
-  const [prevLang, setPrevLang] = useState('en')
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
       <LangContext.Provider value={{ lang, setLang }}>
@@ -78,5 +77,5 @@ function App() {
         </PrevLangContext.Provider>
       </LangContext.Provider>
     </ThemeContext.Provider>
-  );
-} export default App;
+  )
+} export default App
