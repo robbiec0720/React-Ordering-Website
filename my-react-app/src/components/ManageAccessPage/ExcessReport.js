@@ -15,6 +15,7 @@ const ExcessReport = () => {
     ]
 
     // state columns
+    const [tableTheme, setTableTheme] = useState()
     const [excess, setExcess] = useState()
     const [start, setStart] = useState('2022-10-02')
     const { theme } = useContext(ThemeContext)
@@ -35,10 +36,31 @@ const ExcessReport = () => {
             mode: 'dark'
         }
     })
+    const contrastTheme = createTheme({
+        palette: {
+            mode: 'dark',
+            primary: {
+                main: '#ff00ff',
+            },
+            text: {
+                primary: '#00ff00'
+            },
+            divider: '#ff00ff'
+        }
+    })
 
     useEffect(() => {
-        let tempExcess = []
+        if(theme === 'light') {
+            setTableTheme(lightTheme)
+        }
+        else if(theme === 'dark') {
+            setTableTheme(darkTheme)
+        }
+        else if(theme === 'highContrast') {
+            setTableTheme(contrastTheme)
+        }
 
+        let tempExcess = []
         try {
             // getting excess report through api
             const apiExcess = 'https://project3-api.onrender.com/excess/' + start + '/2022-10-25'
@@ -101,7 +123,7 @@ const ExcessReport = () => {
             })
         }
 
-    }, [start, date, submit, to, report, lang, prevLang])
+    }, [start, date, submit, to, report, lang, prevLang, theme, darkTheme, lightTheme, contrastTheme])
 
     // form to get start date input
     class StartForm extends React.Component {
@@ -143,7 +165,7 @@ const ExcessReport = () => {
         <div className={`${theme === 'light' && 'table'} ${theme === 'dark' && 'table-dark'} ${theme === 'highContrast' && 'table-high-contrast'}`}>
             <h1>{report} {start} {to} 2022-10-25</h1>
             <StartForm></StartForm>
-            <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+            <ThemeProvider theme={tableTheme}>
                 <DataGrid
                     getRowId={(row) => row.ingredient_id}
                     rows={excess ? excess : []}

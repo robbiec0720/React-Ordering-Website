@@ -15,6 +15,7 @@ const ViewMenu = () => {
         { field: 'is_seasonal', headerName: 'Seasonal?', width: 90 }
     ]
 
+    const [tableTheme, setTableTheme] = useState()
     const [menu, setMenu] = useState()
     const [view, setView] = useState('View Menu')
     const { theme } = useContext(ThemeContext)
@@ -30,10 +31,31 @@ const ViewMenu = () => {
             mode: 'dark'
         }
     })
+    const contrastTheme = createTheme({
+        palette: {
+            mode: 'dark',
+            primary: {
+                main: '#ff00ff',
+            },
+            text: {
+                primary: '#00ff00'
+            },
+            divider: '#ff00ff'
+        }
+    })
 
     useEffect(() => {
-        let tempMenu = []
+        if(theme === 'light') {
+            setTableTheme(lightTheme)
+        }
+        else if(theme === 'dark') {
+            setTableTheme(darkTheme)
+        }
+        else if(theme === 'highContrast') {
+            setTableTheme(contrastTheme)
+        }
 
+        let tempMenu = []
         try {
             // getting menu through api
             fetch('https://project3-api.onrender.com/menuItems', {
@@ -89,12 +111,12 @@ const ViewMenu = () => {
                 setView(result)
             })
         }
-    }, [view, lang, prevLang])
+    }, [view, lang, prevLang, theme, darkTheme, lightTheme, contrastTheme])
 
     return (
         <div className={`${theme === 'light' && 'table'} ${theme === 'dark' && 'table-dark'} ${theme === 'highContrast' && 'table-high-contrast'}`}>
             <h1>{view}</h1>
-            <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+            <ThemeProvider theme={tableTheme}>
                 <DataGrid
                     getRowId={(row) => row.food_id}
                     rows={menu ? menu : []}
