@@ -41,7 +41,6 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, empl
 
   function openModalSuccess() {
     setIsOpenSuccess(true);
-    console.log("Hello")
   }
 
   function afterOpenModalSuccess() {

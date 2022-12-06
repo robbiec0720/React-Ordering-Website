@@ -12,9 +12,9 @@ const EmployeePage = () => {
     const { prevLang } = useContext(PrevLangContext)
     const [foods, setFoods] = useState([]);
     const [cart, setCart] = useState([]);
-    const [totalPrice, setTotal] = useState([]);
-    const [employeeID, setEmployee] = useState(parseInt(useLocation().state["employeeID"]));
-    const [managerStatus, ManagerStatus] = useState(parseInt(useLocation().state["managerStatus"]));
+    //const [totalPrice, setTotal] = useState([]);
+    const [employeeID] = useState(parseInt(useLocation().state["employeeID"]));
+    //const [managerStatus, ManagerStatus] = useState(parseInt(useLocation().state["managerStatus"]));
     const [order, setOrder] = useState('Current Order')
     const [item, setItem] = useState('Total Items')
     const [sub, setSub] = useState('Subtotal')
@@ -22,7 +22,7 @@ const EmployeePage = () => {
     const [dine, setDine] = useState('Submit Order')
     const [clear, setClear] = useState('Clear Order')
     const [log, setLog] = useState('Logout')
-    const { theme, setTheme } = useContext(ThemeContext)
+    const { theme } = useContext(ThemeContext)
     console.log("Theme", theme)
     let subtitle;
     const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -114,8 +114,8 @@ const EmployeePage = () => {
             item["count"]--;
             setCart([...cart]);
         }
-        if (item["count"] == 0) {
-            console.log(item == cart[0]);
+        if (item["count"] === 0) {
+            console.log(item === cart[0]);
             setCart(cart => cart.filter((_, i) => cart[i] !== item));
         }
 

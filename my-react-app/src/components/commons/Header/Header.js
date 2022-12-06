@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import './Header.css';
 import { AiOutlineMenu } from 'react-icons/ai'
-import { BsFillMoonFill, BsFillSunFill } from 'react-icons/bs'
 import { useNavigate } from 'react-router-dom';
 import { LangContext, PrevLangContext, ThemeContext } from '../../../App';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -20,6 +19,10 @@ const Header = () => {
     const [logout, setLogout] = useState('Logout')
     const [manage, setManage] = useState('Manager Access')
     const [drop, setDrop] = useState('Language')
+    const[tDrop, setTDrop] = useState('Theme')
+    const [light, setLight] = useState('Light Mode')
+    const [dark, setDark] = useState('Dark Mode')
+    const [high, setHigh] = useState('High Contrast')
     const lightTheme = createTheme({
         palette: {
             mode: 'light'
@@ -32,7 +35,7 @@ const Header = () => {
     })
 
     useEffect(() => {
-        let t = [login, logout, manage, drop]
+        let t = [login, logout, manage, drop, tDrop, light, dark, high]
         let text = t.join(';')
         if (lang !== prevLang) {
             const API_KEY = 'AIzaSyANYWkU1YhvNE5flUIvzJv8g-y0KCHva-0'
@@ -67,9 +70,13 @@ const Header = () => {
                 setLogout(split[1])
                 setManage(split[2])
                 setDrop(split[3])
+                setTDrop(split[4])
+                setLight(split[5])
+                setDark(split[6])
+                setHigh(split[7])
             })
         }
-    }, [prevLang, lang, login, logout, manage, drop])
+    }, [prevLang, lang, login, logout, manage, drop, tDrop, light, dark, high])
 
     const handleChange = (event) => {
         setPrevLang(lang)
@@ -93,17 +100,17 @@ const Header = () => {
                 <div className={theme === "light" ? "dropdown" : "dropdown-dark"}>
                     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
                         <FormControl fullWidth size="small">
-                            <InputLabel id="select-label">Themes</InputLabel>
+                            <InputLabel id="select-label">{tDrop}</InputLabel>
                             <Select
                                 labelId="select-label"
                                 id="simple-select"
                                 value={theme}
-                                label="Language"
+                                label={tDrop}
                                 onChange={e => setTheme(e.target.value)}
                             >
-                                <MenuItem value={'light'}>Light</MenuItem>
-                                <MenuItem value={'highContrast'}>High Contrast</MenuItem>
-                                <MenuItem value={'dark'}>Dark</MenuItem>
+                                <MenuItem value={'light'}>{light}</MenuItem>
+                                <MenuItem value={'highContrast'}>{high}</MenuItem>
+                                <MenuItem value={'dark'}>{dark}</MenuItem>
 
                             </Select>
                         </FormControl>
