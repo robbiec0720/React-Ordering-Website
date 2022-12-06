@@ -46,7 +46,7 @@ function App() {
     <ThemeContext.Provider value={{ theme, setTheme }}>
       <LangContext.Provider value={{ lang, setLang }}>
         <PrevLangContext.Provider value={{ prevLang, setPrevLang }}>
-          <div className={theme === 'light' ? 'App align-things' : 'App align-things dark'}>
+          <div className={`${theme === 'light' && 'App align-things'} ${theme === 'dark' && 'App align-things dark'} ${theme === 'highContrast' && 'App align-things high-contrast'}`}>
             <div>
               <Header></Header>
               <Routes>

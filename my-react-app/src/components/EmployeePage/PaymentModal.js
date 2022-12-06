@@ -2,6 +2,8 @@ import React, { useContext, useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import './PaymentModal.css'
 import { FaTimes } from 'react-icons/fa'
+// import { ThemeContext } from '../../App';
+import SuccessModal from './SuccessModal';
 import { LangContext, PrevLangContext, ThemeContext } from '../../App';
 
 const customStyles = {
@@ -35,6 +37,21 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, empl
   const [cash, setCash] = useState('Cash')
   const [cancel, setCancel] = useState('Cancel')
   const [pay, setPay] = useState('Cash Payment')
+  const [modalIsOpenSuccess, setIsOpenSuccess] = React.useState(false);
+
+  function openModalSuccess() {
+    setIsOpenSuccess(true);
+    console.log("Hello")
+  }
+
+  function afterOpenModalSuccess() {
+    // references are now sync'd and can be accessed.
+    subtitle.style.color = '#f00';
+  }
+
+  function closeModalSuccess() {
+    setIsOpenSuccess(false);
+  }
 
   useEffect(() => {
     let t = [card, cash, cancel, pay]
@@ -99,6 +116,7 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, empl
         closeModal()
         setShowInput(false)
         clearCart()
+        openModalSuccess()
         console.log('result is: ', JSON.stringify(result, null, 4))
       }
     } catch (err) {
@@ -135,6 +153,7 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, empl
       closeModal()
       setShowInput(false)
       clearCart()
+      openModalSuccess()
       console.log('result is: ', JSON.stringify(result, null, 4))
     } catch (err) {
       console.log(err)
@@ -187,6 +206,11 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, empl
         </div>
         <button onClick={closeModal} className='close-btn'><FaTimes /></button>
       </Modal>
+      <SuccessModal
+        modalIsOpenSuccess={modalIsOpenSuccess}
+        afterOpenModalSuccess={afterOpenModalSuccess}
+        closeModalSuccess={closeModalSuccess}
+      ></SuccessModal>
     </div>
   );
 };

@@ -140,6 +140,10 @@
   background-color: #282c34;
   color: white;
 }
+.high-contrast{
+  background-color: rgba(0, 0, 0, 0.925);
+  color: rgb(0, 255, 0);
+}
 .align-things{
   display: flex;
   flex-direction: column;

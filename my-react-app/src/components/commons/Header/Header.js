@@ -84,17 +84,38 @@ const Header = () => {
         navigate('/')
     }
     return (
-        <div className={theme === 'light' ? 'header-style' : 'header-style-dark'}>
+        <div className={`${theme === 'light' && 'header-style'} ${theme === 'dark' && 'header-style-dark'} ${theme === 'highContrast' && 'header-style-high-contrast'}`}>
             <div onClick={() => navigate('/')} className='logo'>
                 <img src="https://i.ibb.co/vskyMYP/Chick-fil-A-logo.png" height="70px" width="120px" alt="" />
             </div>
             <div>
-                {
+                {/* {
                     theme !== 'light' ?
                         <button onClick={() => setTheme('light')} className='theme-btn-dark'><BsFillSunFill /></button>
                         :
                         <button onClick={() => setTheme('dark')} className='theme-btn-light'><BsFillMoonFill /></button>
-                }
+                } */}
+
+                {/* dropdown for dark and light mode */}
+                <div className={theme === "light" ? "dropdown" : "dropdown-dark"}>
+                    <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+                        <FormControl fullWidth size="small">
+                            <InputLabel id="select-label">Themes</InputLabel>
+                            <Select
+                                labelId="select-label"
+                                id="simple-select"
+                                value={theme}
+                                label="Language"
+                                onChange={e => setTheme(e.target.value)}
+                            >
+                                <MenuItem value={'light'}>Light</MenuItem>
+                                <MenuItem value={'highContrast'}>High Contrast</MenuItem>
+                                <MenuItem value={'dark'}>Dark</MenuItem>
+
+                            </Select>
+                        </FormControl>
+                    </ThemeProvider>
+                </div>
 
                 <div className={theme === "light" ? "dropdown" : "dropdown-dark"}>
                     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
