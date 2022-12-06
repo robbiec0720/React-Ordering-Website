@@ -2,9 +2,9 @@ import React, { useEffect, useState, useContext } from 'react'
 import './EmployeePage.css'
 import FoodItem from './FoodItem'
 import PaymentModal from './PaymentModal'
-import { LangContext, PrevLangContext } from '../../App'
+import { LangContext, PrevLangContext, ThemeContext } from '../../App'
 import { useLocation, useNavigate } from "react-router-dom"
-import { ThemeContext } from '@emotion/react'
+// import { ThemeContext } from '@emotion/react'
 
 const EmployeePage = () => {
     const navigate = useNavigate()

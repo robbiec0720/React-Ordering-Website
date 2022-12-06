@@ -90,7 +90,7 @@ const ViewInventory = () => {
     }, [view, lang, prevLang])
 
     return (
-        <div className={theme === 'light' ? 'table' : 'table-dark'}>
+        <div className={`${theme === 'light' && 'table'} ${theme === 'dark' && 'table-dark'} ${theme === 'highContrast' && 'table-high-contrast'}`}>
             <h1>{view}</h1>
             <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
                 <DataGrid

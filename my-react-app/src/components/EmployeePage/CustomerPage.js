@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import './EmployeePage.css'
 import FoodItem from './FoodItem'
 import PaymentModal from './PaymentModal'
-import { LangContext, PrevLangContext } from '../../App'
+import { LangContext, PrevLangContext, ThemeContext } from '../../App'
 import MapModal from './MapModal'
 
 const CustomerPage = () => {
@@ -18,6 +18,7 @@ const CustomerPage = () => {
     const [dine, setDine] = useState('Dine-In')
     const [clear, setClear] = useState('Clear Order')
     const [deliv, setDeliv] = useState('Delivery')
+    const { theme } = useContext(ThemeContext)
 
     let subtitle
     const [modalIsOpen, setIsOpen] = React.useState(false)
@@ -142,7 +143,7 @@ const CustomerPage = () => {
                 }
             </div>
             <div className='sub-employee-two'>
-                <div className='selected-items-style'>
+                <div className={`${theme === 'light' && 'selected-items-style'} ${theme === 'dark' && 'selected-items-style-dark'} ${theme === 'highContrast' && 'selected-items-style-high-contrast'}`}>
                     <h3>{order}</h3>
                     <h4>{item}</h4>
                     {cart.map((product) => {
