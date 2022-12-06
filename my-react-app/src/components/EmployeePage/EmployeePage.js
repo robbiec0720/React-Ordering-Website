@@ -4,6 +4,7 @@ import FoodItem from './FoodItem';
 import PaymentModal from './PaymentModal';
 import { LangContext, PrevLangContext } from '../../App';
 import { useLocation, useNavigate } from "react-router-dom";
+import { ThemeContext } from '@emotion/react';
 
 const EmployeePage = () => {
     const navigate = useNavigate();
@@ -21,8 +22,8 @@ const EmployeePage = () => {
     const [dine, setDine] = useState('Submit Order')
     const [clear, setClear] = useState('Clear Order')
     const [log, setLog] = useState('Logout')
-
-
+    const { theme, setTheme } = useContext(ThemeContext)
+    console.log("Theme", theme)
     let subtitle;
     const [modalIsOpen, setIsOpen] = React.useState(false);
 
@@ -120,7 +121,7 @@ const EmployeePage = () => {
 
         console.log(cart);
     }
-
+    console.log(theme)
     return (
         <div className='employee-page-style'>
             <div className='sub-employee-one'>
@@ -129,7 +130,7 @@ const EmployeePage = () => {
                 }
             </div>
             <div className='sub-employee-two'>
-                <div className='selected-items-style'>
+                <div className={`${theme === 'light' && 'selected-items-style'} ${theme === 'dark' && 'selected-items-style-dark'} ${theme === 'highContrast' && 'selected-items-style-high-contrast'}`}>
                     <h3>{order}</h3>
                     <h4>{item}</h4>
                     {cart.map((product) => {

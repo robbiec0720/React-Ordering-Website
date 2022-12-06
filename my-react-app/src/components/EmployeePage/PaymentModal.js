@@ -28,7 +28,7 @@ const customStylesDark = {
     transform: 'translate(-50%, -50%)',
   },
 }
-const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, employee, cost }) => {
+const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, employee, cost, subtitle}) => {
   const { lang } = useContext(LangContext)
   const { prevLang } = useContext(PrevLangContext)
   const [showInput, setShowInput] = useState(false)
@@ -178,7 +178,7 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, empl
         <div>
           {
             showInput ?
-              <form onSubmit={handleAmount} className='form-cash-style'>
+              <form onSubmit={handleAmount} className={`${theme === 'light' && 'form-cash-style'} ${theme === 'dark' && 'form-cash-dark'} ${theme === 'highContrast' && 'form-cash-high-contrast'}`}>
                 <p>{pay}</p>
                 <input onChange={updateInput} className='cash-input-style' type="number" step="0.01" id="amount" placeholder='Enter The Amount' />
                 <input onClick={handleCashSubmit} className='cash-amount-btn' type="submit" value="Confirm" />

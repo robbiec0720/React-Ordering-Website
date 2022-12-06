@@ -11,6 +11,12 @@
     padding-top: 20px;
     padding-bottom: 20px;
 }
+.footer-style-high-contrast{
+    background-color: black;
+    color: rgb(0, 255, 0);
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
 .footer-style > h4{
     margin-bottom: 0;
     padding: 0;

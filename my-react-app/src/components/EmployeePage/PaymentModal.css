@@ -1,6 +1,6 @@
 .modal-style {
     margin: 30px 20px;
-    display: grid;
+    display: grid !important;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 20px;
 }
@@ -58,6 +58,22 @@
 }
 
 .form-cash-style {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.form-cash-dark{
+    color: white;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.form-cash-high-contrast{
+    color: rgb(0, 255, 0);
     margin: 20px;
     display: flex;
     flex-direction: column;
