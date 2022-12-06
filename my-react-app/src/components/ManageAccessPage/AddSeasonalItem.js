@@ -1,9 +1,11 @@
+import { createUseGridApiEventHandler } from '@mui/x-data-grid'
 import React, { useContext, useEffect, useState } from 'react'
-import { LangContext, PrevLangContext } from '../../App'
+import { LangContext, PrevLangContext, MenuContext } from '../../App'
 
 const AddSeasonalItem = () => {
     const { lang } = useContext(LangContext)
     const { prevLang } = useContext(PrevLangContext)
+    const { foods, setFoods } = useContext(MenuContext)
     const [report, setReport] = useState('Add To Menu')
     const [btn, setBtn] = useState('Submit')
 
@@ -77,6 +79,8 @@ const AddSeasonalItem = () => {
         handleSubmit(event) {
             event.preventDefault()
             const url = 'https://project3-api.onrender.com/menuItems/add?array=' + this.state.name + ',' + this.state.ingredients + ',' + this.state.cost + ',' + this.state.type + ',1'
+            setFoods(current => [...current, {id: -1, name: this.state.name, price: this.state.cost, count: 0}] )
+            console.log(foods)
             fetch(url, {
                 method: 'POST',
                 headers: {
@@ -90,6 +94,7 @@ const AddSeasonalItem = () => {
                     alert(json)
                 })
             })
+
         }
 
         render() {

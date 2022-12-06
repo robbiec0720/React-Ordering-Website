@@ -2,13 +2,13 @@ import React, { useContext, useEffect, useState } from 'react'
 import './EmployeePage.css'
 import FoodItem from './FoodItem'
 import PaymentModal from './PaymentModal'
-import { LangContext, PrevLangContext } from '../../App'
+import { LangContext, PrevLangContext, MenuContext } from '../../App'
 import MapModal from './MapModal'
 
 const CustomerPage = () => {
     const { lang } = useContext(LangContext)
     const { prevLang } = useContext(PrevLangContext)
-    const [foods, setFoods] = useState([])
+    const {foods, setFoods} = useContext(MenuContext)
     const [cart, setCart] = useState([])
     //const [totalPrice, setTotal] = useState([])
     const [order, setOrder] = useState('Current Order')
@@ -18,6 +18,7 @@ const CustomerPage = () => {
     const [dine, setDine] = useState('Dine-In')
     const [clear, setClear] = useState('Clear Order')
     const [deliv, setDeliv] = useState('Delivery')
+
 
     let subtitle
     const [modalIsOpen, setIsOpen] = React.useState(false)
@@ -45,9 +46,9 @@ const CustomerPage = () => {
     }
 
     useEffect(() => {
-        fetch('foods.json')
-            .then(res => res.json())
-            .then(result => setFoods(result))
+        // fetch('foods.json')
+        //     .then(res => res.json())
+        //     .then(result => setFoods(result))
 
         let t = [order, item, sub, price, dine, clear, deliv]
         let text = t.join(';')

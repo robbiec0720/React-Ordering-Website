@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react'
 import './EmployeePage.css'
 import FoodItem from './FoodItem'
 import PaymentModal from './PaymentModal'
-import { LangContext, PrevLangContext } from '../../App'
+import { LangContext, PrevLangContext, MenuContext } from '../../App'
 import { useLocation, useNavigate } from "react-router-dom"
 import { ThemeContext } from '@emotion/react'
 
@@ -10,7 +10,7 @@ const EmployeePage = () => {
     const navigate = useNavigate()
     const { lang } = useContext(LangContext)
     const { prevLang } = useContext(PrevLangContext)
-    const [foods, setFoods] = useState([])
+    const {foods, setFoods} = useContext(MenuContext)
     const [cart, setCart] = useState([])
     //const [totalPrice, setTotal] = useState([])
     const [employeeID] = useState(parseInt(useLocation().state["employeeID"]))
@@ -41,9 +41,9 @@ const EmployeePage = () => {
     }
 
     useEffect(() => {
-        fetch('foods.json')
-            .then(res => res.json())
-            .then(result => setFoods(result))
+        // fetch('foods.json')
+        //     .then(res => res.json())
+        //     .then(result => setFoods(result))
 
         let t = [order, item, sub, price, dine, clear, log]
         let text = t.join(';')

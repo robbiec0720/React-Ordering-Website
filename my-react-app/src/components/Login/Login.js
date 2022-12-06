@@ -7,7 +7,7 @@ import { LangContext, PrevLangContext } from '../../App'
 
 const clientId = '1061498518280-61io1snf32r4vai9ghighvuio2b2n30r.apps.googleusercontent.com'
 
-const Login = () => {
+const Login = (foods) => {
   const { lang } = useContext(LangContext)
   const { prevLang } = useContext(PrevLangContext)
   const [google, setGoogle] = useState('Login with Google')
@@ -15,6 +15,7 @@ const Login = () => {
   const [btn, setBtn] = useState('Login')
   const [name, setName] = useState('Email')
   const [pass, setPass] = useState('Password')
+  console.log(foods)
 
   useEffect(() => {
     let t = [google, log, btn, name, pass]

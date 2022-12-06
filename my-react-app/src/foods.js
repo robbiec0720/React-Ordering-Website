@@ -1,4 +1,4 @@
-[
+var menuData = [
     {
         "id": 1,
         "name": "Chick-fil-A Chicken Sandwhich",
@@ -147,3 +147,5 @@
         "img": "https://i.ibb.co/JkhnXwH/Frosted-Coffee-21.png"
     }
 ]
+
+export default menuData;
