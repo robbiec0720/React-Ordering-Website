@@ -42,9 +42,17 @@ const MapModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, cost }) 
   const [country, setCountry] = useState('Country or Region')
   const [code, setCode] = useState('Postal Code')
   const [pay, setPay] = useState('Choose a Payment Option')
+  const [addr, setAddr] = useState('Deilver To')
+  const [apt, setApt] = useState('Apartment, Unit, Suite, or Floor Number')
+  const [state, setState] = useState('State or Province')
+  const [sub, setSub] = useState('Save Address and Submit Order')
+  const [clear, setClear] = useState('Clear Form')
+  const [deliv, setDeliv] = useState('Enter Address for Delivery')
+  const [req, setReq] = useState('Required Field')
+  const [city, setCity] = useState('City')
 
   useEffect(() => {
-    let t = [card, country, code, pay]
+    let t = [card, country, code, pay, addr, apt, state, sub, clear, deliv, req, city]
     let text = t.join(';')
     if (lang !== prevLang) {
       const API_KEY = 'AIzaSyANYWkU1YhvNE5flUIvzJv8g-y0KCHva-0'
@@ -76,12 +84,20 @@ const MapModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, cost }) 
         var split = result.split(';')
         console.log(split)
         setCard(split[0])
-        setCode(split[1])
-        setCountry(split[2])
+        setCountry(split[1])
+        setCode(split[2])
         setPay(split[3])
+        setAddr(split[4])
+        setApt(split[5])
+        setState(split[6])
+        setSub(split[7])
+        setClear(split[8])
+        setDeliv(split[9])
+        setReq(split[10])
+        setCity(split[11])
       })
     }
-  }, [prevLang, lang, card, code, country, pay])
+  }, [prevLang, lang, card, country, code, pay, addr, apt, state, sub, clear, deliv, req, city])
 
 
   const handleClick = async (payment_type) => {
@@ -121,11 +137,11 @@ const MapModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, cost }) 
       >
         <div className='modal-style'>
           <form classname="form-map" id="address-form" action="" method="get" autocomplete="off">
-            <p class="title">Enter address for Delivery</p>
-            <p class="note"><em>* = required field</em></p>
+            <p class="title">{deliv}</p>
+            <p class="note"><em>* = {req}</em></p>
             <label class="full-field">
 
-              <span class="form-label">Deliver to*</span>
+              <span class="form-label">{addr}*</span>
               <input
                 className="input-map"
                 id="ship-address"
@@ -135,15 +151,15 @@ const MapModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, cost }) 
               />
             </label>
             <label class="full-field">
-              <span class="form-label">Apartment, unit, suite, or floor #</span>
+              <span class="form-label">{apt}</span>
               <input className="input-map" id="address2" name="address2" />
             </label>
             <label class="full-field">
-              <span class="form-label">City*</span>
+              <span class="form-label">{city}*</span>
               <input className="input-map" id="locality" name="locality" required />
             </label>
             <label class="slim-field-left">
-              <span class="form-label">State/Province*</span>
+              <span class="form-label">{state}*</span>
               <input className="input-map" id="state" name="state" required />
             </label>
             <label class="slim-field-right" for="postal_code">
@@ -159,8 +175,8 @@ const MapModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, cost }) 
               <option value="Cash">{card}</option>
               <option value="Dining">Dining Dollars</option>
             </select>
-            <button onClick={handleClick} type="button" class="submit">Save address and Submit</button>
-            <input className="input-map" type="reset" value="Clear form" />
+            <button onClick={handleClick} type="button" class="submit">{sub}</button>
+            <input className="input-map" type="reset" value={clear} />
           </form>
           <div id="map">
             <iframe id="msc-map"
