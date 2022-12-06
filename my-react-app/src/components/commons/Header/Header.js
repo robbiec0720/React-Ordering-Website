@@ -132,6 +132,7 @@ const Header = () => {
                                 <MenuItem value={'en'}>English</MenuItem>
                                 <MenuItem value={'es'}>Spanish</MenuItem>
                                 <MenuItem value={'de'}>German</MenuItem>
+                                <MenuItem value={'fr'}>French</MenuItem>
                                 <MenuItem value={'ru'}>Russian</MenuItem>
                             </Select>
                         </FormControl>
