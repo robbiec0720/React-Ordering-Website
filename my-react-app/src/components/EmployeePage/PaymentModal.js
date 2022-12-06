@@ -2,6 +2,8 @@ import React, { useContext, useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import './PaymentModal.css'
 import { FaTimes } from 'react-icons/fa'
+// import { ThemeContext } from '../../App';
+import SuccessModal from './SuccessModal';
 import { LangContext, PrevLangContext, ThemeContext } from '../../App';
 
 const customStyles = {
@@ -26,7 +28,7 @@ const customStylesDark = {
     transform: 'translate(-50%, -50%)',
   },
 }
-const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, employee, cost }) => {
+const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, employee, cost, subtitle}) => {
   const { lang } = useContext(LangContext)
   const { prevLang } = useContext(PrevLangContext)
   const [showInput, setShowInput] = useState(false)
@@ -35,6 +37,21 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, empl
   const [cash, setCash] = useState('Cash')
   const [cancel, setCancel] = useState('Cancel')
   const [pay, setPay] = useState('Cash Payment')
+  const [modalIsOpenSuccess, setIsOpenSuccess] = React.useState(false);
+
+  function openModalSuccess() {
+    setIsOpenSuccess(true);
+    console.log("Hello")
+  }
+
+  function afterOpenModalSuccess() {
+    // references are now sync'd and can be accessed.
+    subtitle.style.color = '#f00';
+  }
+
+  function closeModalSuccess() {
+    setIsOpenSuccess(false);
+  }
 
   useEffect(() => {
     let t = [card, cash, cancel, pay]
@@ -99,6 +116,7 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, empl
         closeModal()
         setShowInput(false)
         clearCart()
+        openModalSuccess()
         console.log('result is: ', JSON.stringify(result, null, 4))
       }
     } catch (err) {
@@ -135,6 +153,7 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, empl
       closeModal()
       setShowInput(false)
       clearCart()
+      openModalSuccess()
       console.log('result is: ', JSON.stringify(result, null, 4))
     } catch (err) {
       console.log(err)
@@ -159,7 +178,7 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, empl
         <div>
           {
             showInput ?
-              <form onSubmit={handleAmount} className='form-cash-style'>
+              <form onSubmit={handleAmount} className={`${theme === 'light' && 'form-cash-style'} ${theme === 'dark' && 'form-cash-dark'} ${theme === 'highContrast' && 'form-cash-high-contrast'}`}>
                 <p>{pay}</p>
                 <input onChange={updateInput} className='cash-input-style' type="number" step="0.01" id="amount" placeholder='Enter The Amount' />
                 <input onClick={handleCashSubmit} className='cash-amount-btn' type="submit" value="Confirm" />
@@ -187,6 +206,11 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, empl
         </div>
         <button onClick={closeModal} className='close-btn'><FaTimes /></button>
       </Modal>
+      <SuccessModal
+        modalIsOpenSuccess={modalIsOpenSuccess}
+        afterOpenModalSuccess={afterOpenModalSuccess}
+        closeModalSuccess={closeModalSuccess}
+      ></SuccessModal>
     </div>
   );
 };
