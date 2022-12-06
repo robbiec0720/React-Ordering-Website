@@ -53,7 +53,7 @@ const MapModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, cost }) 
 
   useEffect(() => {
     let t = [card, country, code, pay, addr, apt, state, sub, clear, deliv, req, city]
-    let text = t.join('')
+    let text = t.join(';')
     if (lang !== prevLang) {
       const API_KEY = 'AIzaSyANYWkU1YhvNE5flUIvzJv8g-y0KCHva-0'
       let url = `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`
@@ -74,14 +74,14 @@ const MapModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, cost }) 
             resolve(response.data.translations[0].translatedText)
           })
           .catch(error => {
-            if (lang !== 'en') {
+            /* if (lang !== 'en') {
               alert("There was an error during translation. Reverting back to English")
               window.location.reload(false)
-            }
+            } */
           })
       })
       translated.then((result) => {
-        var split = result.split('')
+        var split = result.split(';')
         console.log(split)
         setCard(split[0])
         setCountry(split[1])

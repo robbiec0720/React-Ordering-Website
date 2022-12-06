@@ -58,7 +58,7 @@ const RestockReport = () => {
         }
 
         let t = [report, btn]
-        let text = t.join('')
+        let text = t.join(';')
         if (lang !== prevLang) {
             const API_KEY = 'AIzaSyANYWkU1YhvNE5flUIvzJv8g-y0KCHva-0'
             let url = `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`
@@ -86,7 +86,7 @@ const RestockReport = () => {
                     })
             })
             translated.then((result) => {
-                var split = result.split('')
+                var split = result.split(';')
                 console.log(split)
                 setReport(split[0])
                 setBtn(split[1])

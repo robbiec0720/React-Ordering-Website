@@ -46,7 +46,7 @@ const EmployeePage = () => {
             .then(result => setFoods(result))
 
         let t = [order, item, sub, price, dine, clear, log]
-        let text = t.join('')
+        let text = t.join(';')
         if (lang !== prevLang) {
             const API_KEY = 'AIzaSyANYWkU1YhvNE5flUIvzJv8g-y0KCHva-0'
             let url = `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`
@@ -74,7 +74,7 @@ const EmployeePage = () => {
                     })
             })
             translated.then((result) => {
-                var split = result.split('')
+                var split = result.split(';')
                 console.log(split)
                 setOrder(split[0])
                 setItem(split[1])

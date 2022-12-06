@@ -24,7 +24,7 @@ const Sidebar = () => {
 
     useEffect(() => {
         let t = [inv, menu, func, editM, addM, delM, editI, addI, delI, restock, excess, sales]
-        let text = t.join('')
+        let text = t.join(';')
         if (lang !== prevLang) {
             const API_KEY = 'AIzaSyANYWkU1YhvNE5flUIvzJv8g-y0KCHva-0'
             let url = `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`
@@ -52,7 +52,7 @@ const Sidebar = () => {
                     })
             })
             translated.then((result) => {
-                var split = result.split('')
+                var split = result.split(';')
                 console.log(split)
                 setInv(split[0])
                 setMenu(split[1])

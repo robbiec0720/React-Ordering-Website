@@ -64,7 +64,7 @@ const SalesReport = () => {
         }
 
         let t = [sDate, eDate, report, to, submit]
-        let text = t.join('')
+        let text = t.join(';')
         if (lang !== prevLang) {
             const API_KEY = 'AIzaSyANYWkU1YhvNE5flUIvzJv8g-y0KCHva-0'
             let url = `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`
@@ -92,7 +92,7 @@ const SalesReport = () => {
                     })
             })
             translated.then((result) => {
-                var split = result.split('')
+                var split = result.split(';')
                 console.log(split)
                 setSDate(split[0])
                 setEDate(split[1])
