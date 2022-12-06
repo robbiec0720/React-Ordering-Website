@@ -89,13 +89,6 @@ const Header = () => {
                 <img src="https://i.ibb.co/vskyMYP/Chick-fil-A-logo.png" height="70px" width="120px" alt="" />
             </div>
             <div>
-                {/* {
-                    theme !== 'light' ?
-                        <button onClick={() => setTheme('light')} className='theme-btn-dark'><BsFillSunFill /></button>
-                        :
-                        <button onClick={() => setTheme('dark')} className='theme-btn-light'><BsFillMoonFill /></button>
-                } */}
-
                 {/* dropdown for dark and light mode */}
                 <div className={theme === "light" ? "dropdown" : "dropdown-dark"}>
                     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
