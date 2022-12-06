@@ -60,7 +60,7 @@ const Auth = () => {
           <div className="nav-left">
             <h1 class="chickFont">{welcome}</h1>
             <h1>{spicy}</h1>
-            <h3>{deliv}</h3>
+            <h2>{deliv}</h2>
             <button className="nav-page-button" onClick={() => navigate('/customer')}>{btn}</button>
 
           </div>

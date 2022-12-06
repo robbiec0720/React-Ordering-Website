@@ -91,9 +91,9 @@ const Header = () => {
             <div>
                 {
                     theme !== 'light' ?
-                        <button onClick={() => setTheme('light')} className='theme-btn-dark'><BsFillSunFill /></button>
+                        <button onClick={() => setTheme('light')} className='theme-btn-dark' title='Dark Mode'><BsFillSunFill /></button>
                         :
-                        <button onClick={() => setTheme('dark')} className='theme-btn-light'><BsFillMoonFill /></button>
+                        <button onClick={() => setTheme('dark')} className='theme-btn-light' title='Light Mode'><BsFillMoonFill /></button>
                 }
 
                 <div className={theme === "light" ? "dropdown" : "dropdown-dark"}>
