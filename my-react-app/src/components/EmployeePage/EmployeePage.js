@@ -4,12 +4,12 @@ import FoodItem from './FoodItem'
 import PaymentModal from './PaymentModal'
 import { LangContext, PrevLangContext, ThemeContext } from '../../App'
 import { useLocation, useNavigate } from "react-router-dom"
-// import { ThemeContext } from '@emotion/react'
 
 const EmployeePage = () => {
     const navigate = useNavigate()
     const { lang } = useContext(LangContext)
     const { prevLang } = useContext(PrevLangContext)
+    const { theme } = useContext(ThemeContext)
     const [foods, setFoods] = useState([])
     const [cart, setCart] = useState([])
     //const [totalPrice, setTotal] = useState([])
@@ -22,7 +22,6 @@ const EmployeePage = () => {
     const [dine, setDine] = useState('Submit Order')
     const [clear, setClear] = useState('Clear Order')
     const [log, setLog] = useState('Logout')
-    const { theme } = useContext(ThemeContext)
 
     let subtitle
     const [modalIsOpen, setIsOpen] = React.useState(false)

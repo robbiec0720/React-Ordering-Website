@@ -114,7 +114,7 @@ const RestockReport = () => {
     }
 
     return (
-        <div className={theme === 'light' ? 'table' : 'table-dark'}>
+        <div className={`${theme === 'light' && 'table'} ${theme === 'dark' && 'table-dark'} ${theme === 'highContrast' && 'table-high-contrast'}`}>
             <h1>{report}</h1>
             <button className='submit-btn' onClick={handleClick}>{btn}</button>
             <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>

@@ -127,11 +127,11 @@ const ExcessReport = () => {
             return (
                 <form onSubmit={this.handleSubmit}>
                     <label>
-                        {date} (YYYY-MM-DD):&nbsp
+                        {date} (YYYY-MM-DD): &nbsp;
                         <input type="text" value={this.state.value} onChange={this.handleChange} />
                     </label>
                     <label>
-                        &nbsp&nbsp&nbsp&nbsp
+                        &nbsp;&nbsp;&nbsp;&nbsp;
                     </label>
                     <input className="submit-btn" type="submit" value={submit} />
                 </form>
@@ -140,7 +140,7 @@ const ExcessReport = () => {
     }
 
     return (
-        <div className={theme === 'light' ? 'table' : 'table-dark'}>
+        <div className={`${theme === 'light' && 'table'} ${theme === 'dark' && 'table-dark'} ${theme === 'highContrast' && 'table-high-contrast'}`}>
             <h1>{report} {start} {to} 2022-10-25</h1>
             <StartForm></StartForm>
             <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>

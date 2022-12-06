@@ -68,26 +68,27 @@
 }
 
 .table {
-    height: 631px;
+    height: 667px;
     width: 100%;
     padding-bottom: 150px;
 }
 
 .table-dark {
-    height: 631px;
+    height: 667px;
     width: 100%;
     padding-bottom: 150px;
 }
 
 .table-high-contrast {
-    height: 631px;
+    height: 667px;
     width: 100%;
     padding-bottom: 150px;
 }
+
 .sidebar-style {
     background-color: rgb(223, 223, 223);
     color: black;
-    height: 781px;
+    height: 817px;
     margin: 0;
     padding: 0;
 }
@@ -95,7 +96,7 @@
 .sidebar-style-dark {
     background-color: rgb(32, 32, 32);
     color: red !important;
-    height: 802px;
+    height: 838px;
     margin: 0;
     padding: 0;
 }
@@ -103,7 +104,7 @@
 .sidebar-style-high-contrast {
     background-color: rgba(0, 0, 0, 0.925);
     color: rgb(0, 255, 0) !important;
-    height: 802px;
+    height: 838px;
     margin: 0;
     padding: 0;
 }
@@ -260,9 +261,11 @@
     border-color: rgba(236,72,153,var(--tw-border-opacity));
     color: rgba(31,41,55,var(--tw-text-opacity));
 }
+
 /* .side-navigation-panel  *, .side-navigation-panel:after, .side-navigation-panel:before{
 color: blueviolet;
 } */
+
 .form {
     display: flex;
     flex-direction: column;

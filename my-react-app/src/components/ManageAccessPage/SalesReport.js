@@ -128,11 +128,11 @@ const SalesReport = () => {
             return (
                 <form onSubmit={this.handleSubmit}>
                     <label>
-                        {sDate} (YYYY-MM-DD):&nbsp
+                        {sDate} (YYYY-MM-DD):&nbsp;
                         <input type="text" value={this.state.value} onChange={this.handleChange} />
                     </label>
                     <label>
-                        &nbsp&nbsp&nbsp&nbsp
+                        &nbsp;&nbsp;&nbsp;&nbsp;
                     </label>
                     <input className="submit-btn" type="submit" value={submit} />
                 </form>
@@ -164,11 +164,11 @@ const SalesReport = () => {
             return (
                 <form onSubmit={this.handleSubmit}>
                     <label>
-                        {eDate} (YYYY-MM-DD):&nbsp
+                        {eDate} (YYYY-MM-DD):&nbsp;
                         <input type="text" value={this.state.value} onChange={this.handleChange} />
                     </label>
                     <label>
-                        &nbsp&nbsp&nbsp&nbsp
+                        &nbsp;&nbsp;&nbsp;&nbsp;
                     </label>
                     <input className="submit-btn" type="submit" value={submit} />
                 </form>
@@ -177,7 +177,7 @@ const SalesReport = () => {
     }
 
     return (
-        <div className={theme === 'light' ? 'table' : 'table-dark'}>
+        <div className={`${theme === 'light' && 'table'} ${theme === 'dark' && 'table-dark'} ${theme === 'highContrast' && 'table-high-contrast'}`}>
             <h1>{report} {start} {to} {end}</h1>
             <StartForm></StartForm>
             <EndForm></EndForm>

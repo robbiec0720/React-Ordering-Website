@@ -7,9 +7,9 @@ const FoodItem = ({ food, cart, setCart }) => {
   const url = 'https://project3-api.onrender.com/order/add/' + id.toString()
   const { lang } = useContext(LangContext)
   const { prevLang } = useContext(PrevLangContext)
-  const [order, setOrder] = useState('Order Now')
   const {theme} = useContext(ThemeContext)
-
+  const [order, setOrder] = useState('Order Now')
+  
   useEffect(() => {
     let text = order
     if (lang !== prevLang) {

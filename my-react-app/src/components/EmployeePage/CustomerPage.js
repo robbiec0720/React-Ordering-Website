@@ -6,8 +6,9 @@ import { LangContext, PrevLangContext, ThemeContext } from '../../App'
 import MapModal from './MapModal'
 
 const CustomerPage = () => {
-    const { lang } = useContext(LangContext)
+    const { lang } = useContext(LangContext)   
     const { prevLang } = useContext(PrevLangContext)
+    const { theme } = useContext(ThemeContext)
     const [foods, setFoods] = useState([])
     const [cart, setCart] = useState([])
     //const [totalPrice, setTotal] = useState([])
@@ -18,7 +19,6 @@ const CustomerPage = () => {
     const [dine, setDine] = useState('Dine-In')
     const [clear, setClear] = useState('Clear Order')
     const [deliv, setDeliv] = useState('Delivery')
-    const { theme } = useContext(ThemeContext)
 
     let subtitle
     const [modalIsOpen, setIsOpen] = React.useState(false)

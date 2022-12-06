@@ -82,7 +82,7 @@ const DeleteInventory = () => {
             return (
                 <form className="form" onSubmit={this.handleSubmit}>
                     <label>
-                        ID:&nbsp
+                        ID:&nbsp;
                         <input type="text" id={this.state.id} onChange={this.idChange} />
                     </label>
                     <input className="submit-btn" type="submit" value={btn} />
