@@ -67,6 +67,13 @@ const getItemName = (request, response) => {
   })
 }
 
+/**
+ * Makes a query to the database that fetches all of the rows of the FoodItems table in JSON format. 
+ * 
+ * @param {request} request - The input parameters that are passed through the URL request. In this case, none.
+ * @param {response} response All items from the DB FoodItems table whether or not they are seasonal in JSON format.
+ * 
+ */
 const displayMenu = (request, response) => {
   pool.query('SELECT * FROM FoodItems;', (error, results) => {
     if (error) {
@@ -78,10 +85,20 @@ const displayMenu = (request, response) => {
   })
 }
 
+/**
+ * Makes a query to the database that fetches all of the rows of the FoodItems table in JSON format. 
+ * 
+
+ * @param {request} request - The input parameters that are passed through the URL request. In this case, none.
+ * @param {response} response All items from the DB FoodItems table whether or not they are seasonal in JSON format.
+ * @property {request.params.start} start The first parameter of the API call which represents the start date.
+ * @property {request.params.end} end The second parameter of the API call which represents the end date.
+ */
 const salesReport = async (request, response) => {
   const start = new Date(request.params.start).toISOString().slice(0, 10)
   const end = new Date(request.params.end).toISOString().slice(0, 10)
   const sales = []
+
   const count = await new Promise((resolve) => {
     pool.query("SELECT COUNT(*) FROM FoodItems;", (error, results) => {
       if (error) {
