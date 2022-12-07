@@ -101,23 +101,23 @@ const AddToInventory = () => {
             return (
                 <form className="form" onSubmit={this.handleSubmit}>
                     <label>
-                        Ingredient Name:&nbsp
+                        Ingredient Name:&nbsp;
                         <input type="text" name={this.state.name} onChange={this.nameChange} />
                     </label>
                     <label>
-                        Initial Quantity:&nbsp
+                        Initial Quantity:&nbsp;
                         <input type="text" quantity={this.state.quantity} onChange={this.quantityChange} />
                     </label>
                     <label>
-                        Order Threshold:&nbsp
+                        Order Threshold:&nbsp;
                         <input type="text" threshold={this.state.threshold} onChange={this.thresholdChange} />
                     </label>
                     <label>
-                        Reorder Value:&nbsp
+                        Reorder Value:&nbsp;
                         <input type="text" reorder={this.state.reorder} onChange={this.reorderChange} />
                     </label>
                     <label>
-                        Ingredient Cost:&nbsp
+                        Ingredient Cost:&nbsp;
                         <input type="text" cost={this.state.cost} onChange={this.costChange} />
                     </label>
                     <input className="submit-btn" type="submit" value={btn} />

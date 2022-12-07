@@ -10,6 +10,35 @@
     overflow: hidden;
 }
 
+.grid-item-dark {
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+    padding: 5px 15px;
+    border-radius: 8px;
+}
+
+.grid-item-dark:hover {
+    transform: scale(1.03);
+    transition: transform .5s ease-out;
+    overflow: hidden;
+
+}
+
+.grid-item-high-contrast {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: rgb(0, 255, 0);
+    border: 1px solid rgb(0, 255, 0);
+    padding: 5px 15px;
+    border-radius: 8px;
+}
+
+.grid-item-high-contrast:hover {
+    transform: scale(1.03);
+    transition: transform .5s ease-out;
+    overflow: hidden;
+}
+
 .desc {
     font-size: 14px;
     height: 80px;

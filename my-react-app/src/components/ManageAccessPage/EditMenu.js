@@ -92,18 +92,18 @@ const EditMenu = () => {
             return (
                 <form className="form" onSubmit={this.handleSubmit}>
                     <label>
-                        ID:&nbsp
+                        ID:&nbsp;
                         <input type="text" id={this.state.id} onChange={this.idChange} />
                     </label>
                     <label>
-                        Column:&nbsp
+                        Column:&nbsp;
                         <input type="radio" name="Column" value="item_name" onChange={this.colChange} />Item Name
                         <input type="radio" name="Column" value="ingredients" onChange={this.colChange} />Ingredients
                         <input type="radio" name="Column" value="cost" onChange={this.colChange} />Cost
                         <input type="radio" name="Column" value="item_type" onChange={this.colChange} />Item Type
                     </label>
                     <label>
-                        New Value:&nbsp
+                        New Value:&nbsp;
                         <input type="text" value={this.state.value} onChange={this.valChange} />
                     </label>
                     <input className="submit-btn" type="submit" value={btn} />

@@ -2,12 +2,13 @@ import React, { useContext, useEffect, useState } from 'react'
 import './EmployeePage.css'
 import FoodItem from './FoodItem'
 import PaymentModal from './PaymentModal'
-import { LangContext, PrevLangContext } from '../../App'
+import { LangContext, PrevLangContext, ThemeContext } from '../../App'
 import MapModal from './MapModal'
 
 const CustomerPage = () => {
-    const { lang } = useContext(LangContext)
+    const { lang } = useContext(LangContext)   
     const { prevLang } = useContext(PrevLangContext)
+    const { theme } = useContext(ThemeContext)
     const [foods, setFoods] = useState([])
     const [cart, setCart] = useState([])
     //const [totalPrice, setTotal] = useState([])
@@ -142,7 +143,7 @@ const CustomerPage = () => {
                 }
             </div>
             <div className='sub-employee-two'>
-                <div className='selected-items-style'>
+                <div className={`${theme === 'light' && 'selected-items-style'} ${theme === 'dark' && 'selected-items-style-dark'} ${theme === 'highContrast' && 'selected-items-style-high-contrast'}`}>
                     <h3>{order}</h3>
                     <h4>{item}</h4>
                     {cart.map((product) => {

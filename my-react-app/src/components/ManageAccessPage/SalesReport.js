@@ -13,6 +13,7 @@ const SalesReport = () => {
     ]
 
     //state variables
+    const [tableTheme, setTableTheme] = useState()
     const [sales, setSales] = useState()
     const [start, setStart] = useState('2022-10-02')
     const [end, setEnd] = React.useState('2022-10-25')
@@ -34,31 +35,51 @@ const SalesReport = () => {
             mode: 'dark'
         }
     })
+    const contrastTheme = createTheme({
+        palette: {
+            mode: 'dark',
+            primary: {
+                main: '#ff00ff',
+            },
+            text: {
+                primary: '#00ff00'
+            },
+            divider: '#ff00ff'
+        }
+    })
 
     useEffect(() => {
+        if (theme === 'light') {
+            setTableTheme(lightTheme)
+        }
+        else if (theme === 'dark') {
+            setTableTheme(darkTheme)
+        }
+        else if (theme === 'highContrast') {
+            setTableTheme(contrastTheme)
+        }
+
         let tempSales = []
-
-        // getting sales report through api
-        const apiSales = 'https://project3-api.onrender.com/sales/' + start + '/' + end
-        fetch(apiSales, {
-            method: 'GET',
-            headers: {
-                Accept: 'application/json',
-            },
-        }).then(response => {
-            if (!response.ok) {
-                throw new Error(`Error! status: ${response.status}`)
-            }
-
-            response.json().then(json => {
-                for (var key in json) {
-                    tempSales.push(json[key])
-                }
-                setSales(tempSales)
-            })
-        })
-
         try {
+            // getting sales report through api
+            const apiSales = 'https://project3-api.onrender.com/sales/' + start + '/' + end
+            fetch(apiSales, {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                },
+            }).then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error! status: ${response.status}`)
+                }
+
+                response.json().then(json => {
+                    for (var key in json) {
+                        tempSales.push(json[key])
+                    }
+                    setSales(tempSales)
+                })
+            })
         } catch (err) {
             console.log(err)
         }
@@ -102,7 +123,7 @@ const SalesReport = () => {
             })
         }
 
-    }, [start, end, eDate, sDate, lang, prevLang, report, submit, to])
+    }, [start, end, eDate, sDate, lang, prevLang, report, submit, to, theme, darkTheme, lightTheme, contrastTheme])
 
     // form to get start date input
     class StartForm extends React.Component {
@@ -128,11 +149,11 @@ const SalesReport = () => {
             return (
                 <form onSubmit={this.handleSubmit}>
                     <label>
-                        {sDate} (YYYY-MM-DD):&nbsp
+                        {sDate} (YYYY-MM-DD):&nbsp;
                         <input type="text" value={this.state.value} onChange={this.handleChange} />
                     </label>
                     <label>
-                        &nbsp&nbsp&nbsp&nbsp
+                        &nbsp;&nbsp;&nbsp;&nbsp;
                     </label>
                     <input className="submit-btn" type="submit" value={submit} />
                 </form>
@@ -164,11 +185,11 @@ const SalesReport = () => {
             return (
                 <form onSubmit={this.handleSubmit}>
                     <label>
-                        {eDate} (YYYY-MM-DD):&nbsp
+                        {eDate} (YYYY-MM-DD):&nbsp;
                         <input type="text" value={this.state.value} onChange={this.handleChange} />
                     </label>
                     <label>
-                        &nbsp&nbsp&nbsp&nbsp
+                        &nbsp;&nbsp;&nbsp;&nbsp;
                     </label>
                     <input className="submit-btn" type="submit" value={submit} />
                 </form>
@@ -177,11 +198,11 @@ const SalesReport = () => {
     }
 
     return (
-        <div className={theme === 'light' ? 'table' : 'table-dark'}>
+        <div className={`${theme === 'light' && 'table'} ${theme === 'dark' && 'table-dark'} ${theme === 'highContrast' && 'table-high-contrast'}`}>
             <h1>{report} {start} {to} {end}</h1>
             <StartForm></StartForm>
             <EndForm></EndForm>
-            <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+            <ThemeProvider theme={tableTheme}>
                 <DataGrid
                     getRowId={(row) => row.food_id}
                     rows={sales ? sales : []}

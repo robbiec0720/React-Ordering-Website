@@ -16,6 +16,7 @@ const ViewInventory = () => {
     ]
     const [inv, setInv] = useState()
     const [view, setView] = useState('View Inventory')
+    const [tableTheme, setTableTheme] = useState()
     const { theme } = useContext(ThemeContext)
     const { lang } = useContext(LangContext)
     const { prevLang } = useContext(PrevLangContext)
@@ -29,10 +30,31 @@ const ViewInventory = () => {
             mode: 'dark'
         }
     })
+    const contrastTheme = createTheme({
+        palette: {
+            mode: 'dark',
+            primary: {
+                main: '#ff00ff',
+            },
+            text: {
+                primary: '#00ff00'
+            },
+            divider: '#ff00ff'
+        }
+    })
 
     useEffect(() => {
-        let tempInv = []
+        if(theme === 'light') {
+            setTableTheme(lightTheme)
+        }
+        else if(theme === 'dark') {
+            setTableTheme(darkTheme)
+        }
+        else if(theme === 'highContrast') {
+            setTableTheme(contrastTheme)
+        }
 
+        let tempInv = []
         try {
             // getting inventory through api
             fetch('https://project3-api.onrender.com/inventory', {
@@ -87,12 +109,12 @@ const ViewInventory = () => {
                 setView(result)
             })
         }
-    }, [view, lang, prevLang])
+    }, [view, lang, prevLang, theme, darkTheme, lightTheme, contrastTheme])
 
     return (
-        <div className={theme === 'light' ? 'table' : 'table-dark'}>
+        <div className={`${theme === 'light' && 'table'} ${theme === 'dark' && 'table-dark'} ${theme === 'highContrast' && 'table-high-contrast'}`}>
             <h1>{view}</h1>
-            <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+            <ThemeProvider theme={tableTheme}>
                 <DataGrid
                     getRowId={(row) => row.ingredient_id}
                     rows={inv ? inv : []}

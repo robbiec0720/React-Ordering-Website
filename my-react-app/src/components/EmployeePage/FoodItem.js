@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { LangContext, PrevLangContext } from '../../App'
+import { LangContext, PrevLangContext, ThemeContext } from '../../App'
 import './FoodItem.css'
 
 const FoodItem = ({ food, cart, setCart }) => {
@@ -7,8 +7,9 @@ const FoodItem = ({ food, cart, setCart }) => {
   const url = 'https://project3-api.onrender.com/order/add/' + id.toString()
   const { lang } = useContext(LangContext)
   const { prevLang } = useContext(PrevLangContext)
+  const {theme} = useContext(ThemeContext)
   const [order, setOrder] = useState('Order Now')
-
+  
   useEffect(() => {
     let text = order
     if (lang !== prevLang) {
@@ -61,7 +62,7 @@ const FoodItem = ({ food, cart, setCart }) => {
   }
 
   return (
-    <div className='grid-item'>
+    <div className={`${theme === 'light' && 'grid-item'} ${theme === 'dark' && 'grid-item-dark'} ${theme === 'highContrast' && 'grid-item-high-contrast'}`}>
       <div>
         <img src={img} height="100px" width="100px" alt="" />
       </div>

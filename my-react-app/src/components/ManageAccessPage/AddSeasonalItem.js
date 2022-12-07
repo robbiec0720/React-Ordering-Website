@@ -96,19 +96,19 @@ const AddSeasonalItem = () => {
             return (
                 <form className="form" onSubmit={this.handleSubmit}>
                     <label>
-                        Item Name:&nbsp
+                        Item Name:&nbsp;
                         <input type="text" name={this.state.name} onChange={this.nameChange} />
                     </label>
                     <label>
-                        Ingredients (separated by :):&nbsp
+                        Ingredients (separated by :):&nbsp;
                         <input type="text" quantity={this.state.ingredients} onChange={this.ingredientChange} />
                     </label>
                     <label>
-                        Cost:&nbsp
+                        Cost:&nbsp;
                         <input type="text" threshold={this.state.threshold} onChange={this.costChange} />
                     </label>
                     <label>
-                        Item Type:&nbsp
+                        Item Type:&nbsp;
                         <input type="text" reorder={this.state.reorder} onChange={this.typeChange} />
                     </label>
                     <input className="submit-btn" type="submit" value={btn} />

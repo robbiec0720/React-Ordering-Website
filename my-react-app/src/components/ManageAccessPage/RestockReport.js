@@ -14,6 +14,7 @@ const RestockReport = () => {
         { field: 'reorder_value', headerName: 'Reorder Value', width: 130 },
         { field: 'cost', headerName: 'Cost', width: 75 }
     ]
+    const [tableTheme, setTableTheme] = useState()
     const [restock, setRestock] = useState()
     const [report, setReport] = useState('Restock Report')
     const [btn, setBtn] = useState('Restock')
@@ -30,10 +31,31 @@ const RestockReport = () => {
             mode: 'dark'
         }
     })
+    const contrastTheme = createTheme({
+        palette: {
+            mode: 'dark',
+            primary: {
+                main: '#ff00ff',
+            },
+            text: {
+                primary: '#00ff00'
+            },
+            divider: '#ff00ff'
+        }
+    })
 
     useEffect(() => {
-        let tempRestock = []
+        if(theme === 'light') {
+            setTableTheme(lightTheme)
+        }
+        else if(theme === 'dark') {
+            setTableTheme(darkTheme)
+        }
+        else if(theme === 'highContrast') {
+            setTableTheme(contrastTheme)
+        }
 
+        let tempRestock = []
         try {
             // getting restock report through api
             fetch('https://project3-api.onrender.com/inventory/restock-report', {
@@ -93,7 +115,7 @@ const RestockReport = () => {
             })
         }
 
-    }, [lang, prevLang, btn, report])
+    }, [lang, prevLang, btn, report, theme, darkTheme, lightTheme, contrastTheme])
 
     const handleClick = () => {
         // need to change to public api
@@ -114,10 +136,10 @@ const RestockReport = () => {
     }
 
     return (
-        <div className={theme === 'light' ? 'table' : 'table-dark'}>
+        <div className={`${theme === 'light' && 'table'} ${theme === 'dark' && 'table-dark'} ${theme === 'highContrast' && 'table-high-contrast'}`}>
             <h1>{report}</h1>
             <button className='submit-btn' onClick={handleClick}>{btn}</button>
-            <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+            <ThemeProvider theme={tableTheme}>
                 <DataGrid
                     getRowId={(row) => row.ingredient_id}
                     rows={restock ? restock : []}

@@ -92,18 +92,18 @@ const EditInventory = () => {
             return (
                 <form className="form" onSubmit={this.handleSubmit}>
                     <label>
-                        ID:&nbsp
+                        ID:&nbsp;
                         <input type="text" id={this.state.id} onChange={this.idChange} />
                     </label>
                     <label>
-                        Column:&nbsp
+                        Column:&nbsp;
                         <input type="radio" name="Column" value="unit_quantity" onChange={this.colChange} />Unit Quantity
                         <input type="radio" name="Column" value="order_threshold" onChange={this.colChange} />Order Threshold
                         <input type="radio" name="Column" value="reorder_value" onChange={this.colChange} />Reorder Value
                         <input type="radio" name="Column" value="cost" onChange={this.colChange} />Cost
                     </label>
                     <label>
-                        New Value:&nbsp
+                        New Value:&nbsp;
                         <input type="text" value={this.state.value} onChange={this.valChange} />
                     </label>
                     <input className="submit-btn" type="submit" value={btn} />
