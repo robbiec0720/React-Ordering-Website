@@ -150,7 +150,7 @@ const salesReport = async (request, response) => {
  * Makes a query to the database that fetches all of the rows of the Orders table in JSON format. 
  * 
  * @param {request} request - The input parameters that are passed through the URL request. In this case, none.
- * @param {response} response All items from the DB FoodItems table whether or not they are seasonal in JSON format.
+ * @param {response} response All items from the DB Order table  in JSON format.
  * 
  */
 const displayOrder = async (request, response) => {
@@ -173,6 +173,15 @@ const displayOrder = async (request, response) => {
 
 }
 
+/**
+ * Makes a query to the database that fetches all of the rows of the FoodItems table in JSON format. 
+ * 
+ * @param {request} request - The input parameters that are passed through the URL request described in the properties section below.
+ * @param {response} response Responds with code 200 on success or an error otherwise.
+ * @property {request.query.id} id The first parameter of the API call which represents the id to be deleted.
+ * @property {request.query.table} tableName The second parameter of the API call which represents the name of the table from which the id is to be deleted.
+ * @property {request.query.pkcol} colName The third parameter of the API call which represents the name of the primary key column as a string.
+ */
 const deleteEntry = async (request, response) => {
   const id = parseInt(request.query.id)
   const tableName = String(request.query.table)
@@ -207,6 +216,12 @@ const deleteEntry = async (request, response) => {
   }
 }
 
+/**
+ * Makes a query to the database that fetches all inventory items whose quantity is below their respective order threshold.
+ * 
+ * @param {request} request - The input parameters that are passed through the URL request. In this case none.
+ * @param {response} response All inventory items whose quantity is below their respective order threshold in JSON format.
+ */
 const restockReport = (request, response) => {
   pool.query('SELECT * FROM Inventory WHERE unit_quantity <= order_threshold', (error, results) => {
     if (error) {
@@ -218,6 +233,14 @@ const restockReport = (request, response) => {
   })
 }
 
+/**
+ * Makes a query to the database that updates all inventory items that are below their respective order threshold.
+ * Also calls editItem while processing request.
+ * 
+ * @param {request} request - The input parameters that are passed through the URL request. In this case none.
+ * @param {response} response Responds with code 200 on success or an error otherwise.
+ * @see editItem
+ */
 const restock = async (request, response) => {
   const reorder = await new Promise((resolve) => {
     pool.query('SELECT * FROM Inventory WHERE unit_quantity <= order_threshold', (error, results) => {
@@ -237,6 +260,12 @@ const restock = async (request, response) => {
   response.status(200).json('Inventory has been restocked!')
 }
 
+/**
+ * Makes a query to the database that fetches all items from the Inventory table in JSON format.
+ * 
+ * @param {request} request - The input parameters that are passed through the URL request. In this case none.
+ * @param {response} response Responds with code 200 on success or an error otherwise.
+ */
 const displayInventory = (request, response) => {
   pool.query('SELECT * FROM Inventory;', (error, results) => {
     if (error) {
@@ -248,6 +277,14 @@ const displayInventory = (request, response) => {
   })
 }
 
+/**
+ * Executes an excess report on any items that were sold between two dates. 
+ * 
+ * @param {request} request - The input parameters that are passed through the URL request described in the properties section below.
+ * @param {response} response The data corresponding to the excess report in JSON format.
+ * @property {request.params.start} start The first parameter of the API call which represents the start date.
+ * @property {request.params.end} end The second parameter of the API call which represents the end date.
+ */
 const excessReport = async (request, response) => {
   const start = new Date(request.params.start).toISOString().slice(0, 10)
   const end = new Date(request.params.end).toISOString().slice(0, 10)
@@ -302,6 +339,14 @@ const excessReport = async (request, response) => {
   response.status(200).json(excess)
 }
 
+/**
+ * Makes a query to the database that adds an ingredient to the Ingredients table. 
+ * 
+ * @param {request} request - The input parameters that are passed through the URL request described in the properties section below.
+ * @param {response} response Responds with code 200 on success or an error otherwise.
+ * @property {request.query.array.split(',')} params The parameter of the API call which is a comma separated list of items (name, 
+ * quantity, threshold, reorder, cost, id) which hold the values of the ingredient to be added, respectively.
+ */
 const addIngredient = async (request, response) => {
   const params = request.query.array.split(',')
   const name = String(params[0])
@@ -331,6 +376,14 @@ const addIngredient = async (request, response) => {
     })
 }
 
+/**
+ * Makes a query to the database that adds an ingredient to the Ingredients table. 
+ * 
+ * @param {request} request - The input parameters that are passed through the URL request described in the properties section below.
+ * @param {response} response Responds with code 200 on success or an error otherwise.
+ * @property {request.query.array.split(',')} params The parameter of the API call which is a comma separated list of items (name, ingredients, cost
+ * type, isSeasonal, id) which hold the values of the ingredient to be added, respectively.
+ */
 const addFoodItem = async (request, response) => {
   const params = request.query.array.split(',')
   console.log(params)
@@ -363,6 +416,14 @@ const addFoodItem = async (request, response) => {
     })
 }
 
+/**
+ * Makes a query to the database that adds an ingredient to the Ingredients table. 
+ * 
+ * @param {request} request - The input parameters that are passed through the URL request described in the properties section below.
+ * @param {response} response Responds with code 200 on success or an error otherwise.
+ * @property {request.query.array.split(',')} params The parameter of the API call which is a comma separated list of items (table, 
+ * id, col, val, idCol, msg) which hold the values of the ingredient to be added, respectively.
+ */
 const editTable = async (request, response) => {
   const params = request.query.array.split(',')
   const table = String(params[0])
@@ -375,6 +436,13 @@ const editTable = async (request, response) => {
   response.status(200).json(msg)
 }
 
+/**
+ * Makes a query to the database that fetches the id that corresponds to a given employee's email address.
+ * 
+ * @param {request} request - The input parameters that are passed through the URL request described in the properties section below.
+ * @param {response} response Responds with the id of the employee, if they exist in the database.
+ * @property {request.query.email} email The parameter of the API call which represents the email of the requested employee as a string.
+ */
 const getEmployeeID = async (request, response) => {
   const email = String(request.query.email)
   // console.log("EMAIL = " + email)

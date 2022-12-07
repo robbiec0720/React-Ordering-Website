@@ -116,8 +116,7 @@ const displayMenu = (request, response) => {
 /**
  * Makes a query to the database that fetches all of the rows of the FoodItems table in JSON format. 
  * 
-
- * @param {request} request - The input parameters that are passed through the URL request. In this case, none.
+ * @param {request} request - The input parameters that are passed through the URL request described in the properties section below.
  * @param {response} response All items from the DB FoodItems table whether or not they are seasonal in JSON format.
  * @property {request.params.start} start The first parameter of the API call which represents the start date.
  * @property {request.params.end} end The second parameter of the API call which represents the end date.
@@ -175,6 +174,13 @@ const salesReport = async (request, response) => {
   response.status(200).json(sales)
 }
 
+/**
+ * Makes a query to the database that fetches all of the rows of the Orders table in JSON format. 
+ * 
+ * @param {request} request - The input parameters that are passed through the URL request. In this case, none.
+ * @param {response} response All items from the DB Order table  in JSON format.
+ * 
+ */
 const displayOrder = async (request, response) => {
   const display = []
   for (var i = 0; i &lt; order.length; i++) {
@@ -195,6 +201,15 @@ const displayOrder = async (request, response) => {
 
 }
 
+/**
+ * Makes a query to the database that fetches all of the rows of the FoodItems table in JSON format. 
+ * 
+ * @param {request} request - The input parameters that are passed through the URL request described in the properties section below.
+ * @param {response} response Responds with code 200 on success or an error otherwise.
+ * @property {request.query.id} id The first parameter of the API call which represents the id to be deleted.
+ * @property {request.query.table} tableName The second parameter of the API call which represents the name of the table from which the id is to be deleted.
+ * @property {request.query.pkcol} colName The third parameter of the API call which represents the name of the primary key column as a string.
+ */
 const deleteEntry = async (request, response) => {
   const id = parseInt(request.query.id)
   const tableName = String(request.query.table)
@@ -229,6 +244,12 @@ const deleteEntry = async (request, response) => {
   }
 }
 
+/**
+ * Makes a query to the database that fetches all inventory items whose quantity is below their respective order threshold.
+ * 
+ * @param {request} request - The input parameters that are passed through the URL request. In this case none.
+ * @param {response} response All inventory items whose quantity is below their respective order threshold in JSON format.
+ */
 const restockReport = (request, response) => {
   pool.query('SELECT * FROM Inventory WHERE unit_quantity &lt;= order_threshold', (error, results) => {
     if (error) {
@@ -240,6 +261,14 @@ const restockReport = (request, response) => {
   })
 }
 
+/**
+ * Makes a query to the database that updates all inventory items that are below their respective order threshold.
+ * 
+ * @param {request} request - The input parameters that are passed through the URL request. In this case none.
+ * @param {response} response Responds with code 200 on success or an error otherwise.
+ * @property {request.query.id} id The first parameter of the API call which represents the id to be deleted.
+ * @see editItem
+ */
 const restock = async (request, response) => {
   const reorder = await new Promise((resolve) => {
     pool.query('SELECT * FROM Inventory WHERE unit_quantity &lt;= order_threshold', (error, results) => {
@@ -501,7 +530,12 @@ const login = async (request, response) => {
   }
 }
 
-
+/**
+ * Uses helper functions to place the order and corresponding transaction to the website.
+ * @param {request} request - The input parameters that are passed through the URL request. In this case, id, type, and payment.
+ * @param {response} response - -1 for a failed submission, and 0 for a successful one.
+ * 
+ */
 const orderSubmitted = async (request, response) => {
   const id = parseInt(request.query.id)
   const payType = parseInt(request.query.type)
@@ -526,7 +560,12 @@ const orderSubmitted = async (request, response) => {
   condiments = []
 }
 
-
+/**
+ * Places an order entry into the database.
+ * @param {double} payment - Double denoting the payment recieved from the customer.
+ * @param {int} payType - Integer denoting what payment type was used (0 = cash, 1 = card, 2 = dining dollars).
+ * 
+ */
 async function placeOrder(payment, payType) {
   const id = await new Promise((resolve) => {
     pool.query("SELECT MAX(order_id) FROM Orders;", (error, results) => {
@@ -602,6 +641,15 @@ async function placeOrder(payment, payType) {
   return orderInfo
 }
 
+/**
+ * Places a transaction entry into the database.
+ * @param {int} orderID - Double denoting the corresponding order id.
+ * @param {int} employeeID - Integer denoting the id of the employee placing the transaction.
+ * @param {int} payType - Integer denoting what payment type was used (0 = cash, 1 = card, 2 = dining dollars).
+ * @param {double} subtotal - Double denoting the subtotal of the transaction.
+ * @param {double} payment - Double denoting the payment recieved from the customer.
+ * 
+ */
 async function placeTransaction(orderID, employeeID, payType, subtotal, payment) {
   const transId = await new Promise((resolve) => {
     pool.query("SELECT MAX(transaction_id) FROM Transactions;", (error, results) => {
@@ -635,6 +683,10 @@ async function placeTransaction(orderID, employeeID, payType, subtotal, payment)
   console.log("Succesfully placed transaction with orderID = " + orderID + ", employeeID = " + employeeID + ", paymentType = " + payType + ", subtotal = " + subtotal + ", payment = " + payment + ".")
 }
 
+/**
+ * Updates the inventory after an order is placed.
+ * 
+ */
 async function updateInventory() {
   for (let i = 0; i &lt; order.length; i++) {
     var ingredients = await new Promise((resolve) => {
@@ -678,6 +730,12 @@ async function updateInventory() {
   console.log("Succesfully updated inventory.")
 }
 
+/**
+ * Takes the item in the request and adds it to the order array.
+ * @param {request} request - The input parameters that are passed through the URL request. In this case, id.
+ * @param {response} response - A confirmation message that the item was added to the order,
+ * 
+ */
 const addItem = (request, response) => {
   const id = parseInt(request.params.id)
   order.push(id)
@@ -686,6 +744,12 @@ const addItem = (request, response) => {
   response.status(200).json("Item " + id + " successfully added to order!")
 }
 
+/**
+ * Removes the item with the id specified in the request from the order array.
+ * @param {request} request - The input parameters that are passed through the URL request. In this case, id.
+ * @param {response} response - A message indicating if the item was removed or not.
+ * 
+ */
 const removeItem = (request, response) => {
   const id = parseInt(request.params.id)
   const index = order.indexOf(id)
@@ -701,6 +765,12 @@ const removeItem = (request, response) => {
   }
 }
 
+/**
+ * Clears the current order array.
+ * @param {request} request - The input parameters that are passed through the URL request. In this case, none.
+ * @param {response} response - A confirmation message that the cart was cleared.
+ * 
+ */
 const clearCart = (request, response) => {
   order = []
   console.log("Current state of order = " + order)
@@ -742,13 +812,13 @@ module.exports = {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#displayMenu">displayMenu</a></li><li><a href="global.html#getItemName">getItemName</a></li><li><a href="global.html#getMenuItems">getMenuItems</a></li><li><a href="global.html#getSeasonalItems">getSeasonalItems</a></li><li><a href="global.html#salesReport">salesReport</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addItem">addItem</a></li><li><a href="global.html#clearCart">clearCart</a></li><li><a href="global.html#deleteEntry">deleteEntry</a></li><li><a href="global.html#displayMenu">displayMenu</a></li><li><a href="global.html#displayOrder">displayOrder</a></li><li><a href="global.html#getItemName">getItemName</a></li><li><a href="global.html#getMenuItems">getMenuItems</a></li><li><a href="global.html#getSeasonalItems">getSeasonalItems</a></li><li><a href="global.html#orderSubmitted">orderSubmitted</a></li><li><a href="global.html#placeOrder">placeOrder</a></li><li><a href="global.html#placeTransaction">placeTransaction</a></li><li><a href="global.html#removeItem">removeItem</a></li><li><a href="global.html#restock">restock</a></li><li><a href="global.html#restockReport">restockReport</a></li><li><a href="global.html#salesReport">salesReport</a></li><li><a href="global.html#updateInventory">updateInventory</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Tue Dec 06 2022 20:06:39 GMT-0600 (Central Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Tue Dec 06 2022 20:19:11 GMT-0600 (Central Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
