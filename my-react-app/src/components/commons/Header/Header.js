@@ -104,9 +104,9 @@ const Header = () => {
                 <div className={theme === "light" ? "dropdown" : "dropdown-dark"}>
                     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
                         <FormControl fullWidth size="small">
-                            <InputLabel id="select-label">{tDrop}</InputLabel>
+                            <InputLabel id="theme-label">{tDrop}</InputLabel>
                             <Select
-                                labelId="select-label"
+                                labelId="theme-label"
                                 id="theme-select"
                                 value={theme}
                                 label={tDrop}
@@ -124,9 +124,9 @@ const Header = () => {
                 <div className={theme === "light" ? "dropdown" : "dropdown-dark"}>
                     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
                         <FormControl fullWidth size="small">
-                            <InputLabel id="select-label">{drop}</InputLabel>
+                            <InputLabel id="language-label">{drop}</InputLabel>
                             <Select
-                                labelId="select-label"
+                                labelId="language-label"
                                 id="language-select"
                                 value={lang}
                                 label={drop}
