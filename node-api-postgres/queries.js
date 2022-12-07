@@ -16,7 +16,6 @@ var condiments = []
  * Called to request all of the information about the menu items which are stored in the DB (not seasonal).
  * @param {request} request - The input parameters that are passed through the URL request. In this case, none.
  * @param {response} response All items from the DB FoodItems table that are not seasonal.
- * 
  */
 const getMenuItems = (request, response) => {
   pool.query('SELECT * FROM FoodItems WHERE is_seasonal = \'f\';', (error, results) => {
@@ -32,7 +31,6 @@ const getMenuItems = (request, response) => {
  * Called to request all of the information about the menu items which are stored in the DB which are seasonal.
  * @param {request} request - The input parameters that are passed through the URL request. In this case, none.
  * @param {response} response All items from the DB FoodItems table that are not seasonal.
- * 
  */
 const getSeasonalItems = (request, response) => {
   pool.query('SELECT * FROM FoodItems WHERE is_seasonal = \'t\';', (error, results) => {
@@ -48,7 +46,6 @@ const getSeasonalItems = (request, response) => {
  * Called to request all of the information about the menu items which are stored in the DB.
  * @param {request} request - The input parameters that are passed through the URL request. In this case, none.
  * @param {response} response All items from the DB FoodItems table that are not seasonal.
- * 
  */
 const getItemName = (request, response) => {
   const id = parseInt(request.params.id)
@@ -69,10 +66,8 @@ const getItemName = (request, response) => {
 
 /**
  * Makes a query to the database that fetches all of the rows of the FoodItems table in JSON format. 
- * 
  * @param {request} request - The input parameters that are passed through the URL request. In this case, none.
  * @param {response} response All items from the DB FoodItems table whether or not they are seasonal in JSON format.
- * 
  */
 const displayMenu = (request, response) => {
   pool.query('SELECT * FROM FoodItems;', (error, results) => {
@@ -87,8 +82,6 @@ const displayMenu = (request, response) => {
 
 /**
  * Makes a query to the database that fetches all of the rows of the FoodItems table in JSON format. 
- * 
-
  * @param {request} request - The input parameters that are passed through the URL request. In this case, none.
  * @param {response} response All items from the DB FoodItems table whether or not they are seasonal in JSON format.
  * @property {request.params.start} start The first parameter of the API call which represents the start date.
@@ -477,7 +470,9 @@ const login = async (request, response) => {
  * Uses helper functions to place the order and corresponding transaction to the website.
  * @param {request} request - The input parameters that are passed through the URL request. In this case, id, type, and payment.
  * @param {response} response - -1 for a failed submission, and 0 for a successful one.
- * 
+ * @param {request.query.id} id - The first parameter of the API call, represents the id of the employee processing the order.
+ * @param {request.query.type} type - The second parameter of the API call, represents the pay type of the order.
+ * @param {request.query.payment} payment - The third parameter of the API call, represents the payment recieved for the order.
  */
 const orderSubmitted = async (request, response) => {
   const id = parseInt(request.query.id)
@@ -505,9 +500,8 @@ const orderSubmitted = async (request, response) => {
 
 /**
  * Places an order entry into the database.
- * @param {double} payment - Double denoting the payment recieved from the customer.
- * @param {int} payType - Integer denoting what payment type was used (0 = cash, 1 = card, 2 = dining dollars).
- * 
+ * @param payment - Double denoting the payment recieved from the customer.
+ * @param payType - Integer denoting what payment type was used (0 = cash, 1 = card, 2 = dining dollars).
  */
 async function placeOrder(payment, payType) {
   const id = await new Promise((resolve) => {
@@ -586,12 +580,11 @@ async function placeOrder(payment, payType) {
 
 /**
  * Places a transaction entry into the database.
- * @param {int} orderID - Double denoting the corresponding order id.
- * @param {int} employeeID - Integer denoting the id of the employee placing the transaction.
- * @param {int} payType - Integer denoting what payment type was used (0 = cash, 1 = card, 2 = dining dollars).
- * @param {double} subtotal - Double denoting the subtotal of the transaction.
- * @param {double} payment - Double denoting the payment recieved from the customer.
- * 
+ * @param orderID - Double denoting the corresponding order id.
+ * @param employeeID - Integer denoting the id of the employee placing the transaction.
+ * @param payType - Integer denoting what payment type was used (0 = cash, 1 = card, 2 = dining dollars).
+ * @param subtotal - Double denoting the subtotal of the transaction.
+ * @param payment - Double denoting the payment recieved from the customer.
  */
 async function placeTransaction(orderID, employeeID, payType, subtotal, payment) {
   const transId = await new Promise((resolve) => {
@@ -627,8 +620,7 @@ async function placeTransaction(orderID, employeeID, payType, subtotal, payment)
 }
 
 /**
- * Updates the inventory after an order is placed.
- * 
+ * Updates the inventory after an order is placed. 
  */
 async function updateInventory() {
   for (let i = 0; i < order.length; i++) {
@@ -676,8 +668,8 @@ async function updateInventory() {
 /**
  * Takes the item in the request and adds it to the order array.
  * @param {request} request - The input parameters that are passed through the URL request. In this case, id.
- * @param {response} response - A confirmation message that the item was added to the order,
- * 
+ * @param {response} response - A confirmation message that the item was added to the order.
+ * @param {request.query.id} id - The first parameter of the API call, represents the id of the item to be added to the order.
  */
 const addItem = (request, response) => {
   const id = parseInt(request.params.id)
@@ -691,7 +683,7 @@ const addItem = (request, response) => {
  * Removes the item with the id specified in the request from the order array.
  * @param {request} request - The input parameters that are passed through the URL request. In this case, id.
  * @param {response} response - A message indicating if the item was removed or not.
- * 
+ * @param {request.query.id} id - The first parameter of the API call, represents the id of the item to be removed from the order.
  */
 const removeItem = (request, response) => {
   const id = parseInt(request.params.id)
@@ -711,8 +703,7 @@ const removeItem = (request, response) => {
 /**
  * Clears the current order array.
  * @param {request} request - The input parameters that are passed through the URL request. In this case, none.
- * @param {response} response - A confirmation message that the cart was cleared.
- * 
+ * @param {response} response - A confirmation message that the cart was cleared. 
  */
 const clearCart = (request, response) => {
   order = []
