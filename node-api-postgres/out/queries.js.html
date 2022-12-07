@@ -1,4 +1,32 @@
-const Pool = require('pg').Pool
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: queries.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: queries.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const Pool = require('pg').Pool
 const pool = new Pool({
   user: 'csce315_901_quilici',
   host: 'csce-315-db.engr.tamu.edu',
@@ -12,12 +40,6 @@ const pool = new Pool({
 var order = []
 var condiments = []
 
-/**
- * Called to request all of the information about the menu items which are stored in the DB (not seasonal).
- * @param {request} request - The input parameters that are passed through the URL request. In this case, none.
- * @param {response} response All items from the DB FoodItems table that are not seasonal.
- * 
- */
 const getMenuItems = (request, response) => {
   pool.query('SELECT * FROM FoodItems WHERE is_seasonal = \'f\';', (error, results) => {
     if (error) {
@@ -28,12 +50,6 @@ const getMenuItems = (request, response) => {
   })
 }
 
-/**
- * Called to request all of the information about the menu items which are stored in the DB which are seasonal.
- * @param {request} request - The input parameters that are passed through the URL request. In this case, none.
- * @param {response} response All items from the DB FoodItems table that are not seasonal.
- * 
- */
 const getSeasonalItems = (request, response) => {
   pool.query('SELECT * FROM FoodItems WHERE is_seasonal = \'t\';', (error, results) => {
     if (error) {
@@ -44,12 +60,6 @@ const getSeasonalItems = (request, response) => {
   })
 }
 
-/**
- * Called to request all of the information about the menu items which are stored in the DB.
- * @param {request} request - The input parameters that are passed through the URL request. In this case, none.
- * @param {response} response All items from the DB FoodItems table that are not seasonal.
- * 
- */
 const getItemName = (request, response) => {
   const id = parseInt(request.params.id)
 
@@ -92,7 +102,7 @@ const salesReport = async (request, response) => {
     })
   })
   const amounts = new Array(count)
-  for (let i = 0; i < count; i++) {
+  for (let i = 0; i &lt; count; i++) {
     amounts[i] = 0
   }
 
@@ -116,13 +126,13 @@ const salesReport = async (request, response) => {
     })
   })
 
-  for (let i = 0; i < dates.length; i++) {
-    for (let j = 0; j < dates[i].menu_amounts.length; j++) {
+  for (let i = 0; i &lt; dates.length; i++) {
+    for (let j = 0; j &lt; dates[i].menu_amounts.length; j++) {
       amounts[j] += dates[i].menu_amounts[j]
     }
   }
 
-  for (let i = 0; i < menu.length; i++) {
+  for (let i = 0; i &lt; menu.length; i++) {
     sales[i] = { "food_id": menu[i].food_id, "item_name": menu[i].item_name, "amount_sold": amounts[i] }
   }
 
@@ -132,7 +142,7 @@ const salesReport = async (request, response) => {
 
 const displayOrder = async (request, response) => {
   const display = []
-  for (var i = 0; i < order.length; i++) {
+  for (var i = 0; i &lt; order.length; i++) {
     display.push(await new Promise((resolve) => {
       pool.query("SELECT * FROM Orders WHERE order_id = " + order[i], (error, results) => {
         if (error) {
@@ -185,7 +195,7 @@ const deleteEntry = async (request, response) => {
 }
 
 const restockReport = (request, response) => {
-  pool.query('SELECT * FROM Inventory WHERE unit_quantity <= order_threshold', (error, results) => {
+  pool.query('SELECT * FROM Inventory WHERE unit_quantity &lt;= order_threshold', (error, results) => {
     if (error) {
       console.log(error.stack)
       return
@@ -197,7 +207,7 @@ const restockReport = (request, response) => {
 
 const restock = async (request, response) => {
   const reorder = await new Promise((resolve) => {
-    pool.query('SELECT * FROM Inventory WHERE unit_quantity <= order_threshold', (error, results) => {
+    pool.query('SELECT * FROM Inventory WHERE unit_quantity &lt;= order_threshold', (error, results) => {
       if (error) {
         console.log(error.stack)
         return
@@ -206,7 +216,7 @@ const restock = async (request, response) => {
     })
   })
 
-  for (let i = 0; i < reorder.length; i++) {
+  for (let i = 0; i &lt; reorder.length; i++) {
     editItem('Inventory', reorder[i].ingredient_id, 'unit_quantity', reorder[i].reorder_value, 'ingredient_id')
   }
 
@@ -239,7 +249,7 @@ const excessReport = async (request, response) => {
     })
   })
   const amounts = new Array(count)
-  for (let i = 0; i < count; i++) {
+  for (let i = 0; i &lt; count; i++) {
     amounts[i] = 0
   }
 
@@ -253,8 +263,8 @@ const excessReport = async (request, response) => {
     })
   })
 
-  for (let i = 0; i < dates.length; i++) {
-    for (let j = 0; j < dates[i].ingredient_amounts.length; j++) {
+  for (let i = 0; i &lt; dates.length; i++) {
+    for (let j = 0; j &lt; dates[i].ingredient_amounts.length; j++) {
       amounts[j] += dates[i].ingredient_amounts[j]
     }
   }
@@ -268,8 +278,8 @@ const excessReport = async (request, response) => {
     })
   })
 
-  for (let i = 0; i < inv.length; i++) {
-    if (amounts[i] <= 0.1 * inv[i].unit_quantity) {
+  for (let i = 0; i &lt; inv.length; i++) {
+    if (amounts[i] &lt;= 0.1 * inv[i].unit_quantity) {
       var per = Math.round(amounts[i] / inv[i].reorder_value * 10000) / 100
       excess.push({ "ingredient_id": inv[i].ingredient_id, "ingredient_name": inv[i].ingredient_name, "amount_sold": amounts[i], "reorder_value": inv[i].reorder_value, "percentage_sold": per })
     }
@@ -456,7 +466,12 @@ const login = async (request, response) => {
   }
 }
 
-
+/**
+ * Called when an order is submitted.
+ * @param {request} request - The string containing two comma-separated numbers.
+ * @param {response} response The response 
+ * 
+ */
 const orderSubmitted = async (request, response) => {
   const id = parseInt(request.query.id)
   const payType = parseInt(request.query.type)
@@ -481,7 +496,7 @@ const orderSubmitted = async (request, response) => {
   condiments = []
 }
 
-
+/** @function */
 async function placeOrder(payment, payType) {
   const id = await new Promise((resolve) => {
     pool.query("SELECT MAX(order_id) FROM Orders;", (error, results) => {
@@ -499,7 +514,7 @@ async function placeOrder(payment, payType) {
   const desserts = []
 
   var totalCost = 0.0
-  for (let n = 0; n < order.length; n++) {
+  for (let n = 0; n &lt; order.length; n++) {
     var type = -1
     var cost = 0.0
     var i = order[n]
@@ -540,7 +555,7 @@ async function placeOrder(payment, payType) {
 
   // If the emplyee enters a payment received that is less than the total cost,
   // indicate error by returning a null array
-  if (payment < totalCost && payType == 0) {
+  if (payment &lt; totalCost &amp;&amp; payType == 0) {
     var ret = null
     return ret
   }
@@ -591,7 +606,7 @@ async function placeTransaction(orderID, employeeID, payType, subtotal, payment)
 }
 
 async function updateInventory() {
-  for (let i = 0; i < order.length; i++) {
+  for (let i = 0; i &lt; order.length; i++) {
     var ingredients = await new Promise((resolve) => {
       pool.query('SELECT ingredients FROM FoodItems WHERE food_id = $1;', [order[i]], (error, results) => {
         if (error) {
@@ -602,7 +617,7 @@ async function updateInventory() {
       })
     })
 
-    for (let j = 0; j < ingredients.length; j++) {
+    for (let j = 0; j &lt; ingredients.length; j++) {
       var id = ingredients[j]
       var val = await new Promise((resolve) => {
         pool.query('SELECT unit_quantity FROM Inventory WHERE ingredient_id = $1', [id], (error, results) => {
@@ -617,7 +632,7 @@ async function updateInventory() {
     }
   }
 
-  for (let k = 0; k < condiments.length; k++) {
+  for (let k = 0; k &lt; condiments.length; k++) {
     var c_id = condiments[k]
     var c_val = await new Promise((resolve) => {
       pool.query('SELECT unit_quantity FROM Inventory WHERE ingredient_id = $1', [c_id], (error, results) => {
@@ -687,4 +702,26 @@ module.exports = {
   removeItem,
   clearCart,
   getEmployeeID
-}
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#orderSubmitted">orderSubmitted</a></li><li><a href="global.html#placeOrder">placeOrder</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Tue Dec 06 2022 19:37:24 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
