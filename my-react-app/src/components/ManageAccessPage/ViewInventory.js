@@ -114,7 +114,7 @@ const ViewInventory = () => {
     return (
         <div className={`${theme === 'light' && 'table'} ${theme === 'dark' && 'table-dark'} ${theme === 'highContrast' && 'table-high-contrast'}`}>
             <h1>{view}</h1>
-            <ThemeProvider theme={tableTheme}>
+            <ThemeProvider theme={tableTheme ? tableTheme : lightTheme}>
                 <DataGrid
                     getRowId={(row) => row.ingredient_id}
                     rows={inv ? inv : []}

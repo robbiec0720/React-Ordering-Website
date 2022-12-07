@@ -107,7 +107,7 @@ const Header = () => {
                             <InputLabel id="select-label">{tDrop}</InputLabel>
                             <Select
                                 labelId="select-label"
-                                id="simple-select"
+                                id="theme-select"
                                 value={theme}
                                 label={tDrop}
                                 onChange={e => setTheme(e.target.value)}
@@ -127,7 +127,7 @@ const Header = () => {
                             <InputLabel id="select-label">{drop}</InputLabel>
                             <Select
                                 labelId="select-label"
-                                id="simple-select"
+                                id="language-select"
                                 value={lang}
                                 label={drop}
                                 onChange={handleChange}

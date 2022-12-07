@@ -165,7 +165,7 @@ const ExcessReport = () => {
         <div className={`${theme === 'light' && 'table'} ${theme === 'dark' && 'table-dark'} ${theme === 'highContrast' && 'table-high-contrast'}`}>
             <h1>{report} {start} {to} 2022-10-25</h1>
             <StartForm></StartForm>
-            <ThemeProvider theme={tableTheme}>
+            <ThemeProvider theme={tableTheme ? tableTheme : lightTheme}>
                 <DataGrid
                     getRowId={(row) => row.ingredient_id}
                     rows={excess ? excess : []}

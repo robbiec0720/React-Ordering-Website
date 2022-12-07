@@ -202,7 +202,7 @@ const SalesReport = () => {
             <h1>{report} {start} {to} {end}</h1>
             <StartForm></StartForm>
             <EndForm></EndForm>
-            <ThemeProvider theme={tableTheme}>
+            <ThemeProvider theme={tableTheme ? tableTheme : lightTheme}>
                 <DataGrid
                     getRowId={(row) => row.food_id}
                     rows={sales ? sales : []}

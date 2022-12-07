@@ -135,7 +135,7 @@ const MapModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, cost }) 
         contentLabel="Example Modal"
       >
         <div className='modal-style'>
-          <form classname="form-map" id="address-form" action="" method="get" autocomplete="off">
+          <form className="form-map" id="address-form" action="" method="get" autocomplete="off">
             <p class="title">{deliv}</p>
             <p class="note"><em>* = {req}</em></p>
             <label class="full-field">
@@ -169,7 +169,7 @@ const MapModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, cost }) 
               <span class="form-label">{country}*</span>
               <input className="input-map" id="country" name="country" required />
             </label>
-            <label for="cars">{pay}:</label>
+            <label htmlFor="cars">{pay}:</label>
             <select name="payment" id="pay">
               <option value="Cash">{card}</option>
               <option value="Dining">Dining Dollars</option>
@@ -184,7 +184,7 @@ const MapModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, cost }) 
               loading="lazy"
               /* allowFullScreen */
               title="MSC"
-              referrerpolicy="no-referrer-when-downgrade"
+              referrerPolicy="no-referrer-when-downgrade"
               src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBOkjc0jDF0N-fPFXOOppRJ3MbySWygPbk&q=Memorial+Student+Center,CollegeStation+TX">
             </iframe>
           </div>

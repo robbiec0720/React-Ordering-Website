@@ -139,7 +139,7 @@ const RestockReport = () => {
         <div className={`${theme === 'light' && 'table'} ${theme === 'dark' && 'table-dark'} ${theme === 'highContrast' && 'table-high-contrast'}`}>
             <h1>{report}</h1>
             <button className='submit-btn' onClick={handleClick}>{btn}</button>
-            <ThemeProvider theme={tableTheme}>
+            <ThemeProvider theme={tableTheme ? tableTheme : lightTheme}>
                 <DataGrid
                     getRowId={(row) => row.ingredient_id}
                     rows={restock ? restock : []}

@@ -68,7 +68,7 @@ const Auth = () => {
       <div className="container">
         <div id="nav-page-content">
           <div className="nav-left">
-            <h1 class="chickFont">{welcome}</h1>
+            <h1 className="chickFont">{welcome}</h1>
             <h1>{spicy}</h1>
             <h2>{deliv}</h2>
             <button className="nav-page-button" onClick={handlePlace}>{btn}</button>
