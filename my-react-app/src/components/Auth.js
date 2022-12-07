@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useState } from "react"
 import "../App.css"
 import { useNavigate } from "react-router-dom"
-import { LangContext, PrevLangContext } from "../App"
+import { LangContext, PrevLangContext, EmployeeStatusContext, EmployeeIDContext } from "../App"
 
 const Auth = () => {
   const navigate = useNavigate()
   const { lang } = useContext(LangContext)
   const { prevLang } = useContext(PrevLangContext)
+  const { employeeStatus, setEmployeeStatus } = useContext(EmployeeStatusContext)
+  const { employeeID, setEmployeeID } = useContext(EmployeeIDContext)
   const [spicy, setSpicy] = useState('Get our Spicy Chicken Sandwhich')
   const [welcome, setWelcome] = useState('Welcome to Chick-Fil-A')
   const [deliv, setDeliv] = useState('Send your loved ones Chick-fil-A for the holidays. Introducing order delivery.')
@@ -52,6 +54,15 @@ const Auth = () => {
     }
   }, [prevLang, lang, spicy, welcome, deliv, btn])
 
+  const handlePlace = () => {
+    if (employeeStatus == 0) {
+      navigate('/customer')
+    }
+    else {
+      navigate('/employee')
+    }
+  }
+
   return (
     <div id="Nav Page">
       <div className="container">
@@ -60,7 +71,7 @@ const Auth = () => {
             <h1 class="chickFont">{welcome}</h1>
             <h1>{spicy}</h1>
             <h2>{deliv}</h2>
-            <button className="nav-page-button" onClick={() => navigate('/customer')}>{btn}</button>
+            <button className="nav-page-button" onClick={handlePlace}>{btn}</button>
           </div>
           <div className="nav-right">
             <img id="nav-page-main-image" src="CFASpicySandwich.png" alt="Chick-fil-a spicy sandwich" />

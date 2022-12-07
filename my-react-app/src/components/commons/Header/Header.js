@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react'
 import './Header.css'
 import { AiOutlineMenu } from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom'
-import { LangContext, PrevLangContext, ThemeContext } from '../../../App'
+import { LangContext, PrevLangContext, ThemeContext, EmployeeStatusContext, EmployeeIDContext } from '../../../App'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
@@ -15,6 +15,8 @@ const Header = () => {
     const { lang, setLang } = useContext(LangContext)
     const { prevLang, setPrevLang } = useContext(PrevLangContext)
     const { theme, setTheme } = useContext(ThemeContext)
+    const { employeeStatus, setEmployeeStatus } = useContext(EmployeeStatusContext)
+    const { employeeID, setEmployeeID } = useContext(EmployeeIDContext)
     const [login, setLogin] = useState('Login')
     const [logout, setLogout] = useState('Logout')
     const [manage, setManage] = useState('Manager Access')
@@ -87,10 +89,11 @@ const Header = () => {
     }
 
     const handleLogout = () => {
-        localStorage.removeItem("user")
+        setEmployeeID(0)
+        setEmployeeStatus(0)
         navigate('/')
     }
-    
+
     return (
         <div className={`${theme === 'light' && 'header-style'} ${theme === 'dark' && 'header-style-dark'} ${theme === 'highContrast' && 'header-style-high-contrast'}`}>
             <div onClick={() => navigate('/')} className='logo'>
@@ -142,14 +145,14 @@ const Header = () => {
                     <span><AiOutlineMenu className={theme === 'light' ? 'dropdown-icon' : 'dropdown-icon-dark'} /></span>
                     <div className={theme === 'light' ? "dropdown-content" : "dropdown-content-dark"}>
                         {
-                            user ?
+                            employeeStatus === 1 || employeeStatus === 2 ?
                                 <p onClick={handleLogout} className={theme === 'light' ? 'manage-access' : 'manage-access-dark'}><small>{logout}</small></p>
                                 :
                                 <p onClick={() => navigate('/Login')} className={theme === 'light' ? 'manage-access' : 'manage-access-dark'}><small>{login}</small></p>
                         }
 
                         {
-                            user?.role === "manager" && <p onClick={() => navigate('/manage-access')} className={theme === 'light' ? 'manage-access' : 'manage-access-dark'}><small>{manage}</small></p>
+                            employeeStatus === 2 && <p onClick={() => navigate('/manage-access')} className={theme === 'light' ? 'manage-access' : 'manage-access-dark'}><small>{manage}</small></p>
                         }
                     </div>
                 </div>

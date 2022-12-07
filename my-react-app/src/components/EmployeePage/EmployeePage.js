@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react'
 import './EmployeePage.css'
 import FoodItem from './FoodItem'
 import PaymentModal from './PaymentModal'
-import { LangContext, PrevLangContext } from '../../App'
+import { LangContext, PrevLangContext, EmployeeStatusContext, EmployeeIDContext } from '../../App'
 import { useLocation, useNavigate } from "react-router-dom"
 import { ThemeContext } from '@emotion/react'
 
@@ -10,10 +10,12 @@ const EmployeePage = () => {
     const navigate = useNavigate()
     const { lang } = useContext(LangContext)
     const { prevLang } = useContext(PrevLangContext)
+    const {employeeStatus, setEmployeeStatus} = useContext(EmployeeStatusContext)
+    const {employeeID, setEmployeeID} = useContext(EmployeeIDContext)
     const [foods, setFoods] = useState([])
     const [cart, setCart] = useState([])
     //const [totalPrice, setTotal] = useState([])
-    const [employeeID] = useState(parseInt(useLocation().state["employeeID"]))
+    // const [employeeID] = useState(parseInt(useLocation().state["employeeID"]))
     //const [managerStatus, ManagerStatus] = useState(parseInt(useLocation().state["managerStatus"]))
     const [order, setOrder] = useState('Current Order')
     const [item, setItem] = useState('Total Items')
@@ -165,7 +167,7 @@ const EmployeePage = () => {
                     <button className='logout-btn' onClick={() => navigate('../')}>{log}</button>
                 </div>
             </div>
-            <PaymentModal openModal={openModal} modalIsOpen={modalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeModal} clearCart={clearCart} employee={employeeID}></PaymentModal>
+            <PaymentModal openModal={openModal} modalIsOpen={modalIsOpen} afterOpenModal={afterOpenModal} closeModal={closeModal} clearCart={clearCart}></PaymentModal>
         </div>
     )
 }
