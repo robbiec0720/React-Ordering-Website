@@ -3,7 +3,7 @@ import Modal from 'react-modal'
 import './PaymentModal.css'
 import { FaTimes } from 'react-icons/fa'
 import SuccessModal from './SuccessModal'
-import { LangContext, PrevLangContext, ThemeContext } from '../../App'
+import { LangContext, PrevLangContext, ThemeContext, EmployeeStatusContext, EmployeeIDContext } from '../../App'
 
 const customStyles = {
   content: {
@@ -28,10 +28,12 @@ const customStylesDark = {
   },
 }
 
-const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, employee, cost, subtitle }) => {
+const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, cost, subtitle }) => {
   const { lang } = useContext(LangContext)
   const { prevLang } = useContext(PrevLangContext)
   const { theme } = useContext(ThemeContext)
+  const {employeeStatus, setEmployeeStatus} = useContext(EmployeeStatusContext)
+  const {employeeID, setEmployeeID} = useContext(EmployeeIDContext)
   const [showInput, setShowInput] = useState(false)
   const [cashInput, setCashInput] = useState(0.0)
   const [card, setCard] = useState('Card')
@@ -95,12 +97,12 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, empl
 
   const user = JSON.parse(localStorage.getItem("user"))
   const handleClick = async (payment_type) => {
-    console.log("Order Button Clicked with value " + payment_type + "\nEmployee ID = " + employee)
+    console.log("Order Button Clicked with value " + payment_type + "\nEmployee ID = " + employeeID)
     try {
       if (payment_type === 0) {
         setShowInput(true)
       } else {
-        const response = await fetch('https://project3-api.onrender.com/order/submit?id=' + employee + '&type=' + payment_type + '&payment=' + cost, {
+        const response = await fetch('https://project3-api.onrender.com/order/submit?id=' + employeeID + '&type=' + payment_type + '&payment=' + cost, {
           method: 'POST',
           headers: {
             Accept: 'application/json',
@@ -135,7 +137,7 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, empl
     event.preventDefault()
     console.log(cashInput)
 
-    const url = 'https://project3-api.onrender.com/order/submit?id=' + employee + '&type=0&payment=' + cashInput
+    const url = 'https://project3-api.onrender.com/order/submit?id=' + employeeID + '&type=0&payment=' + cashInput
     console.log(url)
     try {
       const response = await fetch(url, {
@@ -187,7 +189,7 @@ const PaymentModal = ({ modalIsOpen, afterOpenModal, closeModal, clearCart, empl
               :
               <>
                 {
-                  user ?
+                  employeeStatus === 1 || employeeStatus === 2 ?
                     <div className='modal-style'>
                       <div onClick={() => handleClick(1)} className="modal-item">{card}</div>
                       <div onClick={() => handleClick(0)} className="modal-item">{cash}</div>
