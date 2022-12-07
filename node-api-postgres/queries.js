@@ -479,7 +479,12 @@ const login = async (request, response) => {
   }
 }
 
-
+/**
+ * Uses helper functions to place the order and corresponding transaction to the website.
+ * @param {request} request - The input parameters that are passed through the URL request. In this case, id, type, and payment.
+ * @param {response} response - -1 for a failed submission, and 0 for a successful one.
+ * 
+ */
 const orderSubmitted = async (request, response) => {
   const id = parseInt(request.query.id)
   const payType = parseInt(request.query.type)
@@ -504,7 +509,12 @@ const orderSubmitted = async (request, response) => {
   condiments = []
 }
 
-
+/**
+ * Places an order entry into the database.
+ * @param {double} payment - Double denoting the payment recieved from the customer.
+ * @param {int} payType - Integer denoting what payment type was used (0 = cash, 1 = card, 2 = dining dollars).
+ * 
+ */
 async function placeOrder(payment, payType) {
   const id = await new Promise((resolve) => {
     pool.query("SELECT MAX(order_id) FROM Orders;", (error, results) => {
@@ -580,6 +590,15 @@ async function placeOrder(payment, payType) {
   return orderInfo
 }
 
+/**
+ * Places a transaction entry into the database.
+ * @param {int} orderID - Double denoting the corresponding order id.
+ * @param {int} employeeID - Integer denoting the id of the employee placing the transaction.
+ * @param {int} payType - Integer denoting what payment type was used (0 = cash, 1 = card, 2 = dining dollars).
+ * @param {double} subtotal - Double denoting the subtotal of the transaction.
+ * @param {double} payment - Double denoting the payment recieved from the customer.
+ * 
+ */
 async function placeTransaction(orderID, employeeID, payType, subtotal, payment) {
   const transId = await new Promise((resolve) => {
     pool.query("SELECT MAX(transaction_id) FROM Transactions;", (error, results) => {
@@ -613,6 +632,10 @@ async function placeTransaction(orderID, employeeID, payType, subtotal, payment)
   console.log("Succesfully placed transaction with orderID = " + orderID + ", employeeID = " + employeeID + ", paymentType = " + payType + ", subtotal = " + subtotal + ", payment = " + payment + ".")
 }
 
+/**
+ * Updates the inventory after an order is placed.
+ * 
+ */
 async function updateInventory() {
   for (let i = 0; i < order.length; i++) {
     var ingredients = await new Promise((resolve) => {
@@ -656,6 +679,12 @@ async function updateInventory() {
   console.log("Succesfully updated inventory.")
 }
 
+/**
+ * Takes the item in the request and adds it to the order array.
+ * @param {request} request - The input parameters that are passed through the URL request. In this case, id.
+ * @param {response} response - A confirmation message that the item was added to the order,
+ * 
+ */
 const addItem = (request, response) => {
   const id = parseInt(request.params.id)
   order.push(id)
@@ -664,6 +693,12 @@ const addItem = (request, response) => {
   response.status(200).json("Item " + id + " successfully added to order!")
 }
 
+/**
+ * Removes the item with the id specified in the request from the order array.
+ * @param {request} request - The input parameters that are passed through the URL request. In this case, id.
+ * @param {response} response - A message indicating if the item was removed or not.
+ * 
+ */
 const removeItem = (request, response) => {
   const id = parseInt(request.params.id)
   const index = order.indexOf(id)
@@ -679,6 +714,12 @@ const removeItem = (request, response) => {
   }
 }
 
+/**
+ * Clears the current order array.
+ * @param {request} request - The input parameters that are passed through the URL request. In this case, none.
+ * @param {response} response - A confirmation message that the cart was cleared.
+ * 
+ */
 const clearCart = (request, response) => {
   order = []
   console.log("Current state of order = " + order)
