@@ -1,3 +1,8 @@
+/**
+ * @file This file encapsulates all of the logic for all of the API calls.
+ * @author Robbie Clark, Cam Quilici 
+ */
+
 const Pool = require('pg').Pool
 const pool = new Pool({
   user: 'csce315_901_quilici',
@@ -82,12 +87,7 @@ const displayMenu = (request, response) => {
 
 /**
  * Makes a query to the database that fetches all of the rows of the FoodItems table in JSON format. 
-<<<<<<< HEAD
- * 
- * @param {request} request - The input parameters that are passed through the URL request described in the properties section below.
-=======
  * @param {request} request - The input parameters that are passed through the URL request. In this case, none.
->>>>>>> 0ac71dd2c8942939f39969860a6e177bcc1d594b
  * @param {response} response All items from the DB FoodItems table whether or not they are seasonal in JSON format.
  * @property {request.params.start} start The first parameter of the API call which represents the start date.
  * @property {request.params.end} end The second parameter of the API call which represents the end date.
@@ -537,7 +537,8 @@ const login = async (request, response) => {
         resolve(String(results.rows[0].is_manager))
       })
     })
-    if (mngr.localeCompare('t') == 0) {
+    console.log(mngr)
+    if (mngr.localeCompare('true') == 0) {
       response.status(200).json(2)
     }
     else {

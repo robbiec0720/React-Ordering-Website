@@ -104,7 +104,431 @@
     
 
     
-    <h4 class="name" id="addItem"><span class="type-signature"></span>addItem<span class="signature">(request, response)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="addFoodItem"><span class="type-signature">(async) </span>addFoodItem<span class="signature">(request, response)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Makes a query to the database that adds an ingredient to the Ingredients table.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>request</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">request</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The input parameters that are passed through the URL request described in the properties section below.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>response</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">response</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Responds with code 200 on success or an error otherwise.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>params</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">request.query.array.split(',')</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The parameter of the API call which is a comma separated list of items (name, ingredients, costtype, isSeasonal, id) which hold the values of the ingredient to be added, respectively.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="queries.js.html">queries.js</a>, <a href="queries.js.html#line386">line 386</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="addIngredient"><span class="type-signature">(async) </span>addIngredient<span class="signature">(request, response)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Makes a query to the database that adds an ingredient to the Ingredients table.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>request</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">request</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The input parameters that are passed through the URL request described in the properties section below.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>response</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">response</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Responds with code 200 on success or an error otherwise.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>params</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">request.query.array.split(',')</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The parameter of the API call which is a comma separated list of items (name, quantity, threshold, reorder, cost, id) which hold the values of the ingredient to be added, respectively.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="queries.js.html">queries.js</a>, <a href="queries.js.html#line349">line 349</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="addItem"><span class="type-signature"></span>addItem<span class="signature">(request, response, id)</span><span class="type-signature"></span></h4>
     
 
     
@@ -187,7 +611,30 @@
 
             
 
-            <td class="description last">A confirmation message that the item was added to the order,</td>
+            <td class="description last">A confirmation message that the item was added to the order.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">request.query.id</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The first parameter of the API call, represents the id of the item to be added to the order.</td>
         </tr>
 
     
@@ -228,7 +675,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="queries.js.html">queries.js</a>, <a href="queries.js.html#line711">line 711</a>
+        <a href="queries.js.html">queries.js</a>, <a href="queries.js.html#line754">line 754</a>
     </li></ul></dd>
     
 
@@ -388,7 +835,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="queries.js.html">queries.js</a>, <a href="queries.js.html#line746">line 746</a>
+        <a href="queries.js.html">queries.js</a>, <a href="queries.js.html#line788">line 788</a>
     </li></ul></dd>
     
 
@@ -646,7 +1093,167 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="queries.js.html">queries.js</a>, <a href="queries.js.html#line185">line 185</a>
+        <a href="queries.js.html">queries.js</a>, <a href="queries.js.html#line184">line 184</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="displayInventory"><span class="type-signature"></span>displayInventory<span class="signature">(request, response)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Makes a query to the database that fetches all items from the Inventory table in JSON format.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>request</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">request</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The input parameters that are passed through the URL request. In this case none.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>response</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">response</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Responds with code 200 on success or an error otherwise.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="queries.js.html">queries.js</a>, <a href="queries.js.html#line268">line 268</a>
     </li></ul></dd>
     
 
@@ -966,7 +1573,666 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="queries.js.html">queries.js</a>, <a href="queries.js.html#line156">line 156</a>
+        <a href="queries.js.html">queries.js</a>, <a href="queries.js.html#line155">line 155</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="editTable"><span class="type-signature">(async) </span>editTable<span class="signature">(request, response)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Makes a query to the database that adds an ingredient to the Ingredients table.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>request</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">request</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The input parameters that are passed through the URL request described in the properties section below.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>response</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">response</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Responds with code 200 on success or an error otherwise.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>params</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">request.query.array.split(',')</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The parameter of the API call which is a comma separated list of items (table, id, col, val, idCol, msg) which hold the values of the ingredient to be added, respectively.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="queries.js.html">queries.js</a>, <a href="queries.js.html#line426">line 426</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="excessReport"><span class="type-signature">(async) </span>excessReport<span class="signature">(request, response)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Executes an excess report on any items that were sold between two dates.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>request</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">request</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The input parameters that are passed through the URL request described in the properties section below.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>response</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">response</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The data corresponding to the excess report in JSON format.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>start</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">request.params.start</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The first parameter of the API call which represents the start date.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>end</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">request.params.end</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The second parameter of the API call which represents the end date.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="queries.js.html">queries.js</a>, <a href="queries.js.html#line287">line 287</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getEmployeeID"><span class="type-signature">(async) </span>getEmployeeID<span class="signature">(request, response)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Makes a query to the database that fetches the id that corresponds to a given employee's email address.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>request</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">request</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The input parameters that are passed through the URL request described in the properties section below.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>response</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">response</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Responds with the id of the employee, if they exist in the database.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>email</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">request.query.email</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The parameter of the API call which represents the email of the requested employee as a string.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="queries.js.html">queries.js</a>, <a href="queries.js.html#line445">line 445</a>
     </li></ul></dd>
     
 
@@ -1126,7 +2392,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="queries.js.html">queries.js</a>, <a href="queries.js.html#line53">line 53</a>
+        <a href="queries.js.html">queries.js</a>, <a href="queries.js.html#line55">line 55</a>
     </li></ul></dd>
     
 
@@ -1286,7 +2552,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="queries.js.html">queries.js</a>, <a href="queries.js.html#line21">line 21</a>
+        <a href="queries.js.html">queries.js</a>, <a href="queries.js.html#line25">line 25</a>
     </li></ul></dd>
     
 
@@ -1446,7 +2712,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="queries.js.html">queries.js</a>, <a href="queries.js.html#line37">line 37</a>
+        <a href="queries.js.html">queries.js</a>, <a href="queries.js.html#line40">line 40</a>
     </li></ul></dd>
     
 
@@ -1482,7 +2748,7 @@
     
 
     
-    <h4 class="name" id="orderSubmitted"><span class="type-signature">(async) </span>orderSubmitted<span class="signature">(request, response)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="orderSubmitted"><span class="type-signature">(async) </span>orderSubmitted<span class="signature">(request, response, id, type, payment)</span><span class="type-signature"></span></h4>
     
 
     
@@ -1569,6 +2835,75 @@
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">request.query.id</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The first parameter of the API call, represents the id of the employee processing the order.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">request.query.type</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The second parameter of the API call, represents the pay type of the order.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>payment</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">request.query.payment</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The third parameter of the API call, represents the payment recieved for the order.</td>
+        </tr>
+
+    
     </tbody>
 </table>
 
@@ -1606,7 +2941,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="queries.js.html">queries.js</a>, <a href="queries.js.html#line511">line 511</a>
+        <a href="queries.js.html">queries.js</a>, <a href="queries.js.html#line557">line 557</a>
     </li></ul></dd>
     
 
@@ -1691,11 +3026,6 @@
 
             <td class="type">
             
-                
-<span class="param-type">double</span>
-
-
-            
             </td>
 
             
@@ -1713,11 +3043,6 @@
             
 
             <td class="type">
-            
-                
-<span class="param-type">int</span>
-
-
             
             </td>
 
@@ -1766,7 +3091,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="queries.js.html">queries.js</a>, <a href="queries.js.html#line541">line 541</a>
+        <a href="queries.js.html">queries.js</a>, <a href="queries.js.html#line586">line 586</a>
     </li></ul></dd>
     
 
@@ -1851,11 +3176,6 @@
 
             <td class="type">
             
-                
-<span class="param-type">int</span>
-
-
-            
             </td>
 
             
@@ -1873,11 +3193,6 @@
             
 
             <td class="type">
-            
-                
-<span class="param-type">int</span>
-
-
             
             </td>
 
@@ -1897,11 +3212,6 @@
 
             <td class="type">
             
-                
-<span class="param-type">int</span>
-
-
-            
             </td>
 
             
@@ -1920,11 +3230,6 @@
 
             <td class="type">
             
-                
-<span class="param-type">double</span>
-
-
-            
             </td>
 
             
@@ -1942,11 +3247,6 @@
             
 
             <td class="type">
-            
-                
-<span class="param-type">double</span>
-
-
             
             </td>
 
@@ -1995,7 +3295,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="queries.js.html">queries.js</a>, <a href="queries.js.html#line625">line 625</a>
+        <a href="queries.js.html">queries.js</a>, <a href="queries.js.html#line669">line 669</a>
     </li></ul></dd>
     
 
@@ -2031,7 +3331,7 @@
     
 
     
-    <h4 class="name" id="removeItem"><span class="type-signature"></span>removeItem<span class="signature">(request, response)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="removeItem"><span class="type-signature"></span>removeItem<span class="signature">(request, response, id)</span><span class="type-signature"></span></h4>
     
 
     
@@ -2118,6 +3418,29 @@
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">request.query.id</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The first parameter of the API call, represents the id of the item to be removed from the order.</td>
+        </tr>
+
+    
     </tbody>
 </table>
 
@@ -2155,7 +3478,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="queries.js.html">queries.js</a>, <a href="queries.js.html#line725">line 725</a>
+        <a href="queries.js.html">queries.js</a>, <a href="queries.js.html#line768">line 768</a>
     </li></ul></dd>
     
 
@@ -2199,7 +3522,7 @@
 
 
 <div class="description">
-    Makes a query to the database that updates all inventory items that are below their respective order threshold.
+    Makes a query to the database that updates all inventory items that are below their respective order threshold.Also calls editItem while processing request.
 </div>
 
 
@@ -2286,58 +3609,6 @@
 
 
 
-    <h5 class="subsection-title">Properties:</h5>
-
-    
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">request.query.id</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The first parameter of the API call which represents the id to be deleted.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
 <dl class="details">
 
     
@@ -2367,7 +3638,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="queries.js.html">queries.js</a>, <a href="queries.js.html#line244">line 244</a>
+        <a href="queries.js.html">queries.js</a>, <a href="queries.js.html#line243">line 243</a>
     </li></ul></dd>
     
 
@@ -2534,7 +3805,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="queries.js.html">queries.js</a>, <a href="queries.js.html#line225">line 225</a>
+        <a href="queries.js.html">queries.js</a>, <a href="queries.js.html#line224">line 224</a>
     </li></ul></dd>
     
 
@@ -2630,7 +3901,7 @@
 
             
 
-            <td class="description last">The input parameters that are passed through the URL request described in the properties section below.</td>
+            <td class="description last">The input parameters that are passed through the URL request. In this case, none.</td>
         </tr>
 
     
@@ -2769,7 +4040,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="queries.js.html">queries.js</a>, <a href="queries.js.html#line96">line 96</a>
+        <a href="queries.js.html">queries.js</a>, <a href="queries.js.html#line95">line 95</a>
     </li></ul></dd>
     
 
@@ -2857,7 +4128,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="queries.js.html">queries.js</a>, <a href="queries.js.html#line662">line 662</a>
+        <a href="queries.js.html">queries.js</a>, <a href="queries.js.html#line705">line 705</a>
     </li></ul></dd>
     
 
@@ -2903,13 +4174,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addItem">addItem</a></li><li><a href="global.html#clearCart">clearCart</a></li><li><a href="global.html#deleteEntry">deleteEntry</a></li><li><a href="global.html#displayMenu">displayMenu</a></li><li><a href="global.html#displayOrder">displayOrder</a></li><li><a href="global.html#getItemName">getItemName</a></li><li><a href="global.html#getMenuItems">getMenuItems</a></li><li><a href="global.html#getSeasonalItems">getSeasonalItems</a></li><li><a href="global.html#orderSubmitted">orderSubmitted</a></li><li><a href="global.html#placeOrder">placeOrder</a></li><li><a href="global.html#placeTransaction">placeTransaction</a></li><li><a href="global.html#removeItem">removeItem</a></li><li><a href="global.html#restock">restock</a></li><li><a href="global.html#restockReport">restockReport</a></li><li><a href="global.html#salesReport">salesReport</a></li><li><a href="global.html#updateInventory">updateInventory</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addFoodItem">addFoodItem</a></li><li><a href="global.html#addIngredient">addIngredient</a></li><li><a href="global.html#addItem">addItem</a></li><li><a href="global.html#clearCart">clearCart</a></li><li><a href="global.html#deleteEntry">deleteEntry</a></li><li><a href="global.html#displayInventory">displayInventory</a></li><li><a href="global.html#displayMenu">displayMenu</a></li><li><a href="global.html#displayOrder">displayOrder</a></li><li><a href="global.html#editTable">editTable</a></li><li><a href="global.html#excessReport">excessReport</a></li><li><a href="global.html#getEmployeeID">getEmployeeID</a></li><li><a href="global.html#getItemName">getItemName</a></li><li><a href="global.html#getMenuItems">getMenuItems</a></li><li><a href="global.html#getSeasonalItems">getSeasonalItems</a></li><li><a href="global.html#orderSubmitted">orderSubmitted</a></li><li><a href="global.html#placeOrder">placeOrder</a></li><li><a href="global.html#placeTransaction">placeTransaction</a></li><li><a href="global.html#removeItem">removeItem</a></li><li><a href="global.html#restock">restock</a></li><li><a href="global.html#restockReport">restockReport</a></li><li><a href="global.html#salesReport">salesReport</a></li><li><a href="global.html#updateInventory">updateInventory</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Tue Dec 06 2022 20:19:11 GMT-0600 (Central Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Tue Dec 06 2022 20:51:10 GMT-0600 (Central Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
