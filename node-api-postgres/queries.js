@@ -1,3 +1,8 @@
+/**
+ * @file This file encapsulates all of the logic for all of the API calls.
+ * @author Robbie Clark, Cam Quilici 
+ */
+
 const Pool = require('pg').Pool
 const pool = new Pool({
   user: 'csce315_901_quilici',
@@ -532,7 +537,8 @@ const login = async (request, response) => {
         resolve(String(results.rows[0].is_manager))
       })
     })
-    if (mngr.localeCompare('t') == 0) {
+    console.log(mngr)
+    if (mngr.localeCompare('true') == 0) {
       response.status(200).json(2)
     }
     else {

@@ -1,3 +1,8 @@
+/**
+ * @file Sets up the routing for all API calls.
+ * @author Robbie Clark, Cam Quilici 
+ */
+
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
