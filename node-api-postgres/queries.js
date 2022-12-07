@@ -429,7 +429,7 @@ const login = async (request, response) => {
         resolve(String(results.rows[0].is_manager))
       })
     })
-    if (mngr.localeCompare('t')) {
+    if (mngr.localeCompare('t') == 0) {
       response.status(200).json(2)
     }
     else {
