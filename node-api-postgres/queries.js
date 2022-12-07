@@ -88,8 +88,7 @@ const displayMenu = (request, response) => {
 /**
  * Makes a query to the database that fetches all of the rows of the FoodItems table in JSON format. 
  * 
-
- * @param {request} request - The input parameters that are passed through the URL request. In this case, none.
+ * @param {request} request - The input parameters that are passed through the URL request described in the properties section below.
  * @param {response} response All items from the DB FoodItems table whether or not they are seasonal in JSON format.
  * @property {request.params.start} start The first parameter of the API call which represents the start date.
  * @property {request.params.end} end The second parameter of the API call which represents the end date.
@@ -147,6 +146,13 @@ const salesReport = async (request, response) => {
   response.status(200).json(sales)
 }
 
+/**
+ * Makes a query to the database that fetches all of the rows of the Orders table in JSON format. 
+ * 
+ * @param {request} request - The input parameters that are passed through the URL request. In this case, none.
+ * @param {response} response All items from the DB FoodItems table whether or not they are seasonal in JSON format.
+ * 
+ */
 const displayOrder = async (request, response) => {
   const display = []
   for (var i = 0; i < order.length; i++) {
