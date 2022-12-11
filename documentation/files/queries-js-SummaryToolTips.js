@@ -1,0 +1,1 @@
+﻿NDSummary.OnToolTipsLoaded("File:queries.js",{3:"<div class=\"NDToolTip TFunction LJavaScript\"><div class=\"TTSummary\">Multiplies two integers and returns the result.</div></div>"});

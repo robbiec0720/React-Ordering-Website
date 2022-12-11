@@ -62,7 +62,7 @@ const DeleteInventory = () => {
         handleSubmit(event) {
             event.preventDefault()
             // change to publicly hosted
-            const url = 'https://project3-api.onrender.com/entry/delete?id=' + this.state.id + '&table=Inventory&pkcol=ingredient_id'
+            const url = 'http://localhost:8081/entry/delete?id=' + this.state.id + '&table=Inventory&pkcol=ingredient_id'
             fetch(url, {
                 method: 'DELETE',
                 headers: {

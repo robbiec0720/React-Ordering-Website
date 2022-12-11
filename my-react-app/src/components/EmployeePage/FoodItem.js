@@ -4,7 +4,7 @@ import './FoodItem.css'
 
 const FoodItem = ({ food, cart, setCart }) => {
   const { id, name, price, img } = food
-  const url = 'https://project3-api.onrender.com/order/add/' + id.toString()
+  const url = 'http://localhost:8081/order/add/' + id.toString()
   const { lang } = useContext(LangContext)
   const { prevLang } = useContext(PrevLangContext)
   const {theme} = useContext(ThemeContext)

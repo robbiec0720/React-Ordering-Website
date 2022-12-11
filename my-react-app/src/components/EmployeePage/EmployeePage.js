@@ -95,7 +95,7 @@ const EmployeePage = () => {
     const clearCart = async () => {
         cart.forEach((element) => element["count"] = 0)
         setCart([])
-        await fetch('https://project3-api.onrender.com/order/clear', {
+        await fetch('http://localhost:8081/order/clear', {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -105,7 +105,7 @@ const EmployeePage = () => {
 
     const removeFromCart = async item => {
         console.log(cart.indexOf(item))
-        const url = 'https://project3-api.onrender.com/order/remove/' + item.id.toString()
+        const url = 'http://localhost:8081/order/remove/' + item.id.toString()
 
         await fetch(url, {
             method: 'GET',

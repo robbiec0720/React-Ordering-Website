@@ -72,7 +72,7 @@ const EditMenu = () => {
         handleSubmit(event) {
             event.preventDefault()
             // need to change to publicly hosted api
-            const url = 'https://project3-api.onrender.com/edit?array=FoodItems,' + this.state.id + ',' + this.state.col + ',' + this.state.value + ',food_id'
+            const url = 'http://localhost:8081/edit?array=FoodItems,' + this.state.id + ',' + this.state.col + ',' + this.state.value + ',food_id'
             fetch(url, {
                 method: 'PUT',
                 headers: {

@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("ord",["Function"],[["orderSubmitted",,[[,,,,0,"File:queries.js:orderSubmitted"]]]]);

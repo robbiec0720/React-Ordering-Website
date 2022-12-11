@@ -81,7 +81,7 @@ const AddToInventory = () => {
 
         handleSubmit(event) {
             event.preventDefault()
-            const url = 'https://project3-api.onrender.com/inventory/add?array=' + this.state.name + ',' + this.state.quantity + ',' + this.state.threshold + ',' + this.state.reorder + ',' + this.state.cost
+            const url = 'http://localhost:8081/inventory/add?array=' + this.state.name + ',' + this.state.quantity + ',' + this.state.threshold + ',' + this.state.reorder + ',' + this.state.cost
             fetch(url, {
                 method: 'POST',
                 headers: {
