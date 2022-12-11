@@ -109,7 +109,7 @@ const ViewInventory = () => {
                 setView(result)
             })
         }
-    }, [view, lang, prevLang, theme, darkTheme, lightTheme, contrastTheme])
+    }, [view, lang, prevLang, theme])
 
     return (
         <div className={`${theme === 'light' && 'table'} ${theme === 'dark' && 'table-dark'} ${theme === 'highContrast' && 'table-high-contrast'}`}>

@@ -115,7 +115,7 @@ const RestockReport = () => {
             })
         }
 
-    }, [lang, prevLang, btn, report, theme, darkTheme, lightTheme, contrastTheme])
+    }, [lang, prevLang, btn, report, theme])
 
     const handleClick = () => {
         // need to change to public api

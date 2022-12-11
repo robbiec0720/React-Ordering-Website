@@ -123,7 +123,7 @@ const ExcessReport = () => {
             })
         }
 
-    }, [start, date, submit, to, report, lang, prevLang, theme, darkTheme, lightTheme, contrastTheme])
+    }, [start, date, submit, to, report, lang, prevLang, theme])
 
     // form to get start date input
     class StartForm extends React.Component {

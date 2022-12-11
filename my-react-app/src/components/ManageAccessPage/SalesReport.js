@@ -123,7 +123,7 @@ const SalesReport = () => {
             })
         }
 
-    }, [start, end, eDate, sDate, lang, prevLang, report, submit, to, theme, darkTheme, lightTheme, contrastTheme])
+    }, [start, end, eDate, sDate, lang, prevLang, report, submit, to, theme])
 
     // form to get start date input
     class StartForm extends React.Component {
